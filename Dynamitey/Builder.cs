@@ -31,7 +31,7 @@ namespace Dynamitey
         /// <returns></returns>
         public static IImpromptuBuilder New()
         {
-            return new BaseBuilder<ChainableDictionary>();
+            return new Builder<ChainableDictionary>();
         }
 
        
@@ -43,7 +43,7 @@ namespace Dynamitey
         /// <returns></returns>
         public static IImpromptuBuilder New<TObjectPrototype>() where TObjectPrototype : new()
         {
-            return new BaseBuilder<TObjectPrototype>();
+            return new Builder<TObjectPrototype>();
         }
 
         
@@ -54,10 +54,10 @@ namespace Dynamitey
     /// </summary>
     public static class Build
     {
-        private static readonly dynamic _objectBuilder = new BaseBuilder<ChainableDictionary>().Object;
+        private static readonly dynamic _objectBuilder = new Builder<ChainableDictionary>().Object;
 
         private static readonly dynamic _listBuilder =
-            Dynamic.Curry(new BaseBuilder<ChainableDictionary>().ListSetup<List>()).
+            Dynamic.Curry(new Builder<ChainableDictionary>().ListSetup<List>()).
                 List();
 
         /// <summary>
@@ -92,11 +92,11 @@ namespace Dynamitey
     public static class Build<TObjectPrototype> where TObjectPrototype : new()
     {
 // ReSharper disable StaticFieldInGenericType
-        private static readonly dynamic _typedBuilder = new BaseBuilder<TObjectPrototype>().Object;
+        private static readonly dynamic _typedBuilder = new Builder<TObjectPrototype>().Object;
 // ReSharper restore StaticFieldInGenericType
 
 // ReSharper disable StaticFieldInGenericType
-        private static readonly dynamic _typedListBuilder = Dynamic.Curry(new BaseBuilder<TObjectPrototype>().ListSetup<TObjectPrototype>()).List();
+        private static readonly dynamic _typedListBuilder = Dynamic.Curry(new Builder<TObjectPrototype>().ListSetup<TObjectPrototype>()).List();
 // ReSharper restore StaticFieldInGenericType
 
         /// <summary>

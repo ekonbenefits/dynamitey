@@ -36,6 +36,20 @@ namespace Dynamitey.Internal.Optimization
     public static class Util
     {
         /// <summary>
+        /// Is Current Runtime Mono?
+        /// </summary>
+        public static readonly bool IsMono;
+
+        static Util()
+        {
+            IsMono = Type.GetType("Mono.Runtime") != null;
+
+
+        }
+   
+
+
+        /// <summary>
         /// Determines whether [is anonymous type] [the specified target].
         /// </summary>
         /// <param name="target">The target.</param>
@@ -44,7 +58,7 @@ namespace Dynamitey.Internal.Optimization
         /// </returns>
         public static bool IsAnonymousType(object target)
         {
-            if(target ==null)
+            if (target == null)
                 return false;
 
             var type = target as Type ?? target.GetType();
@@ -52,15 +66,10 @@ namespace Dynamitey.Internal.Optimization
             return type.IsNotPublic
                    && Attribute.IsDefined(
                        type,
-                       typeof (CompilerGeneratedAttribute),
+                       typeof(CompilerGeneratedAttribute),
                        false);
         }
 
-        static Util()
-        {
-            IsMono = Type.GetType("Mono.Runtime") != null;
-
-        }
 
         /// <summary>
         /// Names the args if necessary.
@@ -123,7 +132,7 @@ namespace Dynamitey.Internal.Optimization
    
         internal static bool MassageResultBasedOnInterface(this BaseObject target, string binderName, bool resultFound, ref object result)
         {
-            if (result is AddRemoveMarker) //Don't massage AddRemove Proxies
+            if (result is BaseForwarder.AddRemoveMarker) //Don't massage AddRemove Proxies
                 return true;
 
             Type tType;
@@ -134,7 +143,7 @@ namespace Dynamitey.Internal.Optimization
             }
 
             if(resultFound){
-              if (result is IDictionary<string, object> && !(result is DictionaryBase)
+              if (result is IDictionary<string, object> && !(result is BaseDictionary)
                     && (!tTryType || tType == typeof(object)))
                 {
                     result = new Dictionary((IDictionary<string, object>)result);
@@ -152,6 +161,11 @@ namespace Dynamitey.Internal.Optimization
 
                     return false;
                 }
+                if (typeof (Delegate).IsAssignableFrom(tType))
+                {
+                    result = new BaseForwarder.AddRemoveMarker();
+                }
+
                 if (tType.IsValueType)
                 {
                     result = Dynamic.InvokeConstructor(tType);
@@ -161,10 +175,7 @@ namespace Dynamitey.Internal.Optimization
         }
 
 
-		/// <summary>
-		/// Is Current Runtime Mono?
-		/// </summary>
-		public static readonly bool IsMono;
+
 
         internal static object[] GetArgsAndNames(object[]args,out string[]argNames)
         {

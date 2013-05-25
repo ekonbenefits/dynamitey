@@ -30,7 +30,7 @@ namespace Dynamitey.DynamicObjects
     /// Base class of Expando-Type objects
     /// </summary>
    
-    public abstract class DictionaryBase : BaseObject, INotifyPropertyChanged
+    public abstract class BaseDictionary : BaseObject, INotifyPropertyChanged
     {
         /// <summary>
         /// Wrapped Dictionary
@@ -72,7 +72,7 @@ namespace Dynamitey.DynamicObjects
         /// Initializes a new instance of the <see cref="Dictionary"/> class.
         /// </summary>
         /// <param name="dict">The dict.</param>
-        protected DictionaryBase(IEnumerable<KeyValuePair<string, object>> dict =null)
+        protected BaseDictionary(IEnumerable<KeyValuePair<string, object>> dict =null)
         {
             if (dict == null)
             {

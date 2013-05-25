@@ -119,7 +119,7 @@ namespace Dynamitey.DynamicObjects
     /// Builds Expando-Like Objects with an inline Syntax
     /// </summary>
     /// <typeparam name="TObjectProtoType">The type of the object proto type.</typeparam>
-    public class BaseBuilder<TObjectProtoType>: BaseObject, IImpromptuBuilder
+    public class Builder<TObjectProtoType>: BaseObject, IImpromptuBuilder
     {
         /// <summary>
         /// Build factory storage
@@ -127,9 +127,9 @@ namespace Dynamitey.DynamicObjects
 		protected IDictionary<string,Activate> _buildType;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseBuilder{TObjectProtoType}"/> class.
+        /// Initializes a new instance of the <see cref="Builder{TObjectProtoType}"/> class.
         /// </summary>
-		public BaseBuilder(){
+		public Builder(){
             _buildType = new Dictionary<string, Activate>();
 			Setup = new SetupTrampoline(this);
 			Object = new BuilderTrampoline(this);
@@ -261,13 +261,13 @@ namespace Dynamitey.DynamicObjects
         ///</summary>
         public class BuilderTrampoline:DynamicObject
         {
-            BaseBuilder<TObjectProtoType> _buider;
+            Builder<TObjectProtoType> _buider;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="BaseBuilder{TObjectProtoType}.BuilderTrampoline"/> class.
+            /// Initializes a new instance of the <see cref="Builder{TObjectProtoType}.BuilderTrampoline"/> class.
             /// </summary>
             /// <param name="builder">The builder.</param>
-            public BuilderTrampoline(BaseBuilder<TObjectProtoType> builder)
+            public BuilderTrampoline(Builder<TObjectProtoType> builder)
             {
 				_buider = builder;
 			}
@@ -294,13 +294,13 @@ namespace Dynamitey.DynamicObjects
         /// </summary>
         public class SetupTrampoline : DynamicObject
         {
-			BaseBuilder<TObjectProtoType> _buider;
+			Builder<TObjectProtoType> _buider;
 
             /// <summary>
-            /// Initializes a new instance of the <see cref="BaseBuilder{TObjectProtoType}.SetupTrampoline"/> class.
+            /// Initializes a new instance of the <see cref="Builder{TObjectProtoType}.SetupTrampoline"/> class.
             /// </summary>
             /// <param name="builder">The builder.</param>
-			public SetupTrampoline(BaseBuilder<TObjectProtoType> builder){
+			public SetupTrampoline(Builder<TObjectProtoType> builder){
 				_buider = builder;
 			}
 			

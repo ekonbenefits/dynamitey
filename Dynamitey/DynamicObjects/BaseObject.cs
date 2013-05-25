@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
 using System.Runtime.Serialization;
@@ -29,11 +30,11 @@ namespace Dynamitey.DynamicObjects
      
     public interface IEquivalentType
     {
-        Type EquivalentType { get; set; }
+        FauxType EquivalentType { get; set; }
     }
 
     [DataContract]
-    public abstract class BaseObject : DynamicObject, IEquivalentType
+    public abstract class BaseObject : DynamicObject, IEquivalentType, IServiceProvider
 
     {
         /// <summary>
@@ -49,6 +50,10 @@ namespace Dynamitey.DynamicObjects
         public bool TryTypeForName(string binderName, out Type type)
         {
            var eqType = (IEquivalentType) this;
+           type = null;
+           if (eqType.EquivalentType == null)
+                return false;
+
            var types = eqType.EquivalentType.GetMember(binderName)
                .Where(it => it is PropertyInfo || it is MethodInfo || it is EventInfo)
                .Select(it =>
@@ -65,7 +70,7 @@ namespace Dynamitey.DynamicObjects
                                return typeof (object);
                            }).ToList();
 
-            type = null;
+;
             if (!types.Any())
                 return false;
             foreach (var currenttype in types)
@@ -79,6 +84,24 @@ namespace Dynamitey.DynamicObjects
         }
 
         [DataMember]
-        Type IEquivalentType.EquivalentType { get; set; }
+        FauxType IEquivalentType.EquivalentType { get; set; }
+     
+        object IServiceProvider.GetService(Type serviceType)
+        {
+            var aggreTypes =AggreType.MakeTypeAppendable(this);
+
+            if (!aggreTypes.ContainsType(serviceType))
+            {
+                aggreTypes.AddType(serviceType);
+                
+                if (serviceType.IsInterface && Dynamic.Impromptu.IsAvailable)
+                {
+                    return Dynamic.Impromptu.DynamicActLike(this, aggreTypes.GetInterfaceTypes());
+                }
+
+            }
+
+            return this;
+        }
     }
 }

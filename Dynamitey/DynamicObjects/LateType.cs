@@ -15,6 +15,22 @@ namespace Dynamitey.DynamicObjects
     /// </summary>
     public class LateType:BaseForwarder
     {
+
+     
+        public class MissingTypeException:Exception
+        {
+             public MissingTypeException(string typename)
+                 : base(String.Format("Could Not Find Type. {0}", typename))
+             {
+                 
+             }
+
+            public MissingTypeException(string message, Exception innerException) : base(message, innerException)
+            {
+                
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the <see cref="LateType"/> class.
         /// </summary>
@@ -23,7 +39,9 @@ namespace Dynamitey.DynamicObjects
             : base(type)
         {
 
-        }  
+        }
+
+        private readonly string TypeName;
         
         /// <summary>
         /// Initializes a new instance of the <see cref="LateType"/> class.
@@ -32,7 +50,8 @@ namespace Dynamitey.DynamicObjects
         public LateType(string typeName)
             : base(Type.GetType(typeName, false))
         {
-
+            TypeName = typeName;
+          
         }
 
         /// <summary>
@@ -78,6 +97,9 @@ namespace Dynamitey.DynamicObjects
         {
             get
             {
+                if(Target ==null)
+                    throw new MissingTypeException(TypeName);
+
                 return InvokeContext.CreateStatic((Type)Target);
             }
         }

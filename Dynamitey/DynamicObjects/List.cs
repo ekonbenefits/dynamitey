@@ -28,7 +28,7 @@ namespace Dynamitey.DynamicObjects
     /// <summary>
     /// Expando-Type List for dynamic objects
     /// </summary>
-    public class List : DictionaryBase, IList<object>, IDictionary<string, object>, INotifyCollectionChanged, IList
+    public class List : BaseDictionary, IList<object>, IDictionary<string, object>, INotifyCollectionChanged, IList
 
     {
 

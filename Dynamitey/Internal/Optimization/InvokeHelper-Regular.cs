@@ -4,6 +4,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Dynamitey.DynamicObjects;
 using Microsoft.CSharp.RuntimeBinder;
 using Binder = Microsoft.CSharp.RuntimeBinder.Binder;
 
@@ -60,18 +61,22 @@ namespace Dynamitey.Internal.Optimization
         }
 
 
-   
 
-      
+
+        internal static readonly dynamic BuildProxy = new DynamicObjects.LateType(
+            "ImpromptuInterface.Build.BuildProxy, ImpromptuInterface, PublicKeyToken=0b1781c923b2975b");
 
         internal static Type EmitCallSiteFuncType(IEnumerable<Type> argTypes, Type returnType)
         {
-
-
-            if(BuildProxy ==null)
-                throw new RuntimeBinderException("Cannot Emit long delegates without ImpromptuInterface installed");
-
-            return BuildProxy.EmitCallSiteFuncType(argTypes, returnType);
+            try
+            {
+                return BuildProxy.EmitCallSiteFuncType(argTypes, returnType);
+            }
+            catch (LateType.MissingTypeException ex)
+            {
+                throw new TypeLoadException("Cannot Emit long delegates without ImpromptuInterface installed", ex);
+            }
+    
         }
 
 
@@ -122,7 +127,8 @@ namespace Dynamitey.Internal.Optimization
 
             return FuncArgs.ContainsKey(tType) || ActionArgs.ContainsKey(tType);
          }
- 
+
+   
 
         internal static object InvokeMethodDelegate(this object target, Delegate tFunc, object[] args)
         {
@@ -620,7 +626,7 @@ namespace Dynamitey.Internal.Optimization
 
         internal static object InvokeConvertCallSite(object target, bool explict, Type type, Type context, ref CallSite callSite)
         {
-            if (callSite == null)
+            if (callSite == null) 
             {
                 LazyBinder tBinder = () =>
                                          {
@@ -630,7 +636,7 @@ namespace Dynamitey.Internal.Optimization
                                          };
                 Type tBinderType = typeof (ConvertBinder);
 
-                var tFunc = BuildProxy.GenerateCallSiteFuncType(new Type[] {}, type);
+                var tFunc = typeof(Func<,,>).MakeGenericType(typeof(CallSite), typeof(object), type);
 
 
                 callSite = CreateCallSite(tFunc, tBinderType,Unknown, tBinder,

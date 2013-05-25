@@ -30,7 +30,7 @@ namespace Dynamitey.DynamicObjects
     /// </summary>
       
     
-     public class Dictionary:DictionaryBase,IDictionary<string,object>
+     public class Dictionary:BaseDictionary,IDictionary<string,object>
     {
 
         /// <summary>

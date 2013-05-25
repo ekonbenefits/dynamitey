@@ -27,15 +27,15 @@ namespace Dynamitey.DynamicObjects
     /// Dynamic Proxy that exposes any properties of objects, and can massage results based on interface
     /// </summary>
 
-    public class BaseGet:BaseForwarder
+    public class Get:BaseForwarder
     {
      
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseGet"/> class.
+        /// Initializes a new instance of the <see cref="Get"/> class.
         /// </summary>
         /// <param name="target">The target.</param>
-        public BaseGet(object target):base(target)
+        public Get(object target):base(target)
         {
             
         }
@@ -64,7 +64,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns></returns>
         public static dynamic Create(object target)
         {
-            return new BaseGet(target);
+            return new Get(target);
         }
         /// <summary>
         /// Provides the implementation for operations that get member values. Classes derived from the <see cref="T:System.Dynamic.DynamicObject"/> class can override this method to specify dynamic behavior for operations such as getting a value for a property.

@@ -26,6 +26,16 @@ using Microsoft.CSharp.RuntimeBinder;
 
 namespace Dynamitey.DynamicObjects
 {
+
+    public interface IForwarder
+    {
+        /// <summary>
+        /// Gets the target.
+        /// </summary>
+        /// <value>The target.</value>
+        object Target { get; }
+    }
+
     /// <summary>
     /// Proxies Calls allows subclasser to override do extra actions before or after base invocation
     /// </summary>
@@ -33,9 +43,51 @@ namespace Dynamitey.DynamicObjects
     /// This may not be as efficient as other proxies that can work on just static objects or just dynamic objects...
     /// Consider this when using.
     /// </remarks>
- 
     public abstract class BaseForwarder : BaseObject, IForwarder
     {
+        public class AddRemoveMarker
+        {
+            /// <summary>
+            /// Implements the operator +.
+            /// </summary>
+            /// <param name="left">The left.</param>
+            /// <param name="right">The right.</param>
+            /// <returns>The result of the operator.</returns>
+            public static AddRemoveMarker operator +(AddRemoveMarker left, object right)
+            {
+                left.Delegate = right;
+                left.IsAdding = true;
+
+                return left;
+            }
+
+            /// <summary>
+            /// Implements the operator -.
+            /// </summary>
+            /// <param name="left">The left.</param>
+            /// <param name="right">The right.</param>
+            /// <returns>The result of the operator.</returns>
+            public static AddRemoveMarker operator -(AddRemoveMarker left, object right)
+            {
+                left.Delegate = right;
+                left.IsAdding = false;
+
+                return left;
+            }
+
+            /// <summary>
+            /// Gets or sets the delegate.
+            /// </summary>
+            /// <value>The delegate.</value>
+            public object Delegate { get; protected set; }
+
+            /// <summary>
+            /// Gets or sets a value indicating whether this instance is adding.
+            /// </summary>
+            /// <value><c>true</c> if this instance is adding; otherwise, <c>false</c>.</value>
+            public bool IsAdding { get; protected set; }
+
+        }
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseForwarder"/> class.
         /// </summary>

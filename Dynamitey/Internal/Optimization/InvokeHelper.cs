@@ -30,9 +30,11 @@ namespace Dynamitey.Internal.Optimization
 
         internal static readonly Type[] FuncKinds;
         internal static readonly Type[] ActionKinds;
+		internal static readonly Type[] TupleKinds;
+
 		internal static readonly IDictionary<Type,int> FuncArgs;
 		internal static readonly IDictionary<Type,int> ActionArgs;
-		internal static readonly dynamic BuildProxy;
+		internal static readonly IDictionary<Type,int> TupleArgs;
 
         static InvokeHelper()
         {
@@ -78,20 +80,24 @@ namespace Dynamitey.Internal.Optimization
 								typeof(Action<,,,,,,,,,,,,,,,>), //16
                             };
 
+			TupleKinds = new []
+                            {
+								typeof(Tuple<>), //1
+								typeof(Tuple<,>), //2
+								typeof(Tuple<,,>), //3
+								typeof(Tuple<,,,>), //4
+								typeof(Tuple<,,,,>), //5
+								typeof(Tuple<,,,,,>), //6
+								typeof(Tuple<,,,,,,>), //7
+								typeof(Tuple<,,,,,,,>), //8
+                            };
+
 
 			FuncArgs = FuncKinds.Zip(Enumerable.Range(0, FuncKinds.Length), (key, value) => new { key, value }).ToDictionary(k => k.key, v => v.value);
             ActionArgs = ActionKinds.Zip(Enumerable.Range(0, ActionKinds.Length), (key, value) => new { key, value }).ToDictionary(k => k.key, v => v.value);
+			TupleArgs = TupleKinds.Zip(Enumerable.Range(1, ActionKinds.Length), (key, value) => new { key, value }).ToDictionary(k => k.key, v => v.value);
 
-			try
-            {
-
-                BuildProxy = new DynamicObjects.LateType(
-                "ImpromptuInterface, ImpromptuInterface.Build.BuildProxy, PublicKeyToken=0b1781c923b2975b");
-            }
-            catch
-            {
-                
-            }
+		
         }
 
 

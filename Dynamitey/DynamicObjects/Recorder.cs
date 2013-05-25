@@ -28,13 +28,13 @@ namespace Dynamitey.DynamicObjects
     /// <summary>
     /// Proxy that Records Dynamic Invocations on an object
     /// </summary>
-    public class BaseRecorder:BaseForwarder
+    public class Recorder:BaseForwarder
     {
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseRecorder"/> class.
+        /// Initializes a new instance of the <see cref="Recorder"/> class.
         /// </summary>
-        public BaseRecorder():base(new Dummy())
+        public Recorder():base(new Dummy())
         {
             Recording = new List<Invocation>();
         }
@@ -46,10 +46,10 @@ namespace Dynamitey.DynamicObjects
         public IList<Invocation> Recording { get; protected set; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BaseRecorder"/> class.
+        /// Initializes a new instance of the <see cref="Recorder"/> class.
         /// </summary>
         /// <param name="target">The target.</param>
-        public BaseRecorder(object target) : base(target)
+        public Recorder(object target) : base(target)
         {
             Recording = new List<Invocation>();
         }

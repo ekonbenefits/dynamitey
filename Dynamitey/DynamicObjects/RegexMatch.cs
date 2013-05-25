@@ -33,7 +33,7 @@ namespace Dynamitey.DynamicObjects
             return _regex.GetGroupNames();
         }
 
-      /*  public override bool TryGetMember(GetMemberBinder binder, out object result)
+       public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
             var tGroup = _match.Groups[binder.Name];
             Type outType;
@@ -44,13 +44,13 @@ namespace Dynamitey.DynamicObjects
             {
                 result = null;
                 if (outType.IsValueType)
-                    result = Impromptu.InvokeConstructor(outType);
+                    result = Dynamic.InvokeConstructor(outType);
                 return true;
             }
 
-            result = Impromptu.CoerceConvert(tGroup.Value, outType);
+            result = Dynamic.CoerceConvert(tGroup.Value, outType);
             return true;
-        }*/
+        }
 
         public string this[int value]
         {

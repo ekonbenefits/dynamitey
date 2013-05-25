@@ -56,7 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dynamic.cs" />
-    <Compile Include="IForwarder.cs" />
+    <Compile Include="DynamicObjects\FauxType.cs" />
     <Compile Include="InlineLambdas1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -72,13 +72,12 @@
     <Compile Include="DynamicObjects\ExtensionToInstanceProxy.cs" />
     <Compile Include="FluentRegex.cs" />
     <Compile Include="DynamicObjects\FluentStringLookup.cs" />
-    <Compile Include="DynamicObjects\BaseBuilder.cs" />
+    <Compile Include="DynamicObjects\Builder.cs" />
     <Compile Include="DynamicObjects\Dictionary.cs" />
-    <Compile Include="DynamicObjects\DictionaryBase.cs" />
+    <Compile Include="DynamicObjects\BaseDictionary.cs" />
     <Compile Include="DynamicObjects\Dummy.cs" />
     <Compile Include="DynamicObjects\Factory.cs" />
     <Compile Include="DynamicObjects\BaseForwarder.cs" />
-    <Compile Include="DynamicObjects\AddRemoveMarker.cs" />
     <Compile Include="DynamicObjects\Get.cs" />
     <Compile Include="DynamicObjects\LateType.cs" />
     <Compile Include="DynamicObjects\Lazy.cs" />
@@ -89,8 +88,7 @@
     <Compile Include="Invocation.cs" />
     <Compile Include="DynamicObjects\LinqInstanceProxy.cs" />
     <Compile Include="DynamicObjects\Mimic.cs" />
-    <Compile Include="IPartialApplication.cs" />
-    <Compile Include="PartialApplyInvocation.cs" />
+    <Compile Include="PartialApply.cs" />
     <Compile Include="Internal\Optimization\BareBonesList.cs" />
     <Compile Include="Internal\Optimization\BinderHash.cs" />
     <Compile Include="Internal\Optimization\InvokeHelper-Regular.cs" />
@@ -106,6 +104,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ThisFunctions.tt</DependentUpon>
     </Compile>
+    <Compile Include="Tupler.cs" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

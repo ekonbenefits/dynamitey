@@ -31,6 +31,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns></returns>
         public override bool TryConvert(ConvertBinder binder, out object result)
         {
+
             result = Dynamic.InvokeConstructor(binder.ReturnType);
             return true;
         }
@@ -155,17 +156,5 @@ namespace Dynamitey.DynamicObjects
             return true;
         }
 
-
-#if SILVERLIGHT5
-
-        /// <summary>
-        /// Gets the custom Type.
-        /// </summary>
-        /// <returns></returns>
-        public Type GetCustomType()
-        {
-            return this.GetDynamicCustomType();
-        }
-#endif
     }
 }

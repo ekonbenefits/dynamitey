@@ -25,10 +25,16 @@ using System.Reflection;
 namespace Dynamitey.Internal
 {
     /// <summary>
-    /// Internal Implementation of <see cref="Impromptu.Curry(object,System.Nullable{int})"/>
+    /// Internal Implementation of <see cref="Dynamic.Curry(object,System.Nullable{int})"/>
     /// </summary>
-    public class Curry:DynamicObject,IPartialApplication
+    public class Curry : DynamicObject, IPartialApply
         {
+
+            public static dynamic operator |(dynamic argument, Curry function)
+            {
+                return ((dynamic)function)(argument);
+            }
+
             private readonly object _target;
             private readonly int? _totalArgCount;
            
@@ -38,6 +44,28 @@ namespace Dynamitey.Internal
                  _target = target;
                 _totalArgCount = totalArgCount;
              }
+
+
+
+            /// <summary>
+            /// Provides implementation for binary operations. Classes derived from the <see cref="T:System.Dynamic.DynamicObject" /> class can override this method to specify dynamic behavior for operations such as addition and multiplication.
+            /// </summary>
+            /// <param name="binder">Provides information about the binary operation. The binder.Operation property returns an <see cref="T:System.Linq.Expressions.ExpressionType" /> object. For example, for the sum = first + second statement, where first and second are derived from the DynamicObject class, binder.Operation returns ExpressionType.Add.</param>
+            /// <param name="arg">The right operand for the binary operation. For example, for the sum = first + second statement, where first and second are derived from the DynamicObject class, <paramref name="arg" /> is equal to second.</param>
+            /// <param name="result">The result of the binary operation.</param>
+            /// <returns>
+            /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)
+            /// </returns>
+            public override bool TryBinaryOperation(BinaryOperationBinder binder, object arg, out object result)
+            {
+                result = null;
+                if (binder.Operation == ExpressionType.LeftShift)
+                {
+                    result =((dynamic)(this))(arg);
+                    return true;
+                }
+                return false;
+            }
 
             /// <summary>
             /// Provides implementation for type conversion operations. Classes derived from the <see cref="T:System.Dynamic.DynamicObject"/> class can override this method to specify dynamic behavior for operations that convert an object from one type to another.
@@ -78,7 +106,7 @@ namespace Dynamitey.Internal
             /// </returns>
            public override bool  TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
            {
-               result = new PartialApplyInvocation(_target, Util.NameArgsIfNecessary(binder.CallInfo, args), binder.Name, _totalArgCount);
+               result = new PartialApply(_target, Util.NameArgsIfNecessary(binder.CallInfo, args), binder.Name, _totalArgCount);
                return true;
            }
            /// <summary>
@@ -92,15 +120,15 @@ namespace Dynamitey.Internal
            /// </returns>
             public override bool  TryInvoke(InvokeBinder binder, object[] args, out object result)
             {
-                var tCurrying = _target as PartialApplyInvocation;
+                var tCurrying = _target as PartialApply;
 
                 
                var  curryResult = tCurrying != null
                              //If already currying append
-                             ? new PartialApplyInvocation(tCurrying.Target,
+                             ? new PartialApply(tCurrying.Target,
                                             tCurrying.Args.Concat(Util.NameArgsIfNecessary(binder.CallInfo, args)).
                                                 ToArray(), tCurrying.MemberName, tCurrying.TotalArgCount, tCurrying.InvocationKind)
-                             : new PartialApplyInvocation(_target, Util.NameArgsIfNecessary(binder.CallInfo, args), String.Empty, _totalArgCount);
+                             : new PartialApply(_target, Util.NameArgsIfNecessary(binder.CallInfo, args), String.Empty, _totalArgCount);
 
 
                result = curryResult;

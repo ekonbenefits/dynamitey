@@ -1,19 +1,54 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Reflection;
 using Dynamitey.Internal.Optimization;
 
 namespace Dynamitey
 {
+
+
+
     /// <summary>
-    /// Internal method for subsequent invocations of <see cref="Impromptu.Curry(object,System.Nullable{int})"/>
+    /// Internal method for subsequent invocations of <see cref="Dynamic.Curry(object,System.Nullable{int})"/>
     /// </summary>
-    public class PartialApplyInvocation : DynamicObject
+    public class PartialApply : DynamicObject, IPartialApply
     {
 
+        /// <summary>
+        /// Pipes the argument into the function
+        /// </summary>
+        /// <param name="argument">The argument.</param>
+        /// <param name="function">The function.</param>
+        /// <returns></returns>
+        public static dynamic operator |(dynamic argument, PartialApply function)
+        {
+           return ((dynamic)function)(argument);
+        }
+
+        /// <summary>
+        /// Provides implementation for binary operations. Classes derived from the <see cref="T:System.Dynamic.DynamicObject" /> class can override this method to specify dynamic behavior for operations such as addition and multiplication.
+        /// </summary>
+        /// <param name="binder">Provides information about the binary operation. The binder.Operation property returns an <see cref="T:System.Linq.Expressions.ExpressionType" /> object. For example, for the sum = first + second statement, where first and second are derived from the DynamicObject class, binder.Operation returns ExpressionType.Add.</param>
+        /// <param name="arg">The right operand for the binary operation. For example, for the sum = first + second statement, where first and second are derived from the DynamicObject class, <paramref name="arg" /> is equal to second.</param>
+        /// <param name="result">The result of the binary operation.</param>
+        /// <returns>
+        /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)
+        /// </returns>
+        public override bool TryBinaryOperation(BinaryOperationBinder binder, object arg, out object result)
+        {
+            result = null;
+            if (binder.Operation == ExpressionType.LeftShift)
+            {
+                result = ((dynamic)(this))(arg);
+                return true;
+            }
+            return false;
+        }
 
         /// <summary>
         /// Provides implementation for type conversion operations. Classes derived from the <see cref="T:System.Dynamic.DynamicObject"/> class can override this method to specify dynamic behavior for operations that convert an object from one type to another.
@@ -31,19 +66,7 @@ namespace Dynamitey
         }
 
 
-#if SILVERLIGHT5
-
-            /// <summary>
-            /// Gets the custom Type.
-            /// </summary>
-            /// <returns></returns>
-            public Type GetCustomType()
-            {
-                return this.GetDynamicCustomType();
-            }
-#endif
-
-        public PartialApplyInvocation(object target, object[] args, string memberName = null, int? totalCount = null, InvocationKind? invocationKind = null)
+        public PartialApply(object target, object[] args, string memberName = null, int? totalCount = null, InvocationKind? invocationKind = null)
         {
             _target = target;
             _memberName = memberName;
@@ -124,7 +147,7 @@ namespace Dynamitey
             if (_totalArgCount.HasValue && (_totalArgCount - Args.Length - args.Length > 0))
             //Not Done currying
             {
-                result = new PartialApplyInvocation(Target, tNewArgs, MemberName,
+                result = new PartialApply(Target, tNewArgs, MemberName,
                                    TotalArgCount, InvocationKind);
 
                 return true;
@@ -163,5 +186,9 @@ namespace Dynamitey
 
             return true;
         }
+    }
+
+    public interface IPartialApply
+    {
     }
 }

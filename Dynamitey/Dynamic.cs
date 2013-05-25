@@ -14,12 +14,12 @@
 //    limitations under the License.
 
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using System.Threading;
+
 using Dynamitey.Internal;
 using Dynamitey.Internal.Optimization;
 using Microsoft.CSharp.RuntimeBinder;
@@ -123,7 +123,7 @@ namespace Dynamitey
         }
 
 
-        public static dynamic DynamicLinq(object enumerable)
+        public static dynamic Linq(object enumerable)
         {
             if(enumerable.GetType().GetInterfaces().Where(it=>it.IsGenericType)
                 .All(it => it.GetGenericTypeDefinition() != typeof(IEnumerable<>)))
@@ -274,8 +274,6 @@ namespace Dynamitey
                 default:
                     throw new ArgumentException("Unsupported Operator", "op");
             }
-
-            return null;
         }
 
         /// <summary>
@@ -559,14 +557,11 @@ namespace Dynamitey
             CallSite tSite = null;
             return InvokeHelper.InvokeGetCallSite(target, name, tContext, tStaticContext, ref tSite);
         }
-//#if SILVERLIGHT
-//  private static readonly Regex _chainRegex
-//           = new Regex(@"((\.?(?<Getter>\w+))|(\[(?<IntIndexer>\d+)\])|(\['(?<StringIndexer>\w+)'\]))");
-//#else
+
+
   private static readonly Regex _chainRegex
            = new Regex(@"((\.?(?<Getter>\w+))|(\[(?<IntIndexer>\d+)\])|(\['(?<StringIndexer>\w+)'\]))");
-//#endif
-      
+
         /// <summary>
         /// Invokes the getter property chain.
         /// </summary>
@@ -616,19 +611,8 @@ namespace Dynamitey
             CallSite tCallSite = null;
             return InvokeHelper.InvokeIsEventCallSite(target, name, tContext, ref tCallSite);
         }
-        /// <summary>
-        /// Invokes add assign with correct behavior for events.
-        /// </summary>
-        /// <param name="target">The target.</param>
-        /// <param name="name">The name.</param>
-        /// <param name="value">The value.</param>
-        [Obsolete("Use InvokeAddAssignMember")]
-        public static void InvokeAddAssign(object target, string name, object value)
-        {
-            InvokeAddAssignMember(target, name, value);
-        }
 
-    /// <summary>
+        /// <summary>
         /// Invokes add assign with correct behavior for events.
         /// </summary>
         /// <param name="target">The target.</param>
@@ -651,17 +635,6 @@ namespace Dynamitey
             InvokeHelper.InvokeAddAssignCallSite(target, name, args, argNames, context, staticContext, ref callSiteIsEvent, ref callSiteAdd, ref callSiteGet, ref callSiteSet);
         }
 
-        /// <summary>
-        /// Invokes subtract assign with correct behavior for events.
-        /// </summary>
-        /// <param name="target">The target.</param>
-        /// <param name="name">The name.</param>
-        /// <param name="value">The value.</param>
-               [Obsolete("use InvokeSubtractAssignMember instead")]
-                public static void InvokeSubtractAssign(object target, string name, object value)
-                {
-                    InvokeSubtractAssignMember(target,name,value);
-                }
         /// <summary>
         /// Invokes subtract assign with correct behavior for events.
         /// </summary>
@@ -709,6 +682,12 @@ namespace Dynamitey
 
         internal static readonly IDictionary<Type, Delegate> CompiledExpressions = new Dictionary<Type, Delegate>();
 
+        /// <summary>
+        /// Coerces any invokable to specificied delegate type.
+        /// </summary>
+        /// <param name="invokeableObject">The invokeable object.</param>
+        /// <param name="delegateType">Type of the delegate.</param>
+        /// <returns></returns>
         public static dynamic CoerceToDelegate(object invokeableObject, Type delegateType)
             {
                 if (!typeof(Delegate).IsAssignableFrom(delegateType.BaseType))
@@ -752,9 +731,68 @@ namespace Dynamitey
 
             }
 
+        private static readonly dynamic LateConvert = new DynamicObjects.LateType(typeof(Convert));
+
+
+        /// <summary>
+        /// Determines whether value is DBNull dynamically (Useful for PCL)
+        /// </summary>
+        /// <param name="value">The value.</param>
+        /// <returns>
+        ///   <c>true</c> if [is DBNull]; otherwise, <c>false</c>.
+        /// </returns>
+        public static bool IsDBNull(object value)
+        {
+
+            try
+            {
+                return LateConvert.IsDBNull(value);
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Applies the equivalent type hint to dynamic object
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <param name="types">The types.</param>
+        public static void ApplyEquivalentType(DynamicObjects.IEquivalentType target, params Type[] types)
+        {
+            if(types.Length == 1)
+                target.EquivalentType = types.First();
+            else
+                target.EquivalentType = new DynamicObjects.AggreType(types.ConvertAll<DynamicObjects.FauxType>().ToArray());
+          
+        }
+
+        /// <summary>
+        /// Implicit or Explicit Converts the items of the specified enumerable.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="enumerable">The enumerable.</param>
+        /// <param name="explict">if set to <c>true</c> [explict].</param>
+        /// <returns></returns>
+        public static IEnumerable<T> ConvertAll<T>(this System.Collections.IEnumerable enumerable, bool explict =false)
+        {
+            return enumerable.Cast<Object>().Select(it => InvokeConvert(it, typeof (T), explict)).Cast<T>();
+        } 
+
+        internal static readonly dynamic Impromptu
+            = new DynamicObjects.LateType("ImpromptuInterface.Impromptu, ImpromptuInterface, PublicKeyToken=0b1781c923b2975b");
+
+
+        /// <summary>
+        /// Goes the extra mile to convert target to type.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
         public static dynamic CoerceConvert(object target, Type type)
         {
-            if (target != null && !type.IsInstanceOfType(target)/* && DBNull.Value != target*/)
+            if (target != null && !type.IsInstanceOfType(target) && !IsDBNull(target))
             {
 
                 var delegateConversion = CoerceToDelegate(target, type);
@@ -763,22 +801,26 @@ namespace Dynamitey
                     return delegateConversion;
 
 
-                //if (type.IsInterface)
-                //{
-                //    if (target is IDictionary<string, object> && !(target is DynamicObjects.DictionaryBase))
-                //    {
-                //        target = new DynamicObjects.Dictionary((IDictionary<string, object>)target);
-                //    }
-                //    else
-                //    {
-                //        target = new ImpromptuGet(target);
-                //    }
-
-
-                //    target = Dynamic.DynamicActLike(target, type);
-                //}
-                //else
+                if (type.IsInterface && Impromptu.IsAvailable)
                 {
+
+
+                
+                    if (target is IDictionary<string, object> && !(target is DynamicObjects.BaseObject))
+                    {
+                        target = new DynamicObjects.Dictionary((IDictionary<string, object>)target);
+                    }
+                    else if(!(target is DynamicObjects.BaseObject))
+                    {
+                        target = new DynamicObjects.Get(target);
+                    }
+
+
+                    target = Impromptu.DynamicActLike(target, type);
+                }
+                else
+                {
+                
 
                     try
                     {
@@ -791,76 +833,33 @@ namespace Dynamitey
                     catch (RuntimeBinderException)
                     {
                         Type tReducedType = type;
-                        if (type.IsGenericType && type.GetGenericTypeDefinition().Equals(typeof(Nullable<>)))
+                        if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
                         {
                             tReducedType = type.GetGenericArguments().First();
                         }
 
+                        if (typeof (Enum).IsAssignableFrom(tReducedType) && target is string)
+                        {
+                            target = Enum.Parse(tReducedType, target as String, true);
 
-                        if (target is IConvertible && typeof(IConvertible).IsAssignableFrom(tReducedType) && !typeof(Enum).IsAssignableFrom(tReducedType))
+                        }else if (target is IConvertible && typeof(IConvertible).IsAssignableFrom(tReducedType))
                         {
 
                             target = Convert.ChangeType(target, tReducedType, Thread.CurrentThread.CurrentCulture);
 
                         }
-//                        else
-//                        {  //finally check type converter since it's the slowest.
 
-//#if !SILVERLIGHT
-//                            var tConverter = TypeDescriptor.GetConverter(tReducedType);
-//#else
-                                    
-//                                    TypeConverter tConverter = null;
-//                                    var tAttributes = tReducedType.GetCustomAttributes(typeof(TypeConverterAttribute), false);
-//                                    var tAttribute  =tAttributes.OfType<TypeConverterAttribute>().FirstOrDefault();
-//                                    if(tAttribute !=null)
-//                                    {
-//                                        tConverter =
-//                                            Impromptu.InvokeConstructor(Type.GetType(tAttribute.ConverterTypeName));
-//                                    }
-
-                                  
-//#endif
-//                            if (tConverter != null && tConverter.CanConvertFrom(target.GetType()))
-//                            {
-//                                target = tConverter.ConvertFrom(target);
-//                            }
-
-//#if SILVERLIGHT                                   
-//                                    else if (target is string)
-//                                    {
-
-//                                        var tDC = new SilverConvertertDC(target as String);
-//                                        var tFE = new SilverConverterFE
-//                                        {
-//                                            DataContext = tDC
-//                                        };
-
-
-//                                        var tProp = SilverConverterFE.GetProperty(tReducedType);
-
-//                                        tFE.SetBinding(tProp, new System.Windows.Data.Binding("StringValue"));
-
-//                                        var tResult = tFE.GetValue(tProp);
-
-//                                        if(tResult != null)
-//                                        {
-//                                            target = tResult;
-//                                        }
-//                                    }
-
-//#endif
-//                        }
                     }
                 }
             }
-            //else if (((target == null)|| target == DBNull.Value)&& type.IsValueType)
-            //{
-            //    target = Dynamic.InvokeConstructor(type);
-            //}else if(!type.IsInstanceOfType(target) && DBNull.Value == target)
-            //{
-            //    return null;
-            //}
+            else if (((target == null) || IsDBNull(target )) && type.IsValueType)
+            {
+                target = Dynamic.InvokeConstructor(type);
+            }
+            else if (!type.IsInstanceOfType(target) && IsDBNull(target))
+            {
+                return null;
+            }
             return target;
         }
 
@@ -943,8 +942,8 @@ namespace Dynamitey
                 tList.AddRange(tTarget.GetMetaObject(Expression.Constant(tTarget)).GetDynamicMemberNames());
             }else
             {
-               
-                if(ComObjectType !=null && ComObjectType.IsInstanceOfType(target))
+
+                if (ComObjectType != null && ComObjectType.IsInstanceOfType(target) && ComBinder.IsAvailable)
                 {
                     tList.AddRange(ComBinder.GetDynamicDataMemberNames(target));
                 }
