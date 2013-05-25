@@ -1,0 +1,17 @@
+# Travis-CI Build for keyczar-dotnet 
+# see travis-ci.org for details
+
+language: c
+
+before_install:
+ # Make sure mono is installed,
+ # pipe stdout to dev/null because qq is still too chatty
+ - sudo apt-get update -qq > /dev/null
+ - sudo apt-get install -qq mono-devel > /dev/null
+env:
+  - EnableNuGetPackageRestore=true
+before_script:
+  - mozroots --import --sync #for nuget SSL to work
+script:
+ - xbuild 
+ - .ci/nunit.sh Dynamitey/bin/Debug/Dynamitey.dll
