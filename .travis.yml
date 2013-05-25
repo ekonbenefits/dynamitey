@@ -6,6 +6,7 @@ language: c
 before_install:
  # Make sure mono is installed,
  # pipe stdout to dev/null because qq is still too chatty
+ - sudo echo "deb http://debian.meebey.net/experimental/mono /" >> /etc/apt/sources.list
  - sudo apt-get update -qq > /dev/null
  - sudo apt-get install -qq mono-devel > /dev/null
 env:
