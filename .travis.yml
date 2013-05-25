@@ -8,7 +8,7 @@ before_install:
  # pipe stdout to dev/null because qq is still too chatty
  - echo "deb http://debian.meebey.net/experimental/mono /" | sudo tee -a /etc/apt/sources.list
  - sudo apt-get update -qq > /dev/null
- - sudo apt-get install -qq mono-devel
+ - sudo apt-get install -qq --force-yes mono-devel
 env:
   - EnableNuGetPackageRestore=true
 before_script:
