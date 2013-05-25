@@ -1,4 +1,4 @@
-# Dynamitey
+# Dynamitey [![Build Status](https://travis-ci.org/ekonbenefits/dynamitey.png?branch=master)](https://travis-ci.org/ekonbenefits/dynamitey)
 
 (pronounced dyna-mighty) flexes DLR muscle to do meta-mazing things in .net
 
