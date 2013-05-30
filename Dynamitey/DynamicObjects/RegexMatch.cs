@@ -13,10 +13,13 @@ namespace Dynamitey.DynamicObjects
         string Value { get;}
     }
 
-  
+   
+   
     public class RegexMatch : BaseObject, IRegexMatch
     {
+       
         private readonly Match _match;
+       
         private readonly Regex _regex;
 
         public RegexMatch(Match match, Regex regex = null)

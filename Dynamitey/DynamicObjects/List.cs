@@ -28,6 +28,7 @@ namespace Dynamitey.DynamicObjects
     /// <summary>
     /// Expando-Type List for dynamic objects
     /// </summary>
+   
     public class List : BaseDictionary, IList<object>, IDictionary<string, object>, INotifyCollectionChanged, IList
 
     {
@@ -35,6 +36,7 @@ namespace Dynamitey.DynamicObjects
         /// <summary>
         /// Wrapped list
         /// </summary>
+       
         protected IList<object> _list;
 
 
@@ -63,29 +65,6 @@ namespace Dynamitey.DynamicObjects
                 _list = contents.ToList();
             }
         }
-
-        //#if !SILVERLIGHT
-        //        /// <summary>
-        //        /// Initializes a new instance of the <see cref="List"/> class.
-        //        /// </summary>
-        //        /// <param name="info">The info.</param>
-        //        /// <param name="context">The context.</param>
-        //        protected List(SerializationInfo info, 
-        //           StreamingContext context):base(info,context)
-        //        {
-        //            _list = info.GetValue<IList<object>>("_list");
-        //        }
-
-        //        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-        //        {
-        //            if (_list.OfType<Delegate>().Any())
-        //            {
-        //                throw new SerializationException("Won't serialize protoType objects containing delegates");
-        //            }
-        //            base.GetObjectData(info,context);
-        //            info.AddValue("_list", _list);
-        //        }
-        //#endif
 
         IEnumerator<KeyValuePair<string, object>> IEnumerable<KeyValuePair<string, object>>.GetEnumerator()
         {

@@ -783,6 +783,11 @@ namespace Dynamitey
         internal static readonly dynamic Impromptu
             = new DynamicObjects.LateType("ImpromptuInterface.Impromptu, ImpromptuInterface, PublicKeyToken=0b1781c923b2975b");
 
+        internal static readonly dynamic TypeDescriptor
+             = new DynamicObjects.LateType("System.ComponentModel.TypeDescriptor, System, PublicKeyToken=b77a5c561934e089");
+
+        internal static readonly Type TypeConverterAttributeSL
+            = Type.GetType("System.ComponentModel.TypeConverter, System, PublicKeyToken=7cec85d7bea7798e", false);
 
         /// <summary>
         /// Goes the extra mile to convert target to type.
@@ -842,11 +847,44 @@ namespace Dynamitey
                         {
                             target = Enum.Parse(tReducedType, target as String, true);
 
-                        }else if (target is IConvertible && typeof(IConvertible).IsAssignableFrom(tReducedType))
+                        }
+                        else if (target is IConvertible && typeof (IConvertible).IsAssignableFrom(tReducedType))
                         {
 
                             target = Convert.ChangeType(target, tReducedType, Thread.CurrentThread.CurrentCulture);
 
+                        }
+                        else
+                        {
+                            try
+                            {
+                                dynamic converter = null;
+                                if (TypeDescriptor.IsAvailable)
+                                {
+                                    converter = TypeDescriptor.GetConverter(tReducedType);
+                                }
+                                else if (TypeConverterAttributeSL != null) 
+                                {
+                                        var tAttributes =
+                                            tReducedType.GetCustomAttributes(TypeConverterAttributeSL, false);
+                                        dynamic attribute = tAttributes.FirstOrDefault();
+                                        if (attribute != null)
+                                        {
+                                            converter =
+                                                Impromptu.InvokeConstructor(Type.GetType(attribute.ConverterTypeName));
+                                        }
+                                }
+                                
+
+                                if (converter != null && converter.CanConvertFrom(target.GetType()))
+                                {
+                                    target = converter.ConvertFrom(target);
+                                }
+                            }
+                            catch (RuntimeBinderException)
+                            {
+                                
+                            }
                         }
 
                     }

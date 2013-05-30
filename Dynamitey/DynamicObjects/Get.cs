@@ -27,6 +27,7 @@ namespace Dynamitey.DynamicObjects
     /// Dynamic Proxy that exposes any properties of objects, and can massage results based on interface
     /// </summary>
 
+   
     public class Get:BaseForwarder
     {
      
@@ -40,21 +41,6 @@ namespace Dynamitey.DynamicObjects
             
         }
 
-//#if !SILVERLIGHT
-//        /// <summary>
-//        /// Initializes a new instance of the <see cref="BaseGet"/> class.
-//        /// </summary>
-//        /// <param name="info">The info.</param>
-//        /// <param name="context">The context.</param>
-//        protected BaseGet(SerializationInfo info, 
-//           StreamingContext context):base(info,context)
-//        {
-
-
-//        }
-
-       
-//#endif
 
 
         /// <summary>

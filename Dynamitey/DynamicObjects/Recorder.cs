@@ -28,6 +28,7 @@ namespace Dynamitey.DynamicObjects
     /// <summary>
     /// Proxy that Records Dynamic Invocations on an object
     /// </summary>
+   
     public class Recorder:BaseForwarder
     {
 
@@ -43,6 +44,7 @@ namespace Dynamitey.DynamicObjects
         /// Gets or sets the recording.
         /// </summary>
         /// <value>The recording.</value>
+       
         public IList<Invocation> Recording { get; protected set; }
 
         /// <summary>
@@ -53,32 +55,6 @@ namespace Dynamitey.DynamicObjects
         {
             Recording = new List<Invocation>();
         }
-
-//#if !SILVERLIGHT
-//        /// <summary>
-//        /// Initializes a new instance of the <see cref="BaseRecorder"/> class.
-//        /// </summary>
-//        /// <param name="info">The info.</param>
-//        /// <param name="context">The context.</param>
-//        protected BaseRecorder(SerializationInfo info, 
-//           StreamingContext context):base(info,context)
-//        {
-
-
-//            Recording = info.GetValue<IList<Invocation>>("Recording");
-//        }
-
-//        /// <summary>
-//        /// Gets the object data.
-//        /// </summary>
-//        /// <param name="info">The info.</param>
-//        /// <param name="context">The context.</param>
-//        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-//        {
-//            base.GetObjectData(info,context);
-//            info.AddValue("Recording", Recording);
-//        }
-//#endif
 
         /// <summary>
         /// Replays the recording on target.

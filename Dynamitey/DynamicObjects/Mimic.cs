@@ -1,6 +1,7 @@
 ﻿using System.Dynamic;
 using System;
 using System.Reflection;
+using System.Runtime.Serialization;
 
 
 namespace Dynamitey.DynamicObjects
@@ -8,6 +9,7 @@ namespace Dynamitey.DynamicObjects
     /// <summary>
     /// Class for TDD, used for mocking any dynamic object
     /// </summary>
+   
     public class Mimic : DynamicObject
     {
         /// <summary>

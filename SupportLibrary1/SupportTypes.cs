@@ -52,13 +52,7 @@ namespace Dynamitey.SupportLibrary1
         }
     }
 
-    public class TestForwarder : Dynamitey.DynamicObjects.BaseForwarder
-    {
-        public TestForwarder(object target)
-            : base(target)
-        {
-        }
-    }
+
 
     public interface IDynamicArg
     {

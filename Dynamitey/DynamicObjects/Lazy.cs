@@ -10,7 +10,7 @@ namespace Dynamitey.DynamicObjects
     /// <summary>
     /// Abstract base for the Generic class <see cref="Lazy{T}"/> with <see cref="Create{T}(System.Func{T})"/> fatory methods
     /// </summary>
-  
+   
     public abstract class Lazy:BaseForwarder
     {
         /// <summary>
@@ -42,24 +42,13 @@ namespace Dynamitey.DynamicObjects
         {
         }
 
-//#if !SILVERLIGHT
-//        /// <summary>
-//        /// Initializes a new instance of the <see cref="Lazy"/> class.
-//        /// </summary>
-//        /// <param name="info">The info.</param>
-//        /// <param name="context">The context.</param>
-//        protected Lazy(SerializationInfo info, StreamingContext context) : base(info, context)
-//        {
-//        }
-//#endif
-
     }
 
     /// <summary>
     /// Wraps a Lazy Type evalutaes on first method call
     /// </summary>
     /// <typeparam name="T"></typeparam>
-
+   
     public class Lazy<T> : Lazy
     {
         /// <summary>
@@ -69,19 +58,6 @@ namespace Dynamitey.DynamicObjects
         public Lazy(System.Lazy<T> target) : base(target)
         {
         }
-
-#if !SILVERLIGHT
-//        /// <summary>
-//        /// Initializes a new instance of the <see cref="BaseForwarder"/> class.
-//        /// </summary>
-//        /// <param name="info">The info.</param>
-//        /// <param name="context">The context.</param>
-//        protected Lazy(SerializationInfo info, StreamingContext context)
-//            : base(info, context)
-//        {
-//        }
-
-#endif
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Lazy{T}"/> class.

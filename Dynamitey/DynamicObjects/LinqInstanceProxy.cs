@@ -9,7 +9,7 @@ using System.Text;
 namespace Dynamitey.DynamicObjects
 {   
     
-    
+   
     public class LinqInstanceProxy : ExtensionToInstanceProxy, IEnumerable<object>
     {    
         

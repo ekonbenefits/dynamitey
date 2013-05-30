@@ -101,6 +101,14 @@ namespace Dynamitey.Tests
             Assert.AreEqual(tNew.Prop3, tTest.Prop3);
         }
 
+        public class TestForwarder : Dynamitey.DynamicObjects.BaseForwarder
+        {
+            public TestForwarder(object target)
+                : base(target)
+            {
+            }
+        }
+
         [Test]
         public void ForwardAnonTest()
         {

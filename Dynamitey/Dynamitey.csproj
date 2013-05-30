@@ -11,14 +11,12 @@
     <RootNamespace>Dynamitey</RootNamespace>
     <AssemblyName>Dynamitey</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseNet40 Condition=" '$(UseNet40)' == '' ">false</UseNet40>
+    <UseNet40 Condition=" $(OS) != 'Windows_NT' ">true</UseNet40>
+    <TargetFrameworkProfile Condition=" $(UseNet40) == false " >Profile154</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
-  <PropertyGroup Condition="$(OS) == 'Windows_NT'">
-  <TargetFrameworkProfile>Profile46</TargetFrameworkProfile>
-  </PropertyGroup>
-
-
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -114,9 +112,10 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup />
-  <Import Project="$(SolutionDir)\Dynamitey\net40.target" Condition="$(OS) != 'Windows_NT'" />
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition="$(OS) == 'Windows_NT'" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition="$(OS) != 'Windows_NT'" />
+  <Import Condition=" $(UseNet40) == true " Project="$(SolutionDir)\dist\net40.targets"  />  
+  <Import Condition=" $(UseNet40) == true " Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Condition=" $(UseNet40) == false " Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

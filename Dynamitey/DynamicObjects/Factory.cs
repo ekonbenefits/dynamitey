@@ -15,6 +15,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 namespace Dynamitey.DynamicObjects
 {
@@ -22,7 +23,7 @@ namespace Dynamitey.DynamicObjects
     /// Base Class for making a fluent factory using an Impromptu Interface return type.
     /// </summary>
    
-    
+   
     public class BaseFactory:BaseObject
     {
   
@@ -85,7 +86,8 @@ namespace Dynamitey.DynamicObjects
     /// <summary>
     /// Base Class for making a singleton fluent factory using an Impromptu Interface return type.
     /// </summary>
-    
+     
+   
     public class BaseSingleInstancesFactory : BaseFactory
     { 
         
@@ -93,6 +95,7 @@ namespace Dynamitey.DynamicObjects
         /// <summary>
         /// Store Singletons
         /// </summary>
+       
         protected readonly Dictionary<string, dynamic> _hashFactoryTypes= new Dictionary<string, dynamic>();
 
         /// <summary>

@@ -7,8 +7,9 @@ This is a Portable Class Library for  .NET 4.5, Silverlight 4 & 5, WinRT
 *If you need .NET 4.0 support, for right now, continue using [ImpromptuInterface](https://github.com/ekonbenefits/impromptu-interface)* from which this was ported from.
 
 # To Do
-  - Add DataContract attributes to all DynamicObjects
-  - Backport to .net 4.0
+  - Backport to .net 4.0 (completed in source)
+  - Add Win Phone 8 (completed in source)
+  - Add test for TypeConverters
   - Add benchmark test suite back
 
 [Change Log](https://github.com/ekonbenefits/dynamitey/wiki/ChangeLog)

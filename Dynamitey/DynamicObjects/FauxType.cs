@@ -7,6 +7,7 @@ using System.Reflection;
 namespace Dynamitey.DynamicObjects
 {
 
+   
     public abstract class FauxType
     {
         public static implicit operator FauxType(Type type)
@@ -26,7 +27,7 @@ namespace Dynamitey.DynamicObjects
 
     }
 
-    [DataContract]
+   
     public class RealType : FauxType
     {
          public static implicit operator Type(RealType type)
@@ -39,7 +40,7 @@ namespace Dynamitey.DynamicObjects
              return new RealType(type);
          }
 
-        [DataMember]
+       
         protected readonly Type TargetType;
 
         public RealType(Type type)
@@ -60,7 +61,7 @@ namespace Dynamitey.DynamicObjects
    
     }
        
-    [DataContract]
+   
     public class AggreType : FauxType
     {
 
@@ -78,7 +79,7 @@ namespace Dynamitey.DynamicObjects
         }
 
 
-        [DataMember]
+       
         protected readonly List<FauxType> Types = new List<FauxType>();
 
         public AggreType(params FauxType[] types)

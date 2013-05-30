@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Reflection;
 using Dynamitey.Internal.Optimization;
@@ -119,11 +120,13 @@ namespace Dynamitey.DynamicObjects
     /// Builds Expando-Like Objects with an inline Syntax
     /// </summary>
     /// <typeparam name="TObjectProtoType">The type of the object proto type.</typeparam>
+   
     public class Builder<TObjectProtoType>: BaseObject, IImpromptuBuilder
     {
         /// <summary>
         /// Build factory storage
         /// </summary>
+       
 		protected IDictionary<string,Activate> _buildType;
 
         /// <summary>
@@ -281,12 +284,6 @@ namespace Dynamitey.DynamicObjects
                 result = InvokeHelper(binder.CallInfo, args, tBuildType);
                 return true;
             }
-#if SILVERLIGHT5
-            public Type GetCustomType()
-            {
-                return this.GetDynamicCustomType();
-            }
-#endif
         }
 
         /// <summary>
@@ -316,12 +313,7 @@ namespace Dynamitey.DynamicObjects
 				result = _buider;
 				return true;
             }
-#if SILVERLIGHT5
-            public Type GetCustomType()
-            {
-                return this.GetDynamicCustomType();
-            }
-#endif
+
         }
 		
 		public override bool TrySetMember(SetMemberBinder binder, dynamic value){

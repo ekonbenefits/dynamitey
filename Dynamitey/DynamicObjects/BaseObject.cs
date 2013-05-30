@@ -33,7 +33,7 @@ namespace Dynamitey.DynamicObjects
         FauxType EquivalentType { get; set; }
     }
 
-    [DataContract]
+
     public abstract class BaseObject : DynamicObject, IEquivalentType, IServiceProvider
 
     {
@@ -83,7 +83,7 @@ namespace Dynamitey.DynamicObjects
             return true;
         }
 
-        [DataMember]
+
         FauxType IEquivalentType.EquivalentType { get; set; }
      
         object IServiceProvider.GetService(Type serviceType)

@@ -13,8 +13,10 @@ namespace Dynamitey.DynamicObjects
     /// <summary>
     /// Building block to use Method calls as dynamic lookups
     /// </summary>
+    
     public class FluentStringLookup:DynamicObject
     {
+       
         private readonly Func<string, dynamic> _lookup;
 
         /// <summary>
@@ -43,17 +45,6 @@ namespace Dynamitey.DynamicObjects
             return false;
         }
 
-#if SILVERLIGHT5
-
-        /// <summary>
-        /// Gets the custom Type.
-        /// </summary>
-        /// <returns></returns>
-        public Type GetCustomType()
-        {
-            return this.GetDynamicCustomType();
-        }
-#endif
 
     }
 }

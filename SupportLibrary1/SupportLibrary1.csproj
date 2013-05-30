@@ -11,14 +11,12 @@
     <RootNamespace>SupportLibrary1</RootNamespace>
     <AssemblyName>SupportLibrary1</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <UseNet40 Condition=" '$(UseNet40)' == '' ">false</UseNet40>
+    <UseNet40 Condition=" $(OS) != 'Windows_NT' ">true</UseNet40>
+    <TargetFrameworkProfile Condition=" $(UseNet40) == false ">Profile154</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
   </PropertyGroup>
-
- <PropertyGroup Condition="$(OS) == 'Windows_NT'">
-  <TargetFrameworkProfile>Profile46</TargetFrameworkProfile>
-  </PropertyGroup>
-
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
@@ -37,29 +35,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <!-- A reference to the entire .NET Framework is automatically included -->
-    <ProjectReference Include="..\Dynamitey\Dynamitey.csproj">
-      <Project>{ce699ab8-4122-4369-baa6-76244a0734e4}</Project>
-      <Name>Dynamitey</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Compile Include="SupportTypes.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup Condition="$(OS) != 'Windows_NT'">
-    <Reference Include="mscorlib" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Runtime.Serialization" />
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" Condition="$(OS) == 'Windows_NT'" />
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" Condition="$(OS) != 'Windows_NT'" />
+  <Import Condition=" $(UseNet40) == true " Project="$(SolutionDir)\dist\net40.targets" />
+  <Import Condition=" $(UseNet40) == true " Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Condition=" $(UseNet40) == false " Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

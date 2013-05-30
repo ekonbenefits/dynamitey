@@ -11,10 +11,14 @@ using Microsoft.CSharp.RuntimeBinder;
 namespace Dynamitey.DynamicObjects
 {
 
+   
     public class ExtensionToInstanceProxy: BaseForwarder
     {
+       
         private readonly Type _extendedType;
+       
         private readonly Type[] _staticTypes;
+       
         private readonly Type[] _instanceHints;
 
         public IEnumerable<Type> InstanceHints
@@ -22,34 +26,7 @@ namespace Dynamitey.DynamicObjects
             get { return _instanceHints/* ?? KnownInterfaces*/; }
         }
 
-//#if !SILVERLIGHT
-//        /// <summary>
-//        /// Initializes a new instance of the <see cref="BaseObject"/> class. when deserializing
-//        /// </summary>
-//        /// <param name="info">The info.</param>
-//        /// <param name="context">The context.</param>
-//        protected ExtensionToInstanceProxy(SerializationInfo info,
-//                                           StreamingContext context) : base(info, context)
-//        {
-//            _staticTypes = info.GetValue<Type[]>("_staticTypes");
-//            _extendedType = info.GetValue<Type>("_extendedType");
-//            _instanceHints = info.GetValue<Type[]>("_instanceHints");
-//        }
 
-//        /// <summary>
-//        /// Populates a <see cref="T:System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object.
-//        /// </summary>
-//        /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to populate with data.</param>
-//        /// <param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization.</param>
-//        /// <exception cref="T:System.Security.SecurityException">The caller does not have the required permission. </exception>
-//        public virtual void GetObjectData(SerializationInfo info, StreamingContext context)
-//        {
-//            base.GetObjectData(info, context);
-//            info.AddValue("_staticType", _extendedType);
-//            info.AddValue("_extendedType", _staticTypes);
-//            info.AddValue("_instanceHints", _staticTypes);
-//        }
-//#endif
 
         public ExtensionToInstanceProxy(dynamic target,  Type extendedType, Type[] staticTypes, Type[] instanceHints = null):base((object)target)
         {
@@ -289,12 +266,7 @@ namespace Dynamitey.DynamicObjects
 
             if (!sucess)
             {
-
-//#if SILVERLIGHT && !SILVERLIGHT5
                 throw exceptionList.First();
-//#else
-//                throw new AggregateException(exceptionList);
-//#endif
             }
 
 

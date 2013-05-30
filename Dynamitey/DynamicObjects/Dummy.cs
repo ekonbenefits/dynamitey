@@ -11,6 +11,7 @@ namespace Dynamitey.DynamicObjects
     /// <summary>
     /// Dummy that just returns null or default for everything.
     /// </summary>
+   
     public class Dummy:BaseObject
     {
 
@@ -22,21 +23,7 @@ namespace Dynamitey.DynamicObjects
             
         }
 
-//    #if !SILVERLIGHT
-//        /// <summary>
-//        /// Initializes a new instance of the <see cref="BaseDummy"/> class.
-//        /// </summary>
-//        /// <param name="info">The info.</param>
-//        /// <param name="context">The context.</param>
-//        protected BaseDummy(SerializationInfo info, 
-//           StreamingContext context):base(info,context)
-//        {
 
-
-//        }
-
-       
-//#endif
 
 
         /// <summary>

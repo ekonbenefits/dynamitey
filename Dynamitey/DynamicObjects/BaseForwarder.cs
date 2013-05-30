@@ -43,8 +43,10 @@ namespace Dynamitey.DynamicObjects
     /// This may not be as efficient as other proxies that can work on just static objects or just dynamic objects...
     /// Consider this when using.
     /// </remarks>
+
     public abstract class BaseForwarder : BaseObject, IForwarder
     {
+       
         public class AddRemoveMarker
         {
             /// <summary>
@@ -79,12 +81,14 @@ namespace Dynamitey.DynamicObjects
             /// Gets or sets the delegate.
             /// </summary>
             /// <value>The delegate.</value>
+           
             public object Delegate { get; protected set; }
 
             /// <summary>
             /// Gets or sets a value indicating whether this instance is adding.
             /// </summary>
             /// <value><c>true</c> if this instance is adding; otherwise, <c>false</c>.</value>
+           
             public bool IsAdding { get; protected set; }
 
         }
@@ -96,33 +100,6 @@ namespace Dynamitey.DynamicObjects
         {
             Target = target;
         }
-
-//#if !SILVERLIGHT
-//        /// <summary>
-//        /// Initializes a new instance of the <see cref="BaseForwarder"/> class.
-//        /// </summary>
-//        /// <param name="info">The info.</param>
-//        /// <param name="context">The context.</param>
-//        protected BaseForwarder(SerializationInfo info, 
-//           StreamingContext context):base(info,context)
-//        {
-
-
-//            Target = info.GetValue<IDictionary<string, object>>("Target");
-//        }
-
-//        /// <summary>
-//        /// Populates a <see cref="T:System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object.
-//        /// </summary>
-//        /// <param name="info">The <see cref="T:System.Runtime.Serialization.SerializationInfo"/> to populate with data.</param>
-//        /// <param name="context">The destination (see <see cref="T:System.Runtime.Serialization.StreamingContext"/>) for this serialization.</param>
-//        /// <exception cref="T:System.Security.SecurityException">The caller does not have the required permission. </exception>
-//        public override void GetObjectData(SerializationInfo info, StreamingContext context)
-//        {
-//            base.GetObjectData(info,context);
-//            info.AddValue("Target", Target);
-//        }
-//#endif
 
         /// <summary>
         /// Returns the enumeration of all dynamic member names.
@@ -147,6 +124,8 @@ namespace Dynamitey.DynamicObjects
         /// Gets or sets the target.
         /// </summary>
         /// <value>The target.</value>
+         
+       
         protected object Target {  get;  set; }
 
         object IForwarder.Target{get { return Target; }}

@@ -15,4 +15,8 @@
     <copyright>Copyright 2013</copyright>
     <tags>dynamic metaprogramming dlr reflection currying tuples expando latetypes</tags>
   </metadata>
+  <files>
+    <file src="bin\Release.net40\Dynamitey.dll" target="lib\net40\Dynamitey.dll" />
+    <file src="bin\Release.net40\Dynamitey.pdb" target="lib\net40\Dynamitey.pdb" />
+  </files>
 </package>

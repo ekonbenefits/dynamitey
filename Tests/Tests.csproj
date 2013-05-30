@@ -12,13 +12,11 @@
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <UseNet40 Condition=" '$(UseNet40)' == '' ">false</UseNet40>
+    <UseNet40 Condition=" $(OS) != 'Windows_NT' ">true</UseNet40>
+    <TargetFrameworkVersion  Condition=" $(UseNet40) == true ">v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile />
-  </PropertyGroup>
-  <PropertyGroup Condition="$(OS) == 'Windows_NT'">
-  <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-  </PropertyGroup>
- <PropertyGroup Condition="$(OS) != 'Windows_NT'">
-  <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -92,6 +90,7 @@
     <Compile Include="MimicTest.cs" />
     <Compile Include="PrivateTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpeedTest.cs" />
     <Compile Include="TuplerTest.cs" />
   </ItemGroup>
   <ItemGroup>

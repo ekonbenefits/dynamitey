@@ -138,13 +138,7 @@ namespace Dynamitey.DynamicObjects
         public ChainableDictionary(IEnumerable<KeyValuePair<string, object>> dict) : base(dict)
         {
         }
-//#if !SILVERLIGHT
-//            protected ChainableDictionary(SerializationInfo info, 
-//           StreamingContext context):base(info,context)
-//        {
 
-//        }
-//#endif
 
 			public override bool TryInvokeMember (InvokeMemberBinder binder, object[] args, out object result)
 			{

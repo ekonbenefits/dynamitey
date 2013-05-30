@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Reflection;
 using Dynamitey.Internal.Optimization;
@@ -16,6 +17,7 @@ namespace Dynamitey
     /// <summary>
     /// Internal method for subsequent invocations of <see cref="Dynamic.Curry(object,System.Nullable{int})"/>
     /// </summary>
+   
     public class PartialApply : DynamicObject, IPartialApply
     {
 
@@ -77,10 +79,15 @@ namespace Dynamitey
             _args = args;
         }
 
+       
         private readonly int? _totalArgCount;
+       
         private readonly object _target;
+       
         private readonly string _memberName;
+       
         private readonly object[] _args;
+       
         private readonly InvocationKind _invocationKind;
 
         /// <summary>
