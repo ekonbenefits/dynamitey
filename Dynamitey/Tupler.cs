@@ -104,11 +104,35 @@ namespace Dynamitey
         /// <returns></returns>
         public static IList<dynamic> ToList(object tuple)
         {
-            return Enumerable.Range(0, Size(tuple)).Select(i => Index(tuple, i)).ToList();
+
+            var list = new List<dynamic>();
+            HelperToList(list, tuple, safe:false);
+            return list;
+
+        }
+
+
+        private static void HelperToList(List<dynamic> list, object tuple, bool safe)
+        {
+            Type type;
+            Type generic;
+            int size;
+            if(HelperIsTuple(tuple, out type, out generic, out size, safe))
+            {
+                for (int i = 0; i < 7 && i < size; i++)
+                {
+                    list.Add(HelperIndex(tuple,i,safe:true));
+                }
+
+                if (size == 8)
+                {
+                    HelperToList(list, (object)(((dynamic)tuple).Rest), true);
+                }
+            }
         }
 
         /// <summary>
-        /// Indexes the specified tuple.
+        /// Gets value at the index of the specified tuple.
         /// </summary>
         /// <param name="tuple">The tuple.</param>
         /// <param name="index">The index.</param>
@@ -116,29 +140,33 @@ namespace Dynamitey
         /// <exception cref="System.ArgumentException">index must be greater than or equalto 0;index</exception>
         public static dynamic Index(object tuple, int index)
         {
+            return HelperIndex(tuple, index, false);
+        }
+
+        private static dynamic HelperIndex(object tuple, int index, bool safe)
+        {
             var item = index + 1;
-            if (item < 1)
+            if (!safe && item < 1)
             {
                 throw new ArgumentException("index must be greater than or equalto 0", "index");
             }
 
-            if (item > Size(tuple))
+            if (!safe && item > Size(tuple))
             {
                 throw new ArgumentException("index must be less than size", "index");
             }
 
-            if (!IsTuple(tuple))
+            if (!safe && !IsTuple(tuple))
             {
                 return tuple;
             }
 
-            if (item < 8)
-            {
-                return Dynamic.InvokeGet(tuple, string.Format("Item{0}", item));
-            }
-            var newtarget = Dynamic.InvokeGet(tuple, "Rest");
-            
-            return Index(newtarget, item - 8);
+            if( item < 8)
+                return InvokeHelper.TupleItem(tuple, item);
+
+            object newtarget = ((dynamic) tuple).Rest;
+            return HelperIndex(newtarget, item - 8, true);
+          
         }
 
         /// <summary>
@@ -150,16 +178,29 @@ namespace Dynamitey
         /// </returns>
         public static bool IsTuple(object target)
         {
+            Type genericType;
+            Type type;
+            int size;
+            return HelperIsTuple(target, out type, out genericType, out size, false);
+        }
+
+        private static bool HelperIsTuple(object target, out Type type, out Type genericeType, out int size, bool safe)
+        {
+            genericeType = typeof(object);
+            size = 1;
+            type = null;
             if (target == null)
                 return false;
-            var tType = target as Type ?? target.GetType();
+            type = target as Type ?? target.GetType();
 
-            if (tType.IsGenericType)
+
+            if (safe || type.IsGenericType)
             {
-                tType = tType.GetGenericTypeDefinition();
+                genericeType = type.GetGenericTypeDefinition();
             }
 
-            return InvokeHelper.TupleArgs.ContainsKey(tType);
+            return InvokeHelper.TupleArgs.TryGetValue(genericeType, out size);
+
         }
 
         /// <summary>
@@ -169,17 +210,20 @@ namespace Dynamitey
         /// <returns></returns>
         public static int Size(object tuple)
         {
-            var size = 1;
-            if (IsTuple(tuple))
-            {
-                var type = tuple as Type ?? tuple.GetType();
-                var gentype = type.GetGenericTypeDefinition();
+            return HelperSize(tuple, false);
+        }
 
-                size = InvokeHelper.TupleArgs[gentype];
+        private static int HelperSize(object tuple, bool safe)
+        {
+            int size;
+            Type genericType;
+            Type type;
+            if (HelperIsTuple(tuple, out type, out genericType, out size, safe))
+            {
                 if (size == 8)
                 {
-                    var lasttype = type.GetGenericArguments().Last();
-                    size = size + Size(lasttype) - 1;
+                    var lasttype = type.GetGenericArguments()[7];
+                    size = size + HelperSize(lasttype, true) - 1;
                 }
             }
             return size;

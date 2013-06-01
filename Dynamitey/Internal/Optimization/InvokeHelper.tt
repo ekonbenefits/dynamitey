@@ -39,6 +39,7 @@ namespace Dynamitey.Internal.Optimization
 		internal static readonly IDictionary<Type,int> FuncArgs;
 		internal static readonly IDictionary<Type,int> ActionArgs;
 		internal static readonly IDictionary<Type,int> TupleArgs;
+		internal static readonly CacheableInvocation[] TupleInvokers;
 
         static InvokeHelper()
         {
@@ -78,14 +79,23 @@ namespace Dynamitey.Internal.Optimization
 		
         }
 
-
+		internal static dynamic TupleItem(dynamic tuple, int index){
+			switch(index){
+<# for(int i=1; i <= 7; i++){ #>
+				case <#=i#>:
+					return tuple.Item<#=i#>;
+<# } #>
+				default:
+					return tuple.Rest;
+			}
+		}
 
 
         internal static void InvokeMemberAction(ref CallSite callsite,
 		                                            Type binderType,
 													int knownType,
 													LazyBinder binder,
-                                                    String_OR_InvokeMemberName name,
+                                                    InvokeMemberName name,
 													bool staticContext,
                                                     Type context, 
                                                     string[] argNames,
@@ -136,7 +146,7 @@ namespace Dynamitey.Internal.Optimization
 										Type binderType,
 										int knownType,
 										LazyBinder binder,
-                                       String_OR_InvokeMemberName name,
+                                       InvokeMemberName name,
 									 bool staticContext,
                                      Type context,
                                      string[] argNames,

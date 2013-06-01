@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -319,6 +320,17 @@ namespace Dynamitey.Tests
             Assert.AreEqual(typeof(long), tCast.GetType());
         }
 
+        [Test]
+        public void TestCoerceConverterColor()
+        {
+            var colorString = "PaleVioletRed";
+
+            var color =Dynamic.CoerceConvert(colorString, typeof (Color));
+
+            Assert.That(color,Is.TypeOf<Color>());
+            Assert.That(color, Is.EqualTo(Color.PaleVioletRed));
+
+        }
 
         [Test]
         public void TestCoerceConverterDBNULL()

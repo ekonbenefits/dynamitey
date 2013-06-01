@@ -76,7 +76,7 @@ namespace Dynamitey
                                               bool isEvent = false)
         {
 
-            return InvokeHelper.CreateCallSite(delegateType, binder.GetType(), InvokeHelper.Unknown, () => binder, name, context, argNames,
+            return InvokeHelper.CreateCallSite(delegateType, binder.GetType(), InvokeHelper.Unknown, () => binder, (InvokeMemberName)name, context, argNames,
                                                staticContext,
                                                isEvent);
         }
@@ -118,7 +118,7 @@ namespace Dynamitey
                                                     string[] argNames = null, bool staticContext = false,
                                                     bool isEvent = false) where T : class
         {
-            return InvokeHelper.CreateCallSite<T>(binder.GetType(), InvokeHelper.Unknown, () => binder, name, context, argNames, staticContext,
+            return InvokeHelper.CreateCallSite<T>(binder.GetType(), InvokeHelper.Unknown, () => binder, (InvokeMemberName) name, context, argNames, staticContext,
                                                   isEvent);
         }
 
@@ -170,7 +170,7 @@ namespace Dynamitey
             args = Util.GetArgsAndNames(args, out tArgNames);
             CallSite tCallSite = null;
 
-            return InvokeHelper.InvokeMemberCallSite(target, name, args, tArgNames, tContext, tStaticContext,
+            return InvokeHelper.InvokeMemberCallSite(target, (InvokeMemberName)name, args, tArgNames, tContext, tStaticContext,
                                                      ref tCallSite);
         }
 
@@ -383,7 +383,7 @@ namespace Dynamitey
             args = Util.GetArgsAndNames(args, out tArgNames);
 
             CallSite tCallSite = null;
-            InvokeHelper.InvokeMemberActionCallSite(target, name, args, tArgNames, tContext, tStaticContext,
+            InvokeHelper.InvokeMemberActionCallSite(target, (InvokeMemberName)name, args, tArgNames, tContext, tStaticContext,
                                                     ref tCallSite);
         }
 
@@ -552,9 +552,7 @@ namespace Dynamitey
         {
             Type tContext;
             bool tStaticContext;
-            target = target.GetTargetContext(out tContext, out tStaticContext);
-            tContext = tContext.FixContext();
-            CallSite tSite = null;
+            target = target.GetTargetContext(out tContext, out tStaticContext);            CallSite tSite = null;
             return InvokeHelper.InvokeGetCallSite(target, name, tContext, tStaticContext, ref tSite);
         }
 

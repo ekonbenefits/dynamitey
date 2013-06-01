@@ -256,21 +256,21 @@ namespace Dynamitey
                     Dynamic.InvokeSetIndex(target, args);
                     return null;
                 case InvocationKind.InvokeMember:
-                    return InvokeHelper.InvokeMemberCallSite(target, Name, args, _argNames, _context, _staticContext, ref _callSite);
+                    return InvokeHelper.InvokeMemberCallSite(target, (InvokeMemberName) Name, args, _argNames, _context, _staticContext, ref _callSite);
                 case InvocationKind.InvokeMemberAction:
-                    InvokeHelper.InvokeMemberActionCallSite(target, Name, args, _argNames, _context, _staticContext, ref _callSite);
+                    InvokeHelper.InvokeMemberActionCallSite(target, (InvokeMemberName)Name, args, _argNames, _context, _staticContext, ref _callSite);
                     return null;
                 case InvocationKind.InvokeMemberUnknown:
                     {
                        
                             try
                             {
-                                var tObj = InvokeHelper.InvokeMemberCallSite(target, Name, args, _argNames, _context, _staticContext, ref _callSite);
+                                var tObj = InvokeHelper.InvokeMemberCallSite(target, (InvokeMemberName)Name, args, _argNames, _context, _staticContext, ref _callSite);
                                 return tObj;
                             }
                             catch (RuntimeBinderException)
                             {
-                               InvokeHelper.InvokeMemberActionCallSite(target, Name, args, _argNames, _context, _staticContext, ref _callSite2);
+                                InvokeHelper.InvokeMemberActionCallSite(target, (InvokeMemberName)Name, args, _argNames, _context, _staticContext, ref _callSite2);
                             return null;
 
                             }

@@ -16,16 +16,45 @@ namespace Dynamitey.Internal.Optimization
 
     }
 
+
+    internal static class BinderCache<T> where T : class
+    {
+        internal static readonly IDictionary<BinderHash<T>, CallSite<T>> Cache = new Dictionary<BinderHash<T>, CallSite<T>>();
+   
+     
+
+      
+    }
+
+    internal static class BinderGetCache<T> where T : class
+    {
+        internal static readonly IDictionary<BinderHash<T>, CallSite<T>>
+                Cache = new Dictionary<BinderHash<T>, CallSite<T>>();
+    }
+
+    internal static class BinderConstructorCache<T> where T : class
+    {
+        internal static readonly IDictionary<BinderHash<T>, CallSite<T>> Cache = new Dictionary<BinderHash<T>, CallSite<T>>();
+    }
+
+    internal static class BinderSetCache<T> where T : class
+    {
+        internal static readonly IDictionary<BinderHash<T>, CallSite<T>> Cache = new Dictionary<BinderHash<T>, CallSite<T>>();
+    }
+
+    internal static class BinderMemberCache<T> where T : class
+    {
+        internal static readonly IDictionary<BinderHash<T>, CallSite<T>> Cache = new Dictionary<BinderHash<T>, CallSite<T>>();
+    }
+
+    internal static class BinderDirectCache<T> where T : class
+    {
+        internal static readonly IDictionary<BinderHash<T>, CallSite<T>> Cache = new Dictionary<BinderHash<T>, CallSite<T>>();
+    }
+
+
     internal static partial class InvokeHelper
     {
-
-
-        private static readonly IDictionary<BinderHash, CallSite> _unknownBinderCache = new Dictionary<BinderHash, CallSite>(20);
-        private static readonly IDictionary<BinderHash, CallSite> _getBinderCache = new Dictionary<BinderHash, CallSite>(20);
-        private static readonly IDictionary<BinderHash, CallSite> _setBinderCache = new Dictionary<BinderHash, CallSite>(20);
-        private static readonly IDictionary<BinderHash, CallSite> _memberBinderCache = new Dictionary<BinderHash, CallSite>(20);
-        private static readonly IDictionary<BinderHash, CallSite> _directBinderCache = new Dictionary<BinderHash, CallSite>(20);
-        private static readonly IDictionary<BinderHash, CallSite> _constructorBinderCache = new Dictionary<BinderHash, CallSite>(20);
 
         internal const int Unknown =0;
         internal const int KnownGet = 1;
@@ -34,27 +63,27 @@ namespace Dynamitey.Internal.Optimization
         internal const int KnownDirect = 4;
         internal const int KnownConstructor = 5;
 
-        private static bool TryDynamicCachedCallSite(BinderHash hash, int knownBinderType, out CallSite callSite)
+        private static bool TryDynamicCachedCallSite<T>(BinderHash<T> hash, int knownBinderType, out CallSite<T> callSite) where T: class 
         {
             switch(knownBinderType)
             {
                 default:
-                    return _unknownBinderCache.TryGetValue(hash, out callSite);
+                    return BinderCache<T>.Cache.TryGetValue(hash, out callSite);
 
                 case KnownGet:
-                    return _getBinderCache.TryGetValue(hash, out callSite);
+                    return BinderGetCache<T>.Cache.TryGetValue(hash, out callSite);
 
                 case KnownSet:
-                    return _setBinderCache.TryGetValue(hash, out callSite);
+                    return BinderSetCache<T>.Cache.TryGetValue(hash, out callSite);
 
                 case KnownMember:
-                    return _memberBinderCache.TryGetValue(hash, out callSite);
+                    return BinderMemberCache<T>.Cache.TryGetValue(hash, out callSite);
 
                 case KnownDirect:
-                    return _directBinderCache.TryGetValue(hash, out callSite);
+                    return BinderDirectCache<T>.Cache.TryGetValue(hash, out callSite);
 
                 case KnownConstructor:
-                    return _constructorBinderCache.TryGetValue(hash, out callSite);
+                    return BinderConstructorCache<T>.Cache.TryGetValue(hash, out callSite);
                             
             }
 
@@ -80,27 +109,27 @@ namespace Dynamitey.Internal.Optimization
         }
 
 
-        private static void SetDynamicCachedCallSite(BinderHash hash, int knownBinderType, CallSite callSite)
+        private static void SetDynamicCachedCallSite<T>(BinderHash<T> hash, int knownBinderType, CallSite<T> callSite) where T: class 
         {
             switch (knownBinderType)
             {
                 default:
-                    _unknownBinderCache[hash] = callSite;
+                    BinderCache<T>.Cache[hash] = callSite;
                     break;
                 case KnownGet:
-                    _getBinderCache[hash] = callSite;
+                    BinderGetCache<T>.Cache[hash] = callSite;
                     break;
                 case KnownSet:
-                    _setBinderCache[hash] = callSite;
+                    BinderSetCache<T>.Cache[hash] = callSite;
                     break;
                 case KnownMember:
-                    _memberBinderCache[hash] = callSite;
+                    BinderMemberCache<T>.Cache[hash] = callSite;
                     break;
                 case KnownDirect:
-                    _directBinderCache[hash] = callSite;
+                    BinderDirectCache<T>.Cache[hash] = callSite;
                     break;
                 case KnownConstructor:
-                    _constructorBinderCache[hash] = callSite;
+                    BinderConstructorCache<T>.Cache[hash] = callSite;
                     break;
             }
         }
@@ -193,13 +222,15 @@ namespace Dynamitey.Internal.Optimization
             return tList;
         }
 
+        internal static readonly IDictionary<Type, CallSite<DynamicCreateCallSite>>
+            _dynamicInvokeCreateCallSite = new Dictionary<Type, CallSite<DynamicCreateCallSite>>();
 
         internal static CallSite CreateCallSite(
             Type delegateType,
             Type specificBinderType,
              int knownType,
             LazyBinder binder,
-            String_OR_InvokeMemberName name,
+            InvokeMemberName name,
             Type context,
             string[] argNames = null,
             bool staticContext = false,
@@ -207,26 +238,55 @@ namespace Dynamitey.Internal.Optimization
            
             )
         {
-            
-            var tHash = BinderHash.Create(delegateType, name, context, argNames, specificBinderType, staticContext, isEvent, knownType != Unknown);
-            lock (_binderCacheLock)
+            CallSite<DynamicCreateCallSite> tSite;
+            if (!_dynamicInvokeCreateCallSite.TryGetValue(delegateType, out tSite))
             {
-                CallSite tOut;
-                if (!TryDynamicCachedCallSite(tHash,knownType, out tOut))
-                {
-                    tOut = CallSite.Create(delegateType, binder());
-                    SetDynamicCachedCallSite(tHash, knownType, tOut);
-                }
-                return tOut;
+                tSite = CallSite<DynamicCreateCallSite>.Create(
+                    Binder.InvokeMember(
+                        CSharpBinderFlags.None,
+                        "CreateCallSite",
+                        new[] { delegateType },
+                        typeof(InvokeHelper),
+                        new[]
+                            {
+                                CSharpArgumentInfo.Create(
+                                    CSharpArgumentInfoFlags.IsStaticType | CSharpArgumentInfoFlags.UseCompileTimeType,
+                                    null), // InvokeHelper
+                                CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.UseCompileTimeType, null), //binderType
+                                CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.UseCompileTimeType, null), //knownType
+                                CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.UseCompileTimeType, null), //binder
+                                CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.UseCompileTimeType, null), //name
+                                CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.UseCompileTimeType, null), //context
+                                CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.UseCompileTimeType, null), //argnames
+                                CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.UseCompileTimeType, null), //staticcontext
+                                CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.UseCompileTimeType, null), //isevent
+                            }
+                        ));
+                _dynamicInvokeCreateCallSite[delegateType] = tSite;
             }
+            return (CallSite)tSite.Target(tSite, typeof(InvokeHelper), specificBinderType, knownType, binder, name, context, argNames, staticContext, isEvent);
         }
+
+        internal delegate object DynamicCreateCallSite(
+           CallSite site,
+           Type targetType,
+           Type specificBinderType, 
+           int knownType,
+           LazyBinder binder,
+           InvokeMemberName name,
+           Type context,
+           string[] argNames,
+           bool staticContext,
+           bool isEvent
+       );
+
 
 
         internal static CallSite<T> CreateCallSite<T>(
         Type specificBinderType,
         int knownType,
         LazyBinder binder,
-        String_OR_InvokeMemberName name,
+        InvokeMemberName name,
         Type context,
         string[] argNames = null,
         bool staticContext = false,
@@ -237,13 +297,38 @@ namespace Dynamitey.Internal.Optimization
             var tHash = BinderHash<T>.Create(name, context, argNames, specificBinderType, staticContext, isEvent, knownType != Unknown);
             lock (_binderCacheLock)
             {
-                CallSite tOut;
+                CallSite<T> tOut;
                 if (!TryDynamicCachedCallSite(tHash, knownType, out tOut))
                 {
                     tOut = CallSite<T>.Create(binder());
                     SetDynamicCachedCallSite(tHash, knownType, tOut);
                 }
-                return (CallSite<T>)tOut;
+                return tOut;
+            }
+        }
+
+        internal static CallSite<T> CreateCallSite<T>(
+   Type specificBinderType,
+   int knownType,
+   LazyBinder binder,
+   string name,
+   Type context,
+   string[] argNames = null,
+   bool staticContext = false,
+   bool isEvent = false
+   )
+   where T : class
+        {
+            var tHash = BinderHash<T>.Create(name, context, argNames, specificBinderType, staticContext, isEvent, knownType != Unknown);
+            lock (_binderCacheLock)
+            {
+                CallSite<T> tOut;
+                if (!TryDynamicCachedCallSite(tHash, knownType, out tOut))
+                {
+                    tOut = CallSite<T>.Create(binder());
+                    SetDynamicCachedCallSite(tHash, knownType, tOut);
+                }
+                return tOut;
             }
         }
 
@@ -255,7 +340,7 @@ namespace Dynamitey.Internal.Optimization
             Type binderType,
             int knownType,
             LazyBinder binder,
-            String_OR_InvokeMemberName name,
+            InvokeMemberName name,
             bool staticContext,
             Type context,
             string[] argNames,
@@ -265,7 +350,7 @@ namespace Dynamitey.Internal.Optimization
         internal static readonly IDictionary<Type, CallSite<DynamicInvokeMemberConstructorValueType>> _dynamicInvokeMemberSite = new Dictionary<Type, CallSite<DynamicInvokeMemberConstructorValueType>>();
 
         internal static dynamic DynamicInvokeStaticMember(Type tReturn, ref CallSite callsite, Type binderType, int knownType, LazyBinder binder,
-                                       string name,
+                                       InvokeMemberName name,
                                      bool staticContext,
                                      Type context,
                                      string[] argNames,
@@ -306,7 +391,7 @@ namespace Dynamitey.Internal.Optimization
 
 
         internal static TReturn InvokeMember<TReturn>(ref CallSite callsite, Type binderType,int knownType, LazyBinder binder,
-                                       String_OR_InvokeMemberName name,
+                                       InvokeMemberName name,
                                      bool staticContext,
                                      Type context,
                                      string[] argNames,
@@ -436,7 +521,7 @@ namespace Dynamitey.Internal.Optimization
             }
         }
 
-        internal static object InvokeMemberCallSite(object target,  String_OR_InvokeMemberName name, object[] args, string[] tArgNames, Type tContext, bool tStaticContext, ref CallSite callSite)
+        internal static object InvokeMemberCallSite(object target,  InvokeMemberName name, object[] args, string[] tArgNames, Type tContext, bool tStaticContext, ref CallSite callSite)
         {
             LazyBinder tBinder = null;
             Type tBinderType = null;
@@ -522,7 +607,7 @@ namespace Dynamitey.Internal.Optimization
             return InvokeMember<object>(ref tCallSite, tBinderType, Unknown, tBinder, Invocation.IndexBinderName, tStaticContext, tContext, tArgNames, target, indexesThenValue);
         }
 
-        internal static void InvokeMemberActionCallSite(object target,String_OR_InvokeMemberName name, object[] args, string[] tArgNames, Type tContext, bool tStaticContext,ref CallSite callSite)
+        internal static void InvokeMemberActionCallSite(object target,InvokeMemberName name, object[] args, string[] tArgNames, Type tContext, bool tStaticContext,ref CallSite callSite)
         {
             LazyBinder tBinder =null;
             Type tBinderType = null;
@@ -651,6 +736,8 @@ namespace Dynamitey.Internal.Optimization
 
         internal class InvokeConstructorDummy{};
 
+        internal static InvokeMemberName ConstructorName = new InvokeMemberName(Invocation.ConstructorBinderName);
+
         internal static object InvokeConstructorCallSite(Type type, bool isValueType, object[] args, string[] argNames, ref CallSite callSite)
         {
             LazyBinder tBinder = null;
@@ -674,11 +761,11 @@ namespace Dynamitey.Internal.Optimization
             if (isValueType || Util.IsMono)
             {
                 CallSite tDummy =null;
-                return DynamicInvokeStaticMember(type, ref tDummy,tBinderType,KnownConstructor, tBinder, Invocation.ConstructorBinderName, true, type,
+                return DynamicInvokeStaticMember(type, ref tDummy, tBinderType, KnownConstructor, tBinder, ConstructorName, true, type,
                                                               argNames, type, args);
             }
 
-            return InvokeMemberTargetType<Type, object>(ref callSite, tBinderType, KnownConstructor, tBinder, Invocation.ConstructorBinderName, true, type, argNames,
+            return InvokeMemberTargetType<Type, object>(ref callSite, tBinderType, KnownConstructor, tBinder, ConstructorName, true, type, argNames,
                                                                      type, args);
         }
 
