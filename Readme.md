@@ -6,6 +6,11 @@ This is a Portable Class Library for  .NET 4.5, Silverlight 4 & 5, WinRT, Win Ph
 
 [Change Log](https://github.com/ekonbenefits/dynamitey/wiki/ChangeLog)
 
+Install with [Nuget](https://nuget.org/packages/Dynamitey/):
+```
+PM> Install-Package Dynamitey
+```
+
 # Meta-mazing Features
   
   - Easy Fast DLR based Reflection -- [oooo](https://github.com/ekonbenefits/dynamitey/wiki/UsageReallyLateBinding)
