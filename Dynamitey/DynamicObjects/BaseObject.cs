@@ -23,17 +23,26 @@ using System.Runtime.Serialization;
 using System.Reflection;
 namespace Dynamitey.DynamicObjects
 {
+
     /// <summary>
-    /// Dynamic Object that knows about the Impromtu Interface return types;
-    /// Override Typical Dynamic Object methods, and use TypeForName to get the return type of an interface member.
+    /// Can Represent an equivalent static type to help dynamically convert member output
     /// </summary>
-     
     public interface IEquivalentType
     {
+        /// <summary>
+        /// Gets or sets the type of the equivalent.
+        /// </summary>
+        /// <value>
+        /// The type of the equivalent.
+        /// </value>
         FauxType EquivalentType { get; set; }
     }
 
 
+    /// <summary>
+    /// Dynamic Object that knows about the Impromtu Interface return types;
+    /// Override Typical Dynamic Object methods, and use TypeForName to get the return type of an interface member.
+    /// </summary>
     public abstract class BaseObject : DynamicObject, IEquivalentType, IServiceProvider
 
     {
@@ -47,6 +56,12 @@ namespace Dynamitey.DynamicObjects
 
 
 
+        /// <summary>
+        /// Tries the name of the member to see if it has a type.
+        /// </summary>
+        /// <param name="binderName">Name of the binder.</param>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
         public bool TryTypeForName(string binderName, out Type type)
         {
            var eqType = (IEquivalentType) this;

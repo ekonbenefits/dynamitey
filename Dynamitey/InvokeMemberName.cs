@@ -94,6 +94,11 @@ namespace Dynamitey
             IsSpecialName = isSpecialName;
         }
 
+        /// <summary>
+        /// Equalses the specified other.
+        /// </summary>
+        /// <param name="other">The other.</param>
+        /// <returns></returns>
         public bool Equals(InvokeMemberName other)
         {
             if (ReferenceEquals(null, other)) return false;

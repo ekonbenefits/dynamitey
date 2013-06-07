@@ -12,7 +12,6 @@ namespace Dynamitey.Tests
         private Stopwatch _watch2;
         private Stopwatch _watch3;
         private bool _skipInitializationCosts;
-        private bool _useThree;
         public TimeIt(bool skipInitializationCosts = false)
         {
             _watch1 = new Stopwatch();
@@ -35,7 +34,7 @@ namespace Dynamitey.Tests
                 _watch2.Start();
                 Action2();
                 _watch2.Stop();
-                if (_useThree)
+                if (useThree)
                 {
                     _watch3.Start();
                     Action3();

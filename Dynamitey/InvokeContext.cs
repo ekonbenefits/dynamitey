@@ -30,7 +30,7 @@ namespace Dynamitey
     public class StaticContext:InvokeContext
     {
         /// <summary>
-        /// Performs an explicit conversion from <see cref="System.Type"/> to <see cref="ImpromptuInterface.StaticContext"/>.
+        /// Performs an explicit conversion from <see cref="System.Type"/> to <see cref="Dynamitey.StaticContext"/>.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <returns>The result of the conversion.</returns>

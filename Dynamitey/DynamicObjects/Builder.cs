@@ -168,6 +168,11 @@ namespace Dynamitey.DynamicObjects
 
 
 
+        /// <summary>
+        /// Setup List or Array, takes either one <see cref="Activate" /> or a list of constructor args that will use objects Type
+        /// </summary>
+        /// <param name="constructorArgs">The constructor args.</param>
+        /// <returns></returns>
         public dynamic ListSetup(params dynamic[] constructorArgs)
         {
             var tActivate =constructorArgs.OfType<Activate>().SingleOrDefault();
@@ -191,26 +196,51 @@ namespace Dynamitey.DynamicObjects
             return this;
         }
 
+        /// <summary>
+        /// Setup List or Array if list has a default constrcutor
+        /// </summary>
+        /// <typeparam name="TList"></typeparam>
+        /// <returns></returns>
         public dynamic ListSetup<TList>()
         {
             return ListSetup(new Activate<TList>());
         }
 
+        /// <summary>
+        /// Setup List or Array, takes either one <see cref="Activate" /> or a list of constructor args that will use objects Type
+        /// </summary>
+        /// <param name="constructorArgsFactory">The constructor args factory.</param>
+        /// <returns></returns>
         public dynamic ListSetup(Func<object[]> constructorArgsFactory)
         {
             return ListSetup((object)constructorArgsFactory);
         }
 
+        /// <summary>
+        /// Setup List or Array if list has a default constrcutor
+        /// </summary>
+        /// <typeparam name="TList"></typeparam>
+        /// <returns></returns>
         public dynamic ArraySetup<TList>()
         {
             return ListSetup(new Activate<TList>());
         }
 
+        /// <summary>
+        /// Alternative name for <see cref="ListSetup(object[])" />
+        /// </summary>
+        /// <param name="constructorArgs">The constructor args.</param>
+        /// <returns></returns>
         public dynamic ArraySetup(params dynamic[] constructorArgs)
         {
             return ListSetup(constructorArgs);
         }
 
+        /// <summary>
+        /// Alternative name for <see cref="ListSetup{TList}" />
+        /// </summary>
+        /// <param name="constructorArgsFactory">The constructor args factory.</param>
+        /// <returns></returns>
         public dynamic ArraySetup(Func<object[]> constructorArgsFactory)
         {
             return ListSetup((object)constructorArgsFactory);
@@ -275,6 +305,13 @@ namespace Dynamitey.DynamicObjects
 				_buider = builder;
 			}
 
+            /// <summary>
+            /// Tries the invoke.
+            /// </summary>
+            /// <param name="binder">The binder.</param>
+            /// <param name="args">The args.</param>
+            /// <param name="result">The result.</param>
+            /// <returns></returns>
             public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
             {
                 Activate tBuildType;
@@ -300,7 +337,15 @@ namespace Dynamitey.DynamicObjects
 			public SetupTrampoline(Builder<TObjectProtoType> builder){
 				_buider = builder;
 			}
-			
+
+            /// <summary>
+            /// Tries the invoke.
+            /// </summary>
+            /// <param name="binder">The binder.</param>
+            /// <param name="args">The args.</param>
+            /// <param name="result">The result.</param>
+            /// <returns></returns>
+            /// <exception cref="System.ArgumentException">Requires argument names for every argument</exception>
             public override bool TryInvoke(InvokeBinder binder, dynamic[] args, out object result)
             {
 				if (binder.CallInfo.ArgumentNames.Count != binder.CallInfo.ArgumentCount)
@@ -315,7 +360,13 @@ namespace Dynamitey.DynamicObjects
             }
 
         }
-		
+
+        /// <summary>
+        /// Tries the set member.
+        /// </summary>
+        /// <param name="binder">The binder.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
 		public override bool TrySetMember(SetMemberBinder binder, dynamic value){
             if (value != null)
             {
@@ -339,6 +390,13 @@ namespace Dynamitey.DynamicObjects
 			return false;
 		}
 
+        /// <summary>
+        /// Tries the invoke member.
+        /// </summary>
+        /// <param name="binder">The binder.</param>
+        /// <param name="args">The args.</param>
+        /// <param name="result">The result.</param>
+        /// <returns></returns>
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
             Type tType;

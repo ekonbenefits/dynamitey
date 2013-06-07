@@ -27,6 +27,9 @@ using Microsoft.CSharp.RuntimeBinder;
 namespace Dynamitey.DynamicObjects
 {
 
+    /// <summary>
+    /// An proxy object
+    /// </summary>
     public interface IForwarder
     {
         /// <summary>
@@ -46,7 +49,10 @@ namespace Dynamitey.DynamicObjects
 
     public abstract class BaseForwarder : BaseObject, IForwarder
     {
-       
+
+        /// <summary>
+        /// Marks whether we are adding or removing the delegate
+        /// </summary>
         public class AddRemoveMarker
         {
             /// <summary>
@@ -174,16 +180,17 @@ namespace Dynamitey.DynamicObjects
             return true;
 
         }
-
+#pragma warning disable 1734
         /// <summary>
-        /// Provides the implementation for operations that invoke an object. Classes derived from the <see cref="T:System.Dynamic.DynamicObject"/> class can override this method to specify dynamic behavior for operations such as invoking an object or a delegate.
+        /// Provides the implementation for operations that invoke an object. Classes derived from the <see cref="T:System.Dynamic.DynamicObject" /> class can override this method to specify dynamic behavior for operations such as invoking an object or a delegate.
         /// </summary>
         /// <param name="binder">Provides information about the invoke operation.</param>
-        /// <param name="args">The arguments that are passed to the object during the invoke operation. For example, for the sampleObject(100) operation, where sampleObject is derived from the <see cref="T:System.Dynamic.DynamicObject"/> class, <paramref name="args[0]"/> is equal to 100.</param>
+        /// <param name="args">The arguments that are passed to the object during the invoke operation. For example, for the sampleObject(100) operation, where sampleObject is derived from the <see cref="T:System.Dynamic.DynamicObject" /> class, <paramref name="args[0]" /> is equal to 100.</param>
         /// <param name="result">The result of the object invocation.</param>
         /// <returns>
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.
         /// </returns>
+#pragma warning restore 1734
         public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
         {
             if (CallTarget == null)
@@ -215,6 +222,13 @@ namespace Dynamitey.DynamicObjects
             return true;
         }
 
+        /// <summary>
+        /// Tries the invoke member.
+        /// </summary>
+        /// <param name="binder">The binder.</param>
+        /// <param name="args">The args.</param>
+        /// <param name="result">The result.</param>
+        /// <returns></returns>
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
             if (CallTarget == null)
@@ -246,8 +260,14 @@ namespace Dynamitey.DynamicObjects
             return true;
         }
 
-       
 
+
+        /// <summary>
+        /// Tries the set member.
+        /// </summary>
+        /// <param name="binder">The binder.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
         public override bool TrySetMember(SetMemberBinder binder, object value)
         {
             if (CallTarget == null)
@@ -283,6 +303,13 @@ namespace Dynamitey.DynamicObjects
             }
         }
 
+        /// <summary>
+        /// Tries the index of the get.
+        /// </summary>
+        /// <param name="binder">The binder.</param>
+        /// <param name="indexes">The indexes.</param>
+        /// <param name="result">The result.</param>
+        /// <returns></returns>
         public override bool TryGetIndex(GetIndexBinder binder, object[] indexes, out object result)
         {
             if (CallTarget == null)
@@ -305,6 +332,13 @@ namespace Dynamitey.DynamicObjects
             }
         }
 
+        /// <summary>
+        /// Tries the index of the set.
+        /// </summary>
+        /// <param name="binder">The binder.</param>
+        /// <param name="indexes">The indexes.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
         public override bool TrySetIndex(SetIndexBinder binder, object[] indexes, object value)
         {
             if (CallTarget == null)
@@ -340,6 +374,13 @@ namespace Dynamitey.DynamicObjects
             return Equals(other.CallTarget, CallTarget);
         }
 
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return ReferenceEquals(null, CallTarget); 
@@ -348,6 +389,12 @@ namespace Dynamitey.DynamicObjects
             return Equals((BaseForwarder) obj);
         }
 
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// </returns>
         public override int GetHashCode()
         {
             return (CallTarget != null ? CallTarget.GetHashCode() : 0);

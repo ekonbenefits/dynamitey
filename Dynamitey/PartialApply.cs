@@ -68,6 +68,14 @@ namespace Dynamitey
         }
 
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="PartialApply" /> class.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <param name="args">The args.</param>
+        /// <param name="memberName">Name of the member.</param>
+        /// <param name="totalCount">The total count.</param>
+        /// <param name="invocationKind">Kind of the invocation.</param>
         public PartialApply(object target, object[] args, string memberName = null, int? totalCount = null, InvocationKind? invocationKind = null)
         {
             _target = target;
@@ -136,7 +144,7 @@ namespace Dynamitey
         }
 
         private IDictionary<int, CacheableInvocation> _cacheableInvocation = new Dictionary<int, CacheableInvocation>();
-
+#pragma warning disable 1734
         /// <summary>
         /// Provides the implementation for operations that invoke an object. Classes derived from the <see cref="T:System.Dynamic.DynamicObject"/> class can override this method to specify dynamic behavior for operations such as invoking an object or a delegate.
         /// </summary>
@@ -146,6 +154,7 @@ namespace Dynamitey
         /// <returns>
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.
         /// </returns>
+#pragma warning restore 1734
         public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
         {
             var tNamedArgs = Util.NameArgsIfNecessary(binder.CallInfo, args);
@@ -195,6 +204,9 @@ namespace Dynamitey
         }
     }
 
+    /// <summary>
+    /// Partial Application Proxy
+    /// </summary>
     public interface IPartialApply
     {
     }

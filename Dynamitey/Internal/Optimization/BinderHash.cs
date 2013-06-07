@@ -182,7 +182,7 @@ namespace Dynamitey.Internal.Optimization
                 }
                 return false;
             
-            return base.Equals(other);
+           
         }
     }
 }

@@ -16,15 +16,27 @@ namespace Dynamitey.DynamicObjects
     public class LateType:BaseForwarder
     {
 
-     
+
+        /// <summary>
+        /// Exception When The Late Type can not be found to bind.
+        /// </summary>
         public class MissingTypeException:Exception
         {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="MissingTypeException" /> class.
+            /// </summary>
+            /// <param name="typename">The typename.</param>
              public MissingTypeException(string typename)
                  : base(String.Format("Could Not Find Type. {0}", typename))
              {
                  
              }
 
+             /// <summary>
+             /// Initializes a new instance of the <see cref="MissingTypeException" /> class.
+             /// </summary>
+             /// <param name="message">The message.</param>
+             /// <param name="innerException">The inner exception.</param>
             public MissingTypeException(string message, Exception innerException) : base(message, innerException)
             {
                 
@@ -55,6 +67,18 @@ namespace Dynamitey.DynamicObjects
         }
 
         /// <summary>
+        /// Initializes a new instance of the <see cref="LateType" /> class.
+        /// </summary>
+        /// <param name="assembly">The assembly.</param>
+        /// <param name="typeName">Name of the type.</param>
+        public LateType(Assembly assembly, string typeName)
+            : base(assembly.GetType(typeName, false))
+        {
+            TypeName = typeName;
+
+        }
+
+        /// <summary>
         /// Returns a late bound constructor
         /// </summary>
         /// <value>The late bound constructor</value>
@@ -73,6 +97,13 @@ namespace Dynamitey.DynamicObjects
             {
                 _type = type;
             }
+            /// <summary>
+            /// Tries the invoke.
+            /// </summary>
+            /// <param name="binder">The binder.</param>
+            /// <param name="args">The args.</param>
+            /// <param name="result">The result.</param>
+            /// <returns></returns>
             public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
             {
                 result = Dynamic.InvokeConstructor(_type, Util.NameArgsIfNecessary(binder.CallInfo, args));
@@ -93,6 +124,13 @@ namespace Dynamitey.DynamicObjects
         }
 
 
+        /// <summary>
+        /// Gets the call target.
+        /// </summary>
+        /// <value>
+        /// The call target.
+        /// </value>
+        /// <exception cref="Dynamitey.DynamicObjects.LateType.MissingTypeException"></exception>
         protected override object CallTarget
         {
             get

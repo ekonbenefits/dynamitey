@@ -123,6 +123,11 @@ namespace Dynamitey
         }
 
 
+        /// <summary>
+        /// Puts a dynamic linq proxy around the specified enumerable.
+        /// </summary>
+        /// <param name="enumerable">The enumerable.</param>
+        /// <returns></returns>
         public static dynamic Linq(object enumerable)
         {
             if(enumerable.GetType().GetInterfaces().Where(it=>it.IsGenericType)
@@ -782,10 +787,10 @@ namespace Dynamitey
             = new DynamicObjects.LateType("ImpromptuInterface.Impromptu, ImpromptuInterface, PublicKeyToken=0b1781c923b2975b");
 
         internal static readonly dynamic TypeDescriptor
-             = new DynamicObjects.LateType("System.ComponentModel.TypeDescriptor, System, PublicKeyToken=b77a5c561934e089");
+             = new DynamicObjects.LateType("System.ComponentModel.TypeDescriptor, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089");
 
         internal static readonly Type TypeConverterAttributeSL
-            = Type.GetType("System.ComponentModel.TypeConverter, System, PublicKeyToken=7cec85d7bea7798e", false);
+            = Type.GetType("System.ComponentModel.TypeConverter, System, Version=5.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e", false);
 
         /// <summary>
         /// Goes the extra mile to convert target to type.

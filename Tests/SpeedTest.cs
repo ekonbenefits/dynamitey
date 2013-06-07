@@ -401,7 +401,6 @@ namespace Dynamitey.Tests
             var tValue = new OverloadingMethPoco();
 
 
-            var tInteration = 1000000;
 
             var tCachedInvoke = new CacheableInvocation(InvocationKind.InvokeMember, "Func", argCount:1);
 

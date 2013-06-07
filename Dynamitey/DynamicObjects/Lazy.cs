@@ -14,17 +14,17 @@ namespace Dynamitey.DynamicObjects
     public abstract class Lazy:BaseForwarder
     {
         /// <summary>
-        /// Creates ImpromptuLazy based on the specified valuefactory.
+        /// Creates Lazy based on the specified valuefactory.
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="valuefactory">The valuefactory.</param>
+        /// <param name="valueFactory">The value factory.</param>
         /// <returns></returns>
         public static dynamic Create<T>(Func<T> valueFactory)
         {
             return new Lazy<T>(valueFactory);
         }
         /// <summary>
-        /// Creates ImpromptuLazy based on the specified target.
+        /// Creates Lazy based on the specified target.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="target">The target.</param>
@@ -82,6 +82,12 @@ namespace Dynamitey.DynamicObjects
                 : Enumerable.Empty<string>();
         }
 
+        /// <summary>
+        /// Gets the call target.
+        /// </summary>
+        /// <value>
+        /// The call target.
+        /// </value>
         protected override object CallTarget
         {
             get

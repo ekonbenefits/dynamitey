@@ -13,7 +13,6 @@ namespace Dynamitey.DynamicObjects
     /// <summary>
     /// Building block to use Method calls as dynamic lookups
     /// </summary>
-    
     public class FluentStringLookup:DynamicObject
     {
        
@@ -28,12 +27,26 @@ namespace Dynamitey.DynamicObjects
             _lookup = lookup;
         }
 
+        /// <summary>
+        /// Tries the invoke member.
+        /// </summary>
+        /// <param name="binder">The binder.</param>
+        /// <param name="args">The args.</param>
+        /// <param name="result">The result.</param>
+        /// <returns></returns>
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
             result = _lookup(binder.Name);
             return true;
         }
 
+        /// <summary>
+        /// Tries the invoke.
+        /// </summary>
+        /// <param name="binder">The binder.</param>
+        /// <param name="args">The args.</param>
+        /// <param name="result">The result.</param>
+        /// <returns></returns>
         public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
         {
             result = null;

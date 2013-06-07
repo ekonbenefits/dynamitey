@@ -7,24 +7,43 @@ using System.Text;
 
 
 namespace Dynamitey.DynamicObjects
-{   
-    
-   
+{
+
+
+    /// <summary>
+    /// Extension to Intance Proxy Configured for LINQ IEnumerable methods
+    /// </summary>
     public class LinqInstanceProxy : ExtensionToInstanceProxy, IEnumerable<object>
-    {    
-        
+    {
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LinqInstanceProxy" /> class.
+        /// </summary>
+        /// <param name="target">The target.</param>
         public LinqInstanceProxy(dynamic target)
             :base((object)target, typeof(IEnumerable<>), new[]{typeof(Enumerable)}, new[]{typeof(ILinq<>), typeof(IOrderedLinq<>)})
         {
 
         }
 
+        /// <summary>
+        /// Creates the self.
+        /// </summary>
+        /// <param name="target">The target.</param>
+        /// <param name="extendedType">Type of the extended.</param>
+        /// <param name="staticTypes">The static types.</param>
+        /// <param name="instanceHints">The instance hints.</param>
+        /// <returns></returns>
         protected override ExtensionToInstanceProxy CreateSelf(object target, Type extendedType, Type[] staticTypes, Type[] instanceHints)
         {
             return new LinqInstanceProxy(target);
         }
 
-     
+
+        /// <summary>
+        /// Gets the enumerator.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerator<object> GetEnumerator()
         {
             return ((dynamic) CallTarget).GetEnumerator();
@@ -36,6 +55,8 @@ namespace Dynamitey.DynamicObjects
         }
     }
 
+#pragma warning disable 1591
+// ReSharper disable UnusedMember.Global
     public interface ILinq<TSource> : IEnumerable<TSource>
     {
         TSource Aggregate(Func<TSource, TSource, TSource> func);
@@ -175,6 +196,7 @@ namespace Dynamitey.DynamicObjects
         IOrderedLinq<TSource> ThenByDescending<TKey>(Func<TSource, TKey> keySelector);
         IOrderedLinq<TSource> ThenByDescending<TKey>(Func<TSource, TKey> keySelector, IComparer<TKey> comparer);
     }
-
+// ReSharper restore UnusedMember.Global
+#pragma warning restore 1591
 
 }

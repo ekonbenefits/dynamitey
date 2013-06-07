@@ -39,7 +39,6 @@ namespace Dynamitey.Internal.Optimization
 		internal static readonly IDictionary<Type,int> FuncArgs;
 		internal static readonly IDictionary<Type,int> ActionArgs;
 		internal static readonly IDictionary<Type,int> TupleArgs;
-		internal static readonly CacheableInvocation[] TupleInvokers;
 
         static InvokeHelper()
         {

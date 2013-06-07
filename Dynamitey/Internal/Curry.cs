@@ -30,6 +30,12 @@ namespace Dynamitey.Internal
     public class Curry : DynamicObject, IPartialApply
         {
 
+            /// <summary>
+            /// Pipe argument (left side) into curried function (right side)
+            /// </summary>
+            /// <param name="argument">The argument.</param>
+            /// <param name="function">The function.</param>
+            /// <returns></returns>
             public static dynamic operator |(dynamic argument, Curry function)
             {
                 return ((dynamic)function)(argument);

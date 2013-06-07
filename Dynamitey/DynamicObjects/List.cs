@@ -152,6 +152,11 @@ namespace Dynamitey.DynamicObjects
             }
         }
 
+        /// <summary>
+        /// Inserts the specified index.
+        /// </summary>
+        /// <param name="index">The index.</param>
+        /// <param name="item">The item.</param>
         public void Insert(int index, dynamic item)
         {
             InsertHelper(item,index);
@@ -175,11 +180,20 @@ namespace Dynamitey.DynamicObjects
             OnCollectionChanged(NotifyCollectionChangedAction.Add, newItem: item, newIndex: index);
         }
 
+        /// <summary>
+        /// Removes at.
+        /// </summary>
+        /// <param name="index">The index.</param>
         public void RemoveAt(int index)
         {
             RemoveHelper(index: index);
         }
 
+        /// <summary>
+        /// Removes the specified item.
+        /// </summary>
+        /// <param name="item">The item.</param>
+        /// <returns></returns>
         public bool Remove(dynamic item)
         {
             return RemoveHelper(item);
@@ -205,6 +219,14 @@ namespace Dynamitey.DynamicObjects
             return true;
         }
 
+        /// <summary>
+        /// Gets or sets the <see cref="object" /> at the specified index.
+        /// </summary>
+        /// <value>
+        /// The <see cref="object" />.
+        /// </value>
+        /// <param name="index">The index.</param>
+        /// <returns></returns>
         public dynamic this[int index]
         {
             get { return _list[index]; }
@@ -227,6 +249,14 @@ namespace Dynamitey.DynamicObjects
         }
 
 
+        /// <summary>
+        /// Called when [collection changed].
+        /// </summary>
+        /// <param name="action">The action.</param>
+        /// <param name="oldItem">The old item.</param>
+        /// <param name="newItem">The new item.</param>
+        /// <param name="oldIndex">The old index.</param>
+        /// <param name="newIndex">The new index.</param>
         protected virtual void OnCollectionChanged(NotifyCollectionChangedAction action, object oldItem = null, object newItem = null, int? oldIndex = null, int? newIndex = null)
 
         {
@@ -292,6 +322,13 @@ namespace Dynamitey.DynamicObjects
             return base.Equals(other) && Equals(other._list, _list);
         }
 
+        /// <summary>
+        /// Determines whether the specified <see cref="System.Object" /> is equal to this instance.
+        /// </summary>
+        /// <param name="obj">The <see cref="System.Object" /> to compare with this instance.</param>
+        /// <returns>
+        ///   <c>true</c> if the specified <see cref="System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+        /// </returns>
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
@@ -299,6 +336,12 @@ namespace Dynamitey.DynamicObjects
             return Equals(obj as List);
         }
 
+        /// <summary>
+        /// Returns a hash code for this instance.
+        /// </summary>
+        /// <returns>
+        /// A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table. 
+        /// </returns>
         public override int GetHashCode()
         {
             unchecked
@@ -326,57 +369,39 @@ namespace Dynamitey.DynamicObjects
             return tItem;
         }
 
-    
-      
-#region Implementation of ITypedList
-
-//#if !SILVERLIGHT
-
-//        /// <summary>
-//        /// Returns the name of the list.
-//        /// </summary>
-//        /// <param name="listAccessors">An array of <see cref="T:System.ComponentModel.PropertyDescriptor"/> objects, for which the list name is returned. This can be null.</param>
-//        /// <returns>The name of the list.</returns>
-//        public string GetListName(PropertyDescriptor[] listAccessors)
-//        {
-//            return null;
-//        }
-
-
-//        public PropertyDescriptorCollection GetItemProperties(PropertyDescriptor[] listAccessors)
-//        {
-//            IEnumerable<string> tList = new string[] { };
-//            if (OverrideGettingItemMethodNames != null)
-//            {
-//                tList = OverrideGettingItemMethodNames(this);
-//            }
-//            else
-//            {
-
-//                tList = Impromptu.GetMemberNames(GetRepresentedItem(), dynamicOnly: true);
-//            }
-
-//            return new PropertyDescriptorCollection(tList.Select(it => new ImpromptuPropertyDescriptor(it)).ToArray());
-//        }
-
-//#endif
-
-#endregion
-
 
         #region Implementation of ICollection
 
+        /// <summary>
+        /// Copies to.
+        /// </summary>
+        /// <param name="array">The array.</param>
+        /// <param name="index">The index.</param>
         public void CopyTo(Array array, int index)
         {
             ((IList)_list).CopyTo(array, index);
         }
         private readonly object _syncRoot = new object();
+
+
+        /// <summary>
+        /// Gets the sync root.
+        /// </summary>
+        /// <value>
+        /// The sync root.
+        /// </value>
         public object SyncRoot
         {
             get { return _syncRoot; }
         }
 
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is synchronized.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is synchronized; otherwise, <c>false</c>.
+        /// </value>
         public bool IsSynchronized
         {
             get { return false; }
@@ -398,6 +423,12 @@ namespace Dynamitey.DynamicObjects
             Remove(value);
         }
 
+        /// <summary>
+        /// Gets a value indicating whether this instance is fixed size.
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if this instance is fixed size; otherwise, <c>false</c>.
+        /// </value>
         public bool IsFixedSize
         {
             get { return false; }

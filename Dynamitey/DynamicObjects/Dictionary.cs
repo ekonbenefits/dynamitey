@@ -28,9 +28,7 @@ namespace Dynamitey.DynamicObjects
     /// <summary>
     /// Similar to Expando Objects but handles null values when the property is defined with an impromptu interface
     /// </summary>
-      
-    
-     public class Dictionary:BaseDictionary,IDictionary<string,object>
+    public class Dictionary:BaseDictionary,IDictionary<string,object>
     {
 
         /// <summary>
@@ -48,19 +46,6 @@ namespace Dynamitey.DynamicObjects
         {
         }
 
-
-//#if !SILVERLIGHT
-//        /// <summary>
-//        /// Initializes a new instance of the <see cref="Dictionary"/> class.
-//        /// </summary>
-//        /// <param name="info">The info.</param>
-//        /// <param name="context">The context.</param>
-//        protected Dictionary(SerializationInfo info, 
-//           StreamingContext context):base(info,context)
-//        {
-
-//        }
-//#endif
 
         /// <summary>
         /// Gets the count.
@@ -120,8 +105,7 @@ namespace Dynamitey.DynamicObjects
     /// <summary>
     /// Adds extra synatx to intialize properties to match up with clay
     /// </summary>
-     
-		public class ChainableDictionary:Dictionary{
+	public class ChainableDictionary:Dictionary{
 
 
             /// <summary>
@@ -140,24 +124,33 @@ namespace Dynamitey.DynamicObjects
         }
 
 
-			public override bool TryInvokeMember (InvokeMemberBinder binder, object[] args, out object result)
-			{
-				if(base.TryInvokeMember (binder, args, out result)){
-					return true;
-				}
-				if(binder.CallInfo.ArgumentCount ==1){
-					 SetProperty(binder.Name, args.FirstOrDefault());
-					result = this;
-					return true;
-				}
-                if (binder.CallInfo.ArgumentCount > 1)
-                {
-                    SetProperty(binder.Name,new List(args));
-                    result = this;
-                    return true;
-                }
-				
-				return false;
+        /// <summary>
+        /// Provides the implementation for operations that invoke a member. Classes derived from the <see cref="T:System.Dynamic.DynamicObject" /> class can override this method to specify dynamic behavior for operations such as calling a method.
+        /// </summary>
+        /// <param name="binder">Provides information about the dynamic operation. The binder.Name property provides the name of the member on which the dynamic operation is performed. For example, for the statement sampleObject.SampleMethod(100), where sampleObject is an instance of the class derived from the <see cref="T:System.Dynamic.DynamicObject" /> class, binder.Name returns "SampleMethod". The binder.IgnoreCase property specifies whether the member name is case-sensitive.</param>
+        /// <param name="args">The arguments that are passed to the object member during the invoke operation. For example, for the statement sampleObject.SampleMethod(100), where sampleObject is derived from the <see cref="T:System.Dynamic.DynamicObject" /> class, <paramref name="args" /> is equal to 100.</param>
+        /// <param name="result">The result of the member invocation.</param>
+        /// <returns>
+        /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)
+        /// </returns>
+		public override bool TryInvokeMember (InvokeMemberBinder binder, object[] args, out object result)
+		{
+			if(base.TryInvokeMember (binder, args, out result)){
+				return true;
 			}
+			if(binder.CallInfo.ArgumentCount ==1){
+					SetProperty(binder.Name, args.FirstOrDefault());
+				result = this;
+				return true;
+			}
+            if (binder.CallInfo.ArgumentCount > 1)
+            {
+                SetProperty(binder.Name,new List(args));
+                result = this;
+                return true;
+            }
+				
+			return false;
 		}
+	}
 }

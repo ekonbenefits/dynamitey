@@ -87,6 +87,13 @@ namespace Dynamitey.DynamicObjects
         
         }
 
+        /// <summary>
+        /// Tries the index of the set.
+        /// </summary>
+        /// <param name="binder">The binder.</param>
+        /// <param name="indexes">The indexes.</param>
+        /// <param name="value">The value.</param>
+        /// <returns></returns>
         public override bool TrySetIndex(System.Dynamic.SetIndexBinder binder, object[] indexes, object value)
         {
             return true;

@@ -276,8 +276,13 @@ namespace Dynamitey.DynamicObjects
             return _dictionary.TryGetValue(key, out value);
         }
 
-       
 
+
+        /// <summary>
+        /// Sets the property.
+        /// </summary>
+        /// <param name="key">The key.</param>
+        /// <param name="value">The value.</param>
         protected void SetProperty(string key, object value)
         {
             object tOldValue;

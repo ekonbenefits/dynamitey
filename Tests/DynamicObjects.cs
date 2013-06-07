@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
@@ -8,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Dynamitey.SupportLibrary1;
-
+using Microsoft.CSharp;
 using NUnit.Framework;
 
 namespace Dynamitey.Tests
@@ -17,7 +18,7 @@ namespace Dynamitey.Tests
     public class DynamicObjs : AssertionHelper
     {
 
-    
+
 
 
         [Test]
@@ -50,7 +51,7 @@ namespace Dynamitey.Tests
             var tArray = new int[] {1, 2, 3};
 
             dynamic tTest = new DynamicObjects.Get(tArray);
-            Dynamic.ApplyEquivalentType(tTest,typeof(IStringIntIndexer));
+            Dynamic.ApplyEquivalentType(tTest, typeof (IStringIntIndexer));
 
             Assert.AreEqual(tArray[2].ToString(), tTest[2]);
         }
@@ -59,7 +60,7 @@ namespace Dynamitey.Tests
         public void GetterEventTest()
         {
             dynamic dynEvent = new DynamicObjects.Get(new PocoEvent());
-            Dynamic.ApplyEquivalentType(dynEvent, typeof(IEvent));
+            Dynamic.ApplyEquivalentType(dynEvent, typeof (IEvent));
             var tSet = false;
             EventHandler<EventArgs> tActsLikeOnEvent = (obj, args) => tSet = true;
             dynEvent.Event += tActsLikeOnEvent;
@@ -74,7 +75,7 @@ namespace Dynamitey.Tests
         public void GetterEventTest2()
         {
             dynamic dynEvent = new DynamicObjects.Get(new PocoEvent());
-            Dynamic.ApplyEquivalentType(dynEvent, typeof(IEvent));
+            Dynamic.ApplyEquivalentType(dynEvent, typeof (IEvent));
             var tSet = false;
             EventHandler<EventArgs> tActsLikeOnEvent = (obj, args) => tSet = true;
             dynEvent.Event += tActsLikeOnEvent;
@@ -244,7 +245,7 @@ namespace Dynamitey.Tests
         {
 
             dynamic tNew = new DynamicObjects.Dictionary();
-            Dynamic.ApplyEquivalentType(tNew, typeof(ISimpleStringMethod));
+            Dynamic.ApplyEquivalentType(tNew, typeof (ISimpleStringMethod));
 
             Assert.That(tNew.StartsWith("Te"), Is.False);
 
@@ -301,9 +302,9 @@ namespace Dynamitey.Tests
             dynamic tNotDynamic = new DynamicObjects.Dictionary(tDictionary);
 
 
-            Dynamic.ApplyEquivalentType(tDynamic, typeof(IDynamicDict));
-            Dynamic.ApplyEquivalentType(tNotDynamic, typeof(INonDynamicDict));
-       
+            Dynamic.ApplyEquivalentType(tDynamic, typeof (IDynamicDict));
+            Dynamic.ApplyEquivalentType(tNotDynamic, typeof (INonDynamicDict));
+
 
             Assert.AreEqual(tDynamic, tNotDynamic);
 
@@ -321,7 +322,7 @@ namespace Dynamitey.Tests
             Assert.AreEqual(TestEnum.Two, tNotDynamic.Test4);
 
             Assert.AreEqual(typeof (Dictionary<string, object>), tNotDynamic.TestD.GetType());
-            Assert.AreEqual(typeof(DynamicObjects.Dictionary), tDynamic.TestD.GetType());
+            Assert.AreEqual(typeof (DynamicObjects.Dictionary), tDynamic.TestD.GetType());
         }
 
         [Test]
@@ -344,8 +345,8 @@ namespace Dynamitey.Tests
             dynamic tNotDynamic = new DynamicObjects.Dictionary(tDictionary);
 
 
-            Dynamic.ApplyEquivalentType(tDynamic, typeof(IDynamicDict));
-            Dynamic.ApplyEquivalentType(tNotDynamic, typeof(INonDynamicDict));
+            Dynamic.ApplyEquivalentType(tDynamic, typeof (IDynamicDict));
+            Dynamic.ApplyEquivalentType(tNotDynamic, typeof (INonDynamicDict));
 
             Assert.AreEqual(tDynamic, tNotDynamic);
 
@@ -359,12 +360,12 @@ namespace Dynamitey.Tests
         {
             var tData = new Dictionary<int, string> {{1, "test"}};
             var tDyn = DynamicObjects.Get.Create(new
-                                               {
-                                                   Test1 = 1,
-                                                   Test2 = "2",
-                                                   IsGreaterThan5 = Return<bool>.Arguments<int>(it => it > 5),
-                                                   ClearData = ReturnVoid.Arguments(() => tData.Clear())
-                                               });
+                                                     {
+                                                         Test1 = 1,
+                                                         Test2 = "2",
+                                                         IsGreaterThan5 = Return<bool>.Arguments<int>(it => it > 5),
+                                                         ClearData = ReturnVoid.Arguments(() => tData.Clear())
+                                                     });
 
             Assert.AreEqual(1, tDyn.Test1);
             Assert.AreEqual("2", tDyn.Test2);
@@ -381,19 +382,19 @@ namespace Dynamitey.Tests
         public void TestAnonInterface()
         {
             dynamic tInterface = new DynamicObjects.Get(new
-                                                                  {
-                                                                      CopyArray =
-                                                                  ReturnVoid.Arguments<Array, int>(
-                                                                      (ar, i) => Enumerable.Range(1, 10)),
-                                                                      Count = 10,
-                                                                      IsSynchronized = false,
-                                                                      SyncRoot = this,
-                                                                      GetEnumerator =
-                                                                  Return<IEnumerator>.Arguments(
-                                                                      () => Enumerable.Range(1, 10).GetEnumerator())
-                                                                  });
+                                                            {
+                                                                CopyArray =
+                                                            ReturnVoid.Arguments<Array, int>(
+                                                                (ar, i) => Enumerable.Range(1, 10)),
+                                                                Count = 10,
+                                                                IsSynchronized = false,
+                                                                SyncRoot = this,
+                                                                GetEnumerator =
+                                                            Return<IEnumerator>.Arguments(
+                                                                () => Enumerable.Range(1, 10).GetEnumerator())
+                                                            });
 
-            Dynamic.ApplyEquivalentType(tInterface,typeof(ICollection),typeof(IEnumerable));
+            Dynamic.ApplyEquivalentType(tInterface, typeof (ICollection), typeof (IEnumerable));
 
             Assert.AreEqual(10, tInterface.Count);
             Assert.AreEqual(false, tInterface.IsSynchronized);
@@ -449,7 +450,7 @@ namespace Dynamitey.Tests
 
             Assert.AreEqual("RiseD", tDict.LeftArm);
             Assert.AreEqual("ClampD", tDict.RightArm);
-            Assert.AreEqual(typeof(DynamicObjects.Dictionary), tDict.GetType());
+            Assert.AreEqual(typeof (DynamicObjects.Dictionary), tDict.GetType());
 
         }
 
@@ -509,7 +510,7 @@ namespace Dynamitey.Tests
 
 
 
-      
+
 
         [Test]
         //This test data is modified from MS-PL Clay project http://clay.codeplex.com
@@ -552,9 +553,9 @@ namespace Dynamitey.Tests
         [Test]
         public void TestRecorder()
         {
-           dynamic New = Builder.New<DynamicObjects.Recorder>();
+            dynamic New = Builder.New<DynamicObjects.Recorder>();
 
-           DynamicObjects.Recorder tRecording = New.Watson(Test: "One", Test2: 2, NameLast: "Watson");
+            DynamicObjects.Recorder tRecording = New.Watson(Test: "One", Test2: 2, NameLast: "Watson");
 
 
             dynamic tVar = tRecording.ReplayOn(new ExpandoObject());
@@ -566,7 +567,40 @@ namespace Dynamitey.Tests
 
 
 
+
         [Test]
+        public void TestCodeDomLateTypeBind()
+        {  
+            // http://stackoverflow.com/questions/16918612/dynamically-use-runtime-compiled-assemlby/16920438#16920438
+            string code = @"
+                namespace CodeInjection
+                {
+                    public static class DynConcatenateString
+                    {
+                        public static string Concatenate(string s1, string s2){
+                            return s1 + "" ! "" + s2;
+                        }
+                    }
+                }";
+   
+            var codeProvider = new CSharpCodeProvider();
+ 
+            var parameters = new CompilerParameters {GenerateExecutable = false, GenerateInMemory = true};
+
+            CompilerResults cr = codeProvider.CompileAssemblyFromSource(parameters,code);
+
+
+            dynamic DynConcatenateString = new DynamicObjects.LateType(cr.CompiledAssembly, "CodeInjection.DynConcatenateString");
+
+
+            Assert.That("1 ! 2", Is.EqualTo(DynConcatenateString.Concatenate("1","2")));
+
+        }
+    
+
+
+
+    [Test]
         public void TestLateLibrarybind()
         {
 
