@@ -2,7 +2,7 @@ try{
   
   $solname = "Dynamitey" 
   $testname = "Tests"
-  @projectname = $solname
+  $projectname = $solname
   $projecttype ="csproj"
 
   #Build PCL and .NET version from one project using msbuild script

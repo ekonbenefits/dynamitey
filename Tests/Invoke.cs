@@ -316,7 +316,7 @@ namespace Dynamitey.Tests
         }
 
         [Test]
-        public void TesStaticPropertySetFollowedByGetTest()
+        public void TestStaticPropertySetFollowedByGetTest()
         {
             var staticContext = InvokeContext.CreateStatic;
             Dynamic.InvokeSet(staticContext(typeof(TestClass)), "StaticProperty", 42);
