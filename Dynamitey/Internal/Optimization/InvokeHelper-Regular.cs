@@ -411,7 +411,7 @@ namespace Dynamitey.Internal.Optimization
                 if (staticContext) //CSharp Binder won't call Static properties, grrr.
                 {
                     var tStaticFlag = CSharpBinderFlags.None;
-                    if (target is Type && ((Type)target).IsPublic)
+                    if ((target is Type && ((Type)target).IsPublic) || Util.IsMono)
                     {
                         //Mono only works if InvokeSpecialName is set and .net only works if it isn't
                         if (Util.IsMono)
