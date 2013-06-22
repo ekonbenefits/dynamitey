@@ -309,7 +309,22 @@ namespace Dynamitey.Tests
             var tOut = tCached.Invoke(typeof(StaticType), 1);
             Assert.AreEqual(false, tOut);
         }
+        
+        private class TestClass
+        {
+            public static int StaticProperty { get; set; }
+        }
 
+        [Test]
+        public void TesStaticPropertySetFollowedByGetTest()
+        {
+            var staticContext = InvokeContext.CreateStatic;
+            Dynamic.InvokeSet(staticContext(typeof(TestClass)), "StaticProperty", 42);
+            var tOut = Dynamic.InvokeGet(staticContext(typeof(TestClass)), "StaticProperty");
+            Assert.AreEqual(42, tOut);
+        }
+        
+     
         [Test]
         public void TestImplicitConvert()
         {
