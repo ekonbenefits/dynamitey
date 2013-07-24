@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+     <PropertyGroup>
+        <SolName Condition=" '$(SolName)' == '' ">Dynamitey</SolName>
+     </PropertyGroup>
+    <ItemGroup> 
+        <ProjectToBuild Include="..\$(SolName).sln">
+            <Properties>Configuration=Release;UseOldPcl=true;</Properties>
+        </ProjectToBuild>
+            <ProjectToBuild Include="..\$(SolName).sln">
+            <Properties>Configuration=Release;OutputPath=bin\Release.net40\;IntermediateOutputPath=obj\Release.net40\;UseNet40=true;</Properties>
+        </ProjectToBuild>
+    </ItemGroup>
+    <Target Name="Build">
+        <MSBuild Projects="@(ProjectToBuild)"/>
+    </Target>
+</Project>

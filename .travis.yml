@@ -1,18 +1,17 @@
 # Travis-CI Build for dynamitey 
 # see travis-ci.org for details
 
-language: c
+language: objective-c
 
-before_install:
- # Make sure mono is installed,
- # pipe stdout to dev/null because qq is still too chatty
- #- echo "deb http://debian.meebey.net/experimental/mono /" | sudo tee -a /etc/apt/sources.list
- - sudo apt-get update -qq > /dev/null
- - sudo apt-get install -qq mono-devel > /dev/null
 env:
-  - EnableNuGetPackageRestore=true
-before_script:
-  - mozroots --import --sync #for nuget SSL to work
+  global:
+    - EnableNuGetPackageRestore=true
+  matrix:
+    - MONO_VER="3.1.2"
+before_install:
+  # Make sure mono is installed,
+  - wget "http://download.mono-project.com/archive/${MONO_VER}/macos-10-x86/MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.pkg"
+  - sudo installer -pkg "MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.pkg" -target /
 script:
- - xbuild 
- - .ci/nunit.sh Tests/bin/Debug/Tests.dll
+  - xbuild
+  - .ci/nunit.sh Tests/bin/Debug/Tests.dll
