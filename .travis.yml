@@ -7,7 +7,7 @@ env:
   global:
     - EnableNuGetPackageRestore=true
   matrix:
-    - MONO_VER="3.1.2"
+    - MONO_VER="3.2.4"
 before_install:
   # Make sure mono is installed,
   - wget "http://download.mono-project.com/archive/${MONO_VER}/macos-10-x86/MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.pkg"
