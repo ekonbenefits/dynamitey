@@ -87,6 +87,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExpandoObjs.cs" />
     <Compile Include="Curry.cs" />
     <Compile Include="DynamicObjects.cs" />
     <Compile Include="Impromptu.cs" />

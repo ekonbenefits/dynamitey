@@ -64,6 +64,7 @@
   <ItemGroup>
     <Compile Include="Dynamic.cs" />
     <Compile Include="DynamicObjects\FauxType.cs" />
+    <Compile Include="Expando.cs" />
     <Compile Include="InlineLambdas1.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
