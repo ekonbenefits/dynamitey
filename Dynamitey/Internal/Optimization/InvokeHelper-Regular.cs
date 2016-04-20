@@ -225,6 +225,8 @@ namespace Dynamitey.Internal.Optimization
         internal static readonly IDictionary<Type, CallSite<DynamicCreateCallSite>>
             _dynamicInvokeCreateCallSite = new Dictionary<Type, CallSite<DynamicCreateCallSite>>();
 
+        private static readonly object _callSiteCacheLock = new object();
+
         internal static CallSite CreateCallSite(
             Type delegateType,
             Type specificBinderType,
@@ -239,7 +241,15 @@ namespace Dynamitey.Internal.Optimization
             )
         {
             CallSite<DynamicCreateCallSite> tSite;
-            if (!_dynamicInvokeCreateCallSite.TryGetValue(delegateType, out tSite))
+
+            bool foundInCache;
+
+            lock (_callSiteCacheLock)
+            {
+                foundInCache = _dynamicInvokeCreateCallSite.TryGetValue(delegateType, out tSite);
+            }
+
+            if (!foundInCache)
             {
                 tSite = CallSite<DynamicCreateCallSite>.Create(
                     Binder.InvokeMember(
@@ -262,7 +272,15 @@ namespace Dynamitey.Internal.Optimization
                                 CSharpArgumentInfo.Create(CSharpArgumentInfoFlags.UseCompileTimeType, null), //isevent
                             }
                         ));
-                _dynamicInvokeCreateCallSite[delegateType] = tSite;
+
+                lock (_callSiteCacheLock)
+                {
+                    // another thread might have been faster; add to dictionary only if we are the first
+                    if (!_dynamicInvokeCreateCallSite.ContainsKey(delegateType))
+                    {
+                        _dynamicInvokeCreateCallSite[delegateType] = tSite;
+                    }
+                }
             }
             return (CallSite)tSite.Target(tSite, typeof(InvokeHelper), specificBinderType, knownType, binder, name, context, argNames, staticContext, isEvent);
         }
