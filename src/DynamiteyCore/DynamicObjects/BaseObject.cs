@@ -1,0 +1,119 @@
+// 
+//  Copyright 2010  Ekon Benefits
+// 
+//    Licensed under the Apache License, Version 2.0 (the "License");
+//    you may not use this file except in compliance with the License.
+//    You may obtain a copy of the License at
+// 
+//        http://www.apache.org/licenses/LICENSE-2.0
+// 
+//    Unless required by applicable law or agreed to in writing, software
+//    distributed under the License is distributed on an "AS IS" BASIS,
+//    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+//    See the License for the specific language governing permissions and
+//    limitations under the License.
+
+using System;
+using System.Dynamic;
+using System.Linq;
+using System.Reflection;
+
+namespace DynamiteyCore.DynamicObjects
+{
+
+    /// <summary>
+    /// Can Represent an equivalent static type to help dynamically convert member output
+    /// </summary>
+    public interface IEquivalentType
+    {
+        /// <summary>
+        /// Gets or sets the type of the equivalent.
+        /// </summary>
+        /// <value>
+        /// The type of the equivalent.
+        /// </value>
+        FauxType EquivalentType { get; set; }
+    }
+
+
+    /// <summary>
+    /// Dynamic Object that knows about the Impromtu Interface return types;
+    /// Override Typical Dynamic Object methods, and use TypeForName to get the return type of an interface member.
+    /// </summary>
+    public abstract class BaseObject : DynamicObject, IEquivalentType, IServiceProvider
+
+    {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="BaseObject"/> class.
+        /// </summary>
+        protected BaseObject()
+        {
+            
+        }
+
+
+
+        /// <summary>
+        /// Tries the name of the member to see if it has a type.
+        /// </summary>
+        /// <param name="binderName">Name of the binder.</param>
+        /// <param name="type">The type.</param>
+        /// <returns></returns>
+        public bool TryTypeForName(string binderName, out Type type)
+        {
+           var eqType = (IEquivalentType) this;
+           type = null;
+           if (eqType.EquivalentType == null)
+                return false;
+
+           var types = eqType.EquivalentType.GetMember(binderName)
+               .Where(it => it is PropertyInfo || it is MethodInfo || it is EventInfo)
+               .Select(it =>
+                           {
+                               var prop =it as PropertyInfo;
+                               if (prop != null)
+                                   return prop.PropertyType;
+                               var mem = it as MethodInfo;
+                               if (mem != null)
+                                   return mem.ReturnType;
+                               var eve = it as EventInfo;
+                               if (eve != null)
+                                   return eve.EventHandlerType;
+                               return typeof (object);
+                           }).ToList();
+
+;
+            if (!types.Any())
+                return false;
+            foreach (var currenttype in types)
+            {
+                if (type == null || type == currenttype)
+                    type = currenttype;
+                else
+                    type = typeof (object);
+            }
+            return true;
+        }
+
+
+        FauxType IEquivalentType.EquivalentType { get; set; }
+     
+        object IServiceProvider.GetService(Type serviceType)
+        {
+            var aggreTypes =AggreType.MakeTypeAppendable(this);
+
+            if (!aggreTypes.ContainsType(serviceType))
+            {
+                aggreTypes.AddType(serviceType);
+                
+                if (serviceType.GetTypeInfo().IsInterface && Dynamic.Impromptu.IsAvailable)
+                {
+                    return Dynamic.Impromptu.DynamicActLike(this, aggreTypes.GetInterfaceTypes());
+                }
+
+            }
+
+            return this;
+        }
+    }
+}
