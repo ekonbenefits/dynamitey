@@ -17,6 +17,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using Dynamitey.DynamicObjects;
 using Dynamitey.Internal.Optimization;
@@ -194,7 +195,7 @@ namespace Dynamitey
             type = target as Type ?? target.GetType();
 
 
-            if (safe || type.IsGenericType)
+            if (safe || type.GetTypeInfo().IsGenericType)
             {
                 genericeType = type.GetGenericTypeDefinition();
             }
@@ -222,7 +223,7 @@ namespace Dynamitey
             {
                 if (size == 8)
                 {
-                    var lasttype = type.GetGenericArguments()[7];
+                    var lasttype = type.GetTypeInfo().GetGenericArguments()[7];
                     size = size + HelperSize(lasttype, true) - 1;
                 }
             }

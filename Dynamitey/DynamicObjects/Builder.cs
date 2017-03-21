@@ -17,7 +17,6 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Reflection;
 using Dynamitey.Internal.Optimization;
@@ -411,7 +410,8 @@ namespace Dynamitey.DynamicObjects
             result = InvokeHelper(binder.CallInfo, args,tBuildType);
             if (TryTypeForName(binder.Name, out tType))
             {
-                if (tType.IsInterface && result != null && !tType.IsAssignableFrom(result.GetType()))
+                var typeInfo = tType.GetTypeInfo();
+                if (typeInfo.IsInterface && result != null && !typeInfo.IsAssignableFrom(result.GetType()))
                 {
                    // result = Impromptu.DynamicActLike(result, tType);
                 }

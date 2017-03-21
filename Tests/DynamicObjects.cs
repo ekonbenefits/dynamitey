@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 
-using Dynamitey.SupportLibrary1;
+using Dynamitey.SupportLibrary;
 using Microsoft.CSharp;
 using NUnit.Framework;
 

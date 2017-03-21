@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Dynamic;
 using System.Linq;
-using System.Runtime.Serialization;
+
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
+using System.Reflection;
 
 namespace Dynamitey.DynamicObjects
 {
@@ -73,7 +74,7 @@ namespace Dynamitey.DynamicObjects
             if (!tGroup.Success)
             {
                 result = null;
-                if (outType.IsValueType)
+                if (outType.GetTypeInfo().IsValueType)
                     result = Dynamic.InvokeConstructor(outType);
                 return true;
             }

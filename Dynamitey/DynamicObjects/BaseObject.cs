@@ -18,9 +18,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
-using System.Runtime.Serialization;
-
 using System.Reflection;
+
+
 namespace Dynamitey.DynamicObjects
 {
 
@@ -109,7 +109,7 @@ namespace Dynamitey.DynamicObjects
             {
                 aggreTypes.AddType(serviceType);
                 
-                if (serviceType.IsInterface && Dynamic.Impromptu.IsAvailable)
+                if (serviceType.GetTypeInfo().IsInterface && Dynamic.Impromptu.IsAvailable)
                 {
                     return Dynamic.Impromptu.DynamicActLike(this, aggreTypes.GetInterfaceTypes());
                 }

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Dynamitey;
-using Dynamitey.SupportLibrary1;
+using Dynamitey.SupportLibrary;
 
 namespace Dynamitey.Tests
 {

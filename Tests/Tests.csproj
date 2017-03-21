@@ -105,12 +105,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dynamitey\Dynamitey.csproj">
-      <Project>{ce699ab8-4122-4369-baa6-76244a0734e4}</Project>
+      <Project>{8902afba-4aca-4880-b606-adec6bb21a1b}</Project>
       <Name>Dynamitey</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SupportLibrary1\SupportLibrary1.csproj">
-      <Project>{348152a9-6a9c-4115-b60a-9e08ca72451d}</Project>
-      <Name>SupportLibrary1</Name>
+    <ProjectReference Include="..\SupportLibrary\SupportLibrary.csproj">
+      <Project>{18e19833-d47e-4a7f-ae64-31e28fef8728}</Project>
+      <Name>SupportLibrary</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

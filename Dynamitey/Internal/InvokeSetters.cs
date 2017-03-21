@@ -59,15 +59,15 @@ namespace Dynamitey.Internal
                     tDict = (IEnumerable<KeyValuePair<string, object>>)args[1];
                 }
                 else if (args[1] is IEnumerable
-                        && args[1].GetType().IsGenericType
+                        && args[1].GetType().GetTypeInfo().IsGenericType
                     )
                 {
                     var tEnumerableArg = (IEnumerable)args[1];
 
-                    var tInterface = tEnumerableArg.GetType().GetInterfaces().FirstOrDefault(it=>it.Name =="IEnumerable`1");
+                    var tInterface = tEnumerableArg.GetType().GetTypeInfo().GetInterfaces().FirstOrDefault(it=>it.Name =="IEnumerable`1");
                     if(tInterface !=null)
                     {
-                        var tParamTypes = tInterface.GetGenericArguments();
+                        var tParamTypes = tInterface.GetTypeInfo().GetGenericArguments();
                         if(tParamTypes.Length ==1 
                             && tParamTypes[0].GetGenericTypeDefinition() == typeof(Tuple<,>))
                         {
@@ -78,7 +78,7 @@ namespace Dynamitey.Internal
                 else if (Util.IsAnonymousType(args[1]))
                 {
                     var keyDict = new Dictionary<string, object>();
-                    foreach (var tProp in args[1].GetType().GetProperties())
+                    foreach (var tProp in args[1].GetType().GetTypeInfo().GetProperties())
                     {
                         keyDict[tProp.Name] = Dynamic.InvokeGet(args[1], tProp.Name);
                     }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
+
 using System.Text;
 using System.Reflection;
 namespace Dynamitey.DynamicObjects
@@ -99,7 +99,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns></returns>
         public override IEnumerable<MemberInfo> GetMember(string binderName)
         {
-            return TargetType.GetMember(binderName);
+            return TargetType.GetTypeInfo().GetMember(binderName);
         }
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns></returns>
         public Type[] GetInterfaceTypes()
         {
-            return Types.SelectMany(it => it.GetContainedTypes()).Where(it => it.IsInterface).ToArray();
+            return Types.SelectMany(it => it.GetContainedTypes()).Where(it => it.GetTypeInfo().IsInterface).ToArray();
         }
 
         /// <summary>

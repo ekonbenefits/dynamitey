@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dynamitey.SupportLibrary1;
+using Dynamitey.SupportLibrary;
 using Microsoft.CSharp.RuntimeBinder;
 using NUnit.Framework;
 
