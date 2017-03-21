@@ -19,7 +19,7 @@ using System.ComponentModel;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
-
+using Dynamitey.Internal.Compat;
 
 namespace Dynamitey.DynamicObjects
 {

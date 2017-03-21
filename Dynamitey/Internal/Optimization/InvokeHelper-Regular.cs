@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using Dynamitey.DynamicObjects;
 using Microsoft.CSharp.RuntimeBinder;
 using Binder = Microsoft.CSharp.RuntimeBinder.Binder;
+using Dynamitey.Internal.Compat;
 
 namespace Dynamitey.Internal.Optimization
 {

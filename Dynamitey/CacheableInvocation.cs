@@ -5,6 +5,7 @@ using System.Runtime.CompilerServices;
 using Dynamitey.Internal.Optimization;
 using Microsoft.CSharp.RuntimeBinder;
 using System.Reflection;
+using Dynamitey.Internal.Compat;
 
 namespace Dynamitey
 {

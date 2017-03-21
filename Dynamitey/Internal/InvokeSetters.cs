@@ -5,7 +5,7 @@ using System.Dynamic;
 using System.Linq;
 using Dynamitey.Internal.Optimization;
 using Microsoft.CSharp.RuntimeBinder;
-
+using Dynamitey.Internal.Compat;
 using System.Reflection;
 
 namespace Dynamitey.Internal

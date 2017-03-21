@@ -4,6 +4,8 @@ using System.Linq;
 
 using System.Text;
 using System.Reflection;
+using Dynamitey.Internal.Compat;
+
 namespace Dynamitey.DynamicObjects
 {
 

@@ -7,6 +7,7 @@ using System.Reflection;
 
 using System.Text;
 using Microsoft.CSharp.RuntimeBinder;
+using Dynamitey.Internal.Compat;
 
 namespace Dynamitey.DynamicObjects
 {

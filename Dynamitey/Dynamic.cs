@@ -25,6 +25,7 @@ using Dynamitey.Internal;
 using Dynamitey.Internal.Optimization;
 using Microsoft.CSharp.RuntimeBinder;
 using System.Text.RegularExpressions;
+using Dynamitey.Internal.Compat;
 
 namespace Dynamitey
 {
@@ -857,7 +858,7 @@ namespace Dynamitey
                         else if (target is IConvertible && typeof (IConvertible).GetTypeInfo().IsAssignableFrom(tReducedType))
                         {
 
-                            target = Convert.ChangeType(target, tReducedType, CultureInfo.DefaultThreadCurrentCulture);
+                            target = Convert.ChangeType(target, tReducedType, Net40.GetDefaultThreadCurrentCulture());
 
                         }
                         else

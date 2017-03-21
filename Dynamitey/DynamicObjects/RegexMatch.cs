@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Collections.Generic;
 using System.Reflection;
+using Dynamitey.Internal.Compat;
 
 namespace Dynamitey.DynamicObjects
 {

@@ -21,6 +21,7 @@ using System.Reflection;
 using System.Text;
 using Dynamitey.DynamicObjects;
 using Dynamitey.Internal.Optimization;
+using Dynamitey.Internal.Compat;
 
 namespace Dynamitey
 {
