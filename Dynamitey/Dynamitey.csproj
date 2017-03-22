@@ -55,6 +55,10 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>InlineLambdas.cs</LastGenOutput>
     </None>
+    <None Update="Internal\Optimization\InvokeHelper.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>InvokeHelper.cs</LastGenOutput>
+    </None>
     <None Update="ThisFunctions.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ThisFunctions.cs</LastGenOutput>
@@ -70,6 +74,11 @@
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
       <DependentUpon>InlineLambdas.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Internal\Optimization\InvokeHelper.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>InvokeHelper.tt</DependentUpon>
     </Compile>
     <Compile Update="ThisFunctions.cs">
       <DesignTime>True</DesignTime>
