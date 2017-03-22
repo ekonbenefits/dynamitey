@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.5;net45;net40</TargetFrameworks>
+    <TargetFrameworks>netstandard1.5;net40;portable40-net45+sl5+win8+wp8</TargetFrameworks>
     <Description>(pronounced dyna-mighty) flexes DLR muscle to do meta-mazing things in .net</Description>
     <Company>Ekon Benefits</Company>
     <Authors />
@@ -21,8 +21,16 @@
     <Version>1.5.0</Version>
 
   </PropertyGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)'!='net40'">
+  
+  <PropertyGroup Condition="'$(TargetFramework)'=='portable40-net45+sl5+win8+wp8'">
+    <TargetFrameworkIdentifier>.NETPortable</TargetFrameworkIdentifier>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Profile158</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(TargetFramework)'=='portable40-net45+sl5+win8+wp8'">
+    <DefineConstants>$(DefineConstants);PORTABLE158</DefineConstants>
+  </PropertyGroup>
+  <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.5'">
     <PackageReference Include="Microsoft.CSharp" Version="4.3.0" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="System.ComponentModel" Version="4.3.0" />
@@ -32,6 +40,13 @@
 
   <ItemGroup Condition="'$(TargetFramework)'=='net40'">
     <Reference Include="Microsoft.CSharp" />
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework)'=='portable40-net45+sl5+win8+wp8'">
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Windows" />
   </ItemGroup>
 
 

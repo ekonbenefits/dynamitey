@@ -14,7 +14,7 @@ namespace Dynamitey.Internal.Compat
 
     public static class Net40
     {
-#if NET40
+#if NET40 || PORTABLE158
 
         public static Type GetTypeInfo(this Type type)
         {
