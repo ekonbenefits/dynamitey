@@ -24,9 +24,37 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Reflection;
 
-namespace Dynamitey.Internal.Optimization
-{
-  
+namespace Dynamitey.Internal.Optimization {
+
+<# var cacheTypes = new []{"", "Get", "Set", "Constructor", "Member", "Direct"}; #>
+
+<# foreach(var name in cacheTypes){ #>
+    internal static class Binder<#=name#>Cache<T> where T : class
+    {
+        private static IDictionary<BinderHash<T>, CallSite<T>> _cache;
+
+        private static readonly object _cacheLock = new object();
+
+        internal static IDictionary<BinderHash<T>, CallSite<T>> Cache
+        {
+            get
+            {
+                lock (_cacheLock)
+                {
+                    return _cache ?? (_cache = new Dictionary<BinderHash<T>, CallSite<T>>());
+                }
+            }
+        }
+
+        internal static readonly Action ClearCache = () =>
+        {
+            lock (_cacheLock)
+            {
+                _cache = null;
+            }
+        };
+    }
+<# } #>
 
     internal static partial class InvokeHelper
     {

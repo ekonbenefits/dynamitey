@@ -39,7 +39,13 @@ namespace Dynamitey
     /// </summary>
     public static class Dynamic
     {
-
+        /// <summary>
+        /// Clears the dynamic binding caches.
+        /// </summary>
+        public static void ClearCaches()
+        {
+            InvokeHelper.ClearAllCaches();
+        }
 
         private static readonly Type ComObjectType;
 

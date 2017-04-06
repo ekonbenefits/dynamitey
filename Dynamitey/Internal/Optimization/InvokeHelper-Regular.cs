@@ -18,42 +18,6 @@ namespace Dynamitey.Internal.Optimization
     }
 
 
-    internal static class BinderCache<T> where T : class
-    {
-        internal static readonly IDictionary<BinderHash<T>, CallSite<T>> Cache = new Dictionary<BinderHash<T>, CallSite<T>>();
-   
-     
-
-      
-    }
-
-    internal static class BinderGetCache<T> where T : class
-    {
-        internal static readonly IDictionary<BinderHash<T>, CallSite<T>>
-                Cache = new Dictionary<BinderHash<T>, CallSite<T>>();
-    }
-
-    internal static class BinderConstructorCache<T> where T : class
-    {
-        internal static readonly IDictionary<BinderHash<T>, CallSite<T>> Cache = new Dictionary<BinderHash<T>, CallSite<T>>();
-    }
-
-    internal static class BinderSetCache<T> where T : class
-    {
-        internal static readonly IDictionary<BinderHash<T>, CallSite<T>> Cache = new Dictionary<BinderHash<T>, CallSite<T>>();
-    }
-
-    internal static class BinderMemberCache<T> where T : class
-    {
-        internal static readonly IDictionary<BinderHash<T>, CallSite<T>> Cache = new Dictionary<BinderHash<T>, CallSite<T>>();
-    }
-
-    internal static class BinderDirectCache<T> where T : class
-    {
-        internal static readonly IDictionary<BinderHash<T>, CallSite<T>> Cache = new Dictionary<BinderHash<T>, CallSite<T>>();
-    }
-
-
     internal static partial class InvokeHelper
     {
 
@@ -63,6 +27,30 @@ namespace Dynamitey.Internal.Optimization
         internal const int KnownMember = 3;
         internal const int KnownDirect = 4;
         internal const int KnownConstructor = 5;
+
+
+
+        private static readonly object _clearDynamicLock = new object();
+        internal static IDictionary<Type, CallSite<DynamicCreateCallSite>> DynamicInvokeCreateCallSite
+        {
+            get
+            {
+                lock (_clearDynamicLock)
+                {
+                    return _dynamicInvokeCreateCallSite ?? (_dynamicInvokeCreateCallSite =
+                               new Dictionary<Type, CallSite<DynamicCreateCallSite>>());
+                }
+
+            }
+        }
+
+        internal static void ClearFullyDynamicCache()
+        {
+            lock (_clearDynamicLock)
+            {
+                _dynamicInvokeCreateCallSite = null;
+            }
+        }
 
         private static bool TryDynamicCachedCallSite<T>(BinderHash<T> hash, int knownBinderType, out CallSite<T> callSite) where T: class 
         {
@@ -109,33 +97,61 @@ namespace Dynamitey.Internal.Optimization
     
         }
 
+        internal static HashSet<object> _allCaches = new HashSet<object>();
+        private static readonly object _binderCacheLock = new object();
+        private static readonly object _callSiteCacheLock = new object();
+        internal static IDictionary<Type, CallSite<DynamicCreateCallSite>> _dynamicInvokeCreateCallSite;
+
+
+        internal static void ClearAllCaches()
+        {
+            lock (_binderCacheLock)
+            {
+                foreach (Action instance in _allCaches)
+                {
+                    instance();
+                }
+            }
+
+            lock (_callSiteCacheLock)
+            {
+                ClearFullyDynamicCache();
+            }
+        }
+
 
         private static void SetDynamicCachedCallSite<T>(BinderHash<T> hash, int knownBinderType, CallSite<T> callSite) where T: class 
         {
             switch (knownBinderType)
             {
                 default:
+                    _allCaches.Add(BinderCache<T>.ClearCache);
                     BinderCache<T>.Cache[hash] = callSite;
                     break;
                 case KnownGet:
+                    _allCaches.Add(BinderGetCache<T>.ClearCache);
                     BinderGetCache<T>.Cache[hash] = callSite;
                     break;
                 case KnownSet:
+                    _allCaches.Add(BinderSetCache<T>.ClearCache);
                     BinderSetCache<T>.Cache[hash] = callSite;
                     break;
                 case KnownMember:
+                    _allCaches.Add(BinderMemberCache<T>.ClearCache);
                     BinderMemberCache<T>.Cache[hash] = callSite;
                     break;
                 case KnownDirect:
+                    _allCaches.Add(BinderDirectCache<T>.ClearCache);
                     BinderDirectCache<T>.Cache[hash] = callSite;
                     break;
                 case KnownConstructor:
+                    _allCaches.Add(BinderConstructorCache<T>.ClearCache);
                     BinderConstructorCache<T>.Cache[hash] = callSite;
                     break;
             }
         }
 
-        private static readonly object _binderCacheLock = new object();
+      
 
         /// <summary>
         /// LazyBinderType
@@ -223,10 +239,10 @@ namespace Dynamitey.Internal.Optimization
             return tList;
         }
 
-        internal static readonly IDictionary<Type, CallSite<DynamicCreateCallSite>>
-            _dynamicInvokeCreateCallSite = new Dictionary<Type, CallSite<DynamicCreateCallSite>>();
 
-        private static readonly object _callSiteCacheLock = new object();
+
+
+  
 
         internal static CallSite CreateCallSite(
             Type delegateType,
@@ -247,7 +263,7 @@ namespace Dynamitey.Internal.Optimization
 
             lock (_callSiteCacheLock)
             {
-                foundInCache = _dynamicInvokeCreateCallSite.TryGetValue(delegateType, out tSite);
+                foundInCache = DynamicInvokeCreateCallSite.TryGetValue(delegateType, out tSite);
             }
 
             if (!foundInCache)
@@ -277,9 +293,9 @@ namespace Dynamitey.Internal.Optimization
                 lock (_callSiteCacheLock)
                 {
                     // another thread might have been faster; add to dictionary only if we are the first
-                    if (!_dynamicInvokeCreateCallSite.ContainsKey(delegateType))
+                    if (!DynamicInvokeCreateCallSite.ContainsKey(delegateType))
                     {
-                        _dynamicInvokeCreateCallSite[delegateType] = tSite;
+                        DynamicInvokeCreateCallSite[delegateType] = tSite;
                     }
                 }
             }

@@ -20,9 +20,159 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Reflection;
 
-namespace Dynamitey.Internal.Optimization
-{
-  
+namespace Dynamitey.Internal.Optimization {
+
+
+    internal static class BinderCache<T> where T : class
+    {
+        private static IDictionary<BinderHash<T>, CallSite<T>> _cache;
+
+        private static readonly object _cacheLock = new object();
+
+        internal static IDictionary<BinderHash<T>, CallSite<T>> Cache
+        {
+            get
+            {
+                lock (_cacheLock)
+                {
+                    return _cache ?? (_cache = new Dictionary<BinderHash<T>, CallSite<T>>());
+                }
+            }
+        }
+
+        internal static readonly Action ClearCache = () =>
+        {
+            lock (_cacheLock)
+            {
+                _cache = null;
+            }
+        };
+    }
+    internal static class BinderGetCache<T> where T : class
+    {
+        private static IDictionary<BinderHash<T>, CallSite<T>> _cache;
+
+        private static readonly object _cacheLock = new object();
+
+        internal static IDictionary<BinderHash<T>, CallSite<T>> Cache
+        {
+            get
+            {
+                lock (_cacheLock)
+                {
+                    return _cache ?? (_cache = new Dictionary<BinderHash<T>, CallSite<T>>());
+                }
+            }
+        }
+
+        internal static readonly Action ClearCache = () =>
+        {
+            lock (_cacheLock)
+            {
+                _cache = null;
+            }
+        };
+    }
+    internal static class BinderSetCache<T> where T : class
+    {
+        private static IDictionary<BinderHash<T>, CallSite<T>> _cache;
+
+        private static readonly object _cacheLock = new object();
+
+        internal static IDictionary<BinderHash<T>, CallSite<T>> Cache
+        {
+            get
+            {
+                lock (_cacheLock)
+                {
+                    return _cache ?? (_cache = new Dictionary<BinderHash<T>, CallSite<T>>());
+                }
+            }
+        }
+
+        internal static readonly Action ClearCache = () =>
+        {
+            lock (_cacheLock)
+            {
+                _cache = null;
+            }
+        };
+    }
+    internal static class BinderConstructorCache<T> where T : class
+    {
+        private static IDictionary<BinderHash<T>, CallSite<T>> _cache;
+
+        private static readonly object _cacheLock = new object();
+
+        internal static IDictionary<BinderHash<T>, CallSite<T>> Cache
+        {
+            get
+            {
+                lock (_cacheLock)
+                {
+                    return _cache ?? (_cache = new Dictionary<BinderHash<T>, CallSite<T>>());
+                }
+            }
+        }
+
+        internal static readonly Action ClearCache = () =>
+        {
+            lock (_cacheLock)
+            {
+                _cache = null;
+            }
+        };
+    }
+    internal static class BinderMemberCache<T> where T : class
+    {
+        private static IDictionary<BinderHash<T>, CallSite<T>> _cache;
+
+        private static readonly object _cacheLock = new object();
+
+        internal static IDictionary<BinderHash<T>, CallSite<T>> Cache
+        {
+            get
+            {
+                lock (_cacheLock)
+                {
+                    return _cache ?? (_cache = new Dictionary<BinderHash<T>, CallSite<T>>());
+                }
+            }
+        }
+
+        internal static readonly Action ClearCache = () =>
+        {
+            lock (_cacheLock)
+            {
+                _cache = null;
+            }
+        };
+    }
+    internal static class BinderDirectCache<T> where T : class
+    {
+        private static IDictionary<BinderHash<T>, CallSite<T>> _cache;
+
+        private static readonly object _cacheLock = new object();
+
+        internal static IDictionary<BinderHash<T>, CallSite<T>> Cache
+        {
+            get
+            {
+                lock (_cacheLock)
+                {
+                    return _cache ?? (_cache = new Dictionary<BinderHash<T>, CallSite<T>>());
+                }
+            }
+        }
+
+        internal static readonly Action ClearCache = () =>
+        {
+            lock (_cacheLock)
+            {
+                _cache = null;
+            }
+        };
+    }
 
     internal static partial class InvokeHelper
     {

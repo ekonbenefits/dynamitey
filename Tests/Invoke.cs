@@ -15,6 +15,13 @@ namespace Dynamitey.Tests
 {
     public class Invoke:AssertionHelper
     {
+        [TestFixtureTearDown]
+        public void DestroyCaches()
+        {
+            Dynamic.ClearCaches();
+        }
+
+
         [Test]
         public void TestDynamicSet()
         {
