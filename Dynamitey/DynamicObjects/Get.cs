@@ -84,7 +84,15 @@ namespace Dynamitey.DynamicObjects
 
             if (!base.TryInvokeMember(binder, args, out result))
             {
-                result = Dynamic.InvokeGet(CallTarget, binder.Name);
+                try
+                {
+                    //Check if there is a get property because it might return a function
+                    result = Dynamic.InvokeGet(CallTarget, binder.Name);
+                }
+                catch (RuntimeBinderException)
+                {
+                    return false;
+                }
                 if (result == null)
                     return false;
                 var tDel = result as Delegate;
