@@ -238,9 +238,30 @@ namespace Dynamitey.DynamicObjects
 
             object[] tArgs = Util.NameArgsIfNecessary(binder.CallInfo, args);
 
+
+            Type[] types = null;
+            try
+            { // Try and pull generic arguments from binder
+                IList<Type> typeList = Dynamic.InvokeGet(binder,
+                    "Microsoft.CSharp.RuntimeBinder.ICSharpInvokeOrInvokeMemberBinder.TypeArguments");
+                if (typeList != null)
+                {
+
+                    types = typeList.ToArray();
+
+                }
+
+            }
+            catch (RuntimeBinderException)
+            {
+                types = null;
+            }
+
+            var name = InvokeMemberName.Create;
+            var fullName = name(binder.Name, types);
             try
             {
-                result = Dynamic.InvokeMember(CallTarget, binder.Name, tArgs);
+                result = Dynamic.InvokeMember(CallTarget, fullName, tArgs);
                
             }
             catch (RuntimeBinderException)
@@ -248,7 +269,7 @@ namespace Dynamitey.DynamicObjects
                 result = null;
                 try
                 {
-                    Dynamic.InvokeMemberAction(CallTarget, binder.Name, tArgs);
+                    Dynamic.InvokeMemberAction(CallTarget, fullName, tArgs);
                 }
                 catch (RuntimeBinderException)
                 {
