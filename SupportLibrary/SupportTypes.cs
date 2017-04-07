@@ -366,6 +366,16 @@ namespace Dynamitey.SupportLibrary
 
     }
 
+    public class ForwardGenericMethodsTestClass
+    {
+        public string Value { get; set; }
+
+        public T Create<T>(int arg) where T : ForwardGenericMethodsTestClass, new()
+        {
+            return new T { Value = "test" + arg };
+        }
+    }
+
 
     public class GenericMethOutPoco
     {

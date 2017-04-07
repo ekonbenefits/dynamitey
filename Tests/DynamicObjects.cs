@@ -133,6 +133,16 @@ namespace Dynamitey.Tests
         }
 
 
+        [Test]
+        public void ForwardGenericMethodsTest()
+        {
+            dynamic tNew = new ForwardGenericMethodsTestClass();
+
+            dynamic tFwd = new TestForwarder(tNew);
+
+            Assert.AreEqual("test99", tFwd.Create<ForwardGenericMethodsTestClass>(99).Value);
+        }
+
 
         [Test]
         public void ForwardDynamicTest()
