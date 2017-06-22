@@ -1,4 +1,4 @@
-#!/usr/bin/env fsharpi --define:mono_posix --exec
+#!/usr/bin/fsharpi --define:mono_posix --exec
 
 #if FSharp_MakeFile
 
