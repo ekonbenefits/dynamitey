@@ -8,7 +8,7 @@ env:
     - EnableNuGetPackageRestore=true
     
 mono: none
-dotnet: 1.1.4
+dotnet: 1.0.4
 dist: trusty
 
 script:
