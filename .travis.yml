@@ -7,7 +7,7 @@ env:
   global:
     - EnableNuGetPackageRestore=true
     
-mono: none
+mono: latest
 dotnet: 1.0.4
 dist: trusty
 
