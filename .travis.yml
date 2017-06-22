@@ -12,6 +12,4 @@ dotnet: 1.0.4
 dist: trusty
 
 script:
-  - dotnet restore
-  - dotnet build
-  - .ci/nunit.sh Tests/bin/Debug/Tests.dll
+  - ./build.fsx
