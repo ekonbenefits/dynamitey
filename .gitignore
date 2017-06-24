@@ -148,3 +148,4 @@ $RECYCLE.BIN/
 .DS_Store
 
 /dist/*.nupkg
+*.userprefs
