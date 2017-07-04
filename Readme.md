@@ -1,4 +1,5 @@
-# Dynamitey [![Build Status](https://travis-ci.org/ekonbenefits/dynamitey.png?branch=master)](https://travis-ci.org/ekonbenefits/dynamitey)
+# Dynamitey [![Build Status](https://travis-ci.org/ekonbenefits/dynamitey.png?branch=master)](https://travis-ci.org/ekonbenefits/dynamitey) [![Build status](https://ci.appveyor.com/api/projects/status/kctdnnmctakj1j9w?svg=true)](https://ci.appveyor.com/project/jbtule/dynamitey)
+
 
 (pronounced dyna-mighty) flexes DLR muscle to do meta-mazing things in .net
 
