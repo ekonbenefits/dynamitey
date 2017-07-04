@@ -12,7 +12,7 @@ dotnet: 1.0.4
 dist: trusty
 
 install:
-  - sudo apt-get install msbuild
+  - /usr/bin/env
 
 script:
   - ./build.fsx
