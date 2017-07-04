@@ -805,7 +805,7 @@ namespace Dynamitey.Internal.Optimization
             }
 
 
-            if (isValueType || Util.IsMono)
+            if (isValueType)
             {
                 CallSite tDummy =null;
                 return DynamicInvokeStaticMember(type, ref tDummy, tBinderType, KnownConstructor, tBinder, ConstructorName, true, type,
@@ -831,15 +831,8 @@ namespace Dynamitey.Internal.Optimization
             if (!_dynamicInvokeWrapFunc.TryGetValue(returnType, out tSite))
             {
 
-                var tMethod = "WrapFuncHelperMono";
-
-#if !__MonoCS__
-                //Mono Compiler can't compile or run WrapFuncHelper
-                if (!Util.IsMono)
-                {
-                    tMethod = "WrapFuncHelper";
-                }
-#endif
+                var tMethod =  "WrapFuncHelper";
+ 
                 tSite = CallSite<DynamicInvokeWrapFunc>.Create(
                     Binder.InvokeMember(
                         CSharpBinderFlags.None,
