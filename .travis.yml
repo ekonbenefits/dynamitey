@@ -6,7 +6,6 @@ solution: Dynamitey.sln
 env:
   global:
     - EnableNuGetPackageRestore=true
-    - PATH=/usr/bin:$PATH
     
 mono: latest
 dotnet: 1.0.4
