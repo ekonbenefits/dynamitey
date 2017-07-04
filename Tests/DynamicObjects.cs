@@ -177,9 +177,9 @@ namespace Dynamitey.Tests
             Assert.That(() => tNew.Action1(), Throws.InstanceOf<AssertionException>());
             Assert.That(() => tNew.Action2(true), Throws.InstanceOf<AssertionException>());
 
-            Assert.That(tNew.Action3(), Is.EqualTo("test"));
+            Assert.That((object)tNew.Action3(), Is.EqualTo("test"));
 
-            Assert.That(tNew.Action4(4), Is.EqualTo("test4"));
+            Assert.That((object)tNew.Action4(4), Is.EqualTo("test4"));
         }
 
         [Test]
@@ -200,9 +200,9 @@ namespace Dynamitey.Tests
             Assert.That(() => tFwd.Action1(), Throws.InstanceOf<AssertionException>());
             Assert.That(() => tFwd.Action2(true), Throws.InstanceOf<AssertionException>());
 
-            Assert.That(tFwd.Action3(), Is.EqualTo("test"));
+            Assert.That((object)tFwd.Action3(), Is.EqualTo("test"));
 
-            Assert.That(tFwd.Action4(4), Is.EqualTo("test4"));
+            Assert.That((object)tFwd.Action4(4), Is.EqualTo("test4"));
         }
 
         [Test]
@@ -257,7 +257,7 @@ namespace Dynamitey.Tests
             dynamic tNew = new DynamicObjects.Dictionary();
             Dynamic.ApplyEquivalentType(tNew, typeof (ISimpleStringMethod));
 
-            Assert.That(tNew.StartsWith("Te"), Is.False);
+            Assert.That((object)tNew.StartsWith("Te"), Is.False);
 
 
 
@@ -409,7 +409,7 @@ namespace Dynamitey.Tests
             Assert.AreEqual(10, tInterface.Count);
             Assert.AreEqual(false, tInterface.IsSynchronized);
             Assert.AreEqual(this, tInterface.SyncRoot);
-            Assert.That(tInterface.GetEnumerator(), Is.InstanceOf<IEnumerator>());
+            Assert.That((object)tInterface.GetEnumerator(), Is.InstanceOf<IEnumerator>());
         }
 
         [Test]

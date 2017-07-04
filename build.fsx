@@ -60,12 +60,13 @@ Target "Build" (fun () ->
 
 Target "Test" (fun () ->
     trace " --- Test the libs --- "
-    let testDir = "./Tests/bin/Release/"
+    let testDir = "./Tests/bin/Release/net462/"
     !! (testDir + "Tests.dll")
                |> NUnit (fun p ->
                          { p with
                                ToolPath = "./packages/NUnit.Runners.2.6.2/tools"
                                //DisableShadowCopy = true;
+                               ExcludeCategory = "Performance"
                                OutputFile = testDir + "TestResults.xml" })
 )
 

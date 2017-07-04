@@ -349,8 +349,8 @@ namespace Dynamitey.Tests
 
             var color =Dynamic.CoerceConvert(colorString, typeof (Color));
 
-            Assert.That(color,Is.TypeOf<Color>());
-            Assert.That(color, Is.EqualTo(Color.PaleVioletRed));
+            Assert.That((object)color,Is.TypeOf<Color>());
+            Assert.That((object)color, Is.EqualTo(Color.PaleVioletRed));
 
         }
 

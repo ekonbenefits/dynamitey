@@ -27,7 +27,7 @@ namespace Dynamitey.Tests
         {
             dynamic mimic = new DynamicObjects.Mimic();
             dynamic result = mimic.I.Can.Get.Any.Property.I.Want.And.It.Wont.Blow.Up;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
         }
 
         [Test]
@@ -35,7 +35,7 @@ namespace Dynamitey.Tests
         {
             dynamic mimic = new DynamicObjects.Mimic();
             dynamic result = mimic.I.Can.Set.Any.Property.I.Want.And.It.Wont.Blow = "Up";
-            Assert.That(result, Is.EqualTo("Up"));
+            Assert.That((object)result, Is.EqualTo("Up"));
         }
 
         [Test]
@@ -43,7 +43,7 @@ namespace Dynamitey.Tests
         {
             dynamic mimic = new DynamicObjects.Mimic();
             dynamic result = mimic.I.Can.Call.Any.Method.I.Want.And.It.Wont.Blow.Up();
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
         }
 
         [Test]
@@ -51,7 +51,7 @@ namespace Dynamitey.Tests
         {
             dynamic mimic = new DynamicObjects.Mimic();
             dynamic result = mimic.I().Can().Call().Any().Method().I().Want().And().It().Wont().Blow().Up("And", "Any", "Parameter", "I", "Want", 1, 2, 3, 44.99m);
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
         }
 
         [Test]
@@ -59,7 +59,7 @@ namespace Dynamitey.Tests
         {
             dynamic mimic = new DynamicObjects.Mimic();
             dynamic result = mimic["I"]["Can"]["Get"]["Indexes"]["All"]["Day"]["Like"]["It"]["Aint"]["No"]["Thang"];
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
         }
 
         [Test]
@@ -67,7 +67,7 @@ namespace Dynamitey.Tests
         {
             dynamic mimic = new DynamicObjects.Mimic();
             dynamic result = mimic["I"]["Can"]["Set"]["Indexes"]["All"]["Day"]["Like"]["It"]["Aint"]["No"] = "Thang";
-            Assert.That(result, Is.EqualTo("Thang"));
+            Assert.That((object)result, Is.EqualTo("Thang"));
         }
 
         [Test]
@@ -96,31 +96,31 @@ namespace Dynamitey.Tests
             dynamic result;
 
             result = !mimic;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = ++mimic;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = --mimic;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = mimic++;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = mimic--;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = mimic += 1;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = mimic -= 1;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = mimic /= 2;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = mimic *= 4;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = mimic ^= true;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = mimic |= true;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = mimic &= false;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = mimic %= 5;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
         }
 
         [Test]
@@ -131,21 +131,21 @@ namespace Dynamitey.Tests
             dynamic result;
 
             result = thing1 + thing2;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = thing1 - thing2;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = thing1 / thing2;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = thing1 * thing2;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = thing1 | thing2;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = thing1 & thing2;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = thing1 ^ thing2;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
             result = thing1 % thing2;
-            Assert.That(result, Is.TypeOf<DynamicObjects.Mimic>());
+            Assert.That((object)result, Is.TypeOf<DynamicObjects.Mimic>());
         }
 
         [Test]
