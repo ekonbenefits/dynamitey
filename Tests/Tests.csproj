@@ -13,6 +13,7 @@
     <PackageReference Include="NUnit" Version="2.6.2" />
      <PackageReference Include="FSharp.Core" Version="4.0.0" />
      <PackageReference Include="Moq" Version="4.0.10827"/>
+     <PackageReference Include="NUnit.Runners" Version="2.6.2"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dynamitey\Dynamitey.csproj" />
