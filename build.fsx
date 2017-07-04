@@ -1,5 +1,8 @@
-#!/usr/bin/env fsharpi --define:mono_posix --exec
-
+#!/bin/sh
+#if bin_sh
+  # Doing this because arguments can't be used with /usr/bin/env on linux, just mac
+  exec fsharpi --define:mono_posix --exec $0 $*
+#endif
 #if FSharp_MakeFile
 
 (*
