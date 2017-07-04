@@ -6,7 +6,7 @@ solution: Dynamitey.sln
 env:
   global:
     - EnableNuGetPackageRestore=true
-    - PATH=$PATH:/usr/bin
+    - PATH=/usr/bin:$PATH
     
 mono: latest
 dotnet: 1.0.4
@@ -14,7 +14,7 @@ dist: trusty
 
 install:
   - /usr/bin/env
-  - ls -la /usr/bin/fsharpi
+  - which fsharpi
 
 script:
   - ./build.fsx
