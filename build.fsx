@@ -68,6 +68,15 @@ Target "Test" (fun () ->
                                //DisableShadowCopy = true;
                                ExcludeCategory = "Performance"
                                OutputFile = testDir + "TestResults.xml" })
+     
+    let appveyor = environVarOrNone "APPVEYOR_JOB_ID"
+    match appveyor with
+        | Some(jobid) -> 
+            use webClient = new System.Net.WebClient()
+            webClient.UploadFile(sprintf "https://ci.appveyor.com/api/testresults/nunit/%s" jobid, testDir + "TestResults.xml") |> ignore
+        | None -> ()
+    
+    
 )
 
 "Restore"
