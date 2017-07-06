@@ -16,3 +16,7 @@ install:
 
 script:
   - ./build.fsx
+
+branches:
+  only:
+    - master
