@@ -2,14 +2,16 @@
 # see travis-ci.org for details
 
 language: csharp
+os: osx
+
 solution: Dynamitey.sln
+
 env:
   global:
     - EnableNuGetPackageRestore=true
     
 mono: beta
 dotnet: 1.0.4
-dist: trusty
 
 install:
   - msbuild /ver
