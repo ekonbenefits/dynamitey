@@ -261,6 +261,10 @@ namespace Dynamitey
                     return leftArg | rightArg;
                 case ExpressionType.And:
                     return leftArg & rightArg;
+                case ExpressionType.OrElse:
+                    return leftArg || rightArg;
+                case ExpressionType.AndAlso:
+                    return leftArg && rightArg;
                 default:
                     throw new ArgumentException("Unsupported Operator", "op");
             }
@@ -280,10 +284,14 @@ namespace Dynamitey
                     return !arg;
                 case ExpressionType.Negate:
                     return -arg;
-                case ExpressionType.Decrement:
+                case ExpressionType.PreDecrementAssign:
                     return --arg;
-                case ExpressionType.Increment:
+                case ExpressionType.PreIncrementAssign:
                     return ++arg;
+                case ExpressionType.PostDecrementAssign:
+                    return arg--;
+                case ExpressionType.PostIncrementAssign:
+                    return arg++;
                 default:
                     throw new ArgumentException("Unsupported Operator", "op");
             }
