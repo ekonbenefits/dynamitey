@@ -1360,9 +1360,9 @@ namespace Dynamitey.Tests
             return tMock.Object;
         }
 
-        public class BinaryTestDynObject:DynamicObject{
+        public class OperatorTestDynObject:DynamicObject{
             ExpressionType _type;
-            public BinaryTestDynObject(ExpressionType type){
+            public OperatorTestDynObject(ExpressionType type){
                 _type = type;
             }
 
@@ -1372,11 +1372,22 @@ namespace Dynamitey.Tests
                 return true;
             }
 
+            public override bool TryUnaryOperation(UnaryOperationBinder binder, out object result){
+                Assert.AreEqual(_type, binder.Operation);
+                result = _type;
+                return true;
+            }
+
         }
-         private void RunMockTests(ExpressionType type){
-            var mock = new BinaryTestDynObject(type);
+         private void RunBinaryMockTests(ExpressionType type){
+            var mock = new OperatorTestDynObject(type);
             var dummy = new Object();
             Dynamic.InvokeBinaryOperator(mock, type, dummy);
+        }
+
+        private void RunUnaryMockTests(ExpressionType type){
+            var mock = new OperatorTestDynObject(type);
+            Dynamic.InvokeUnaryOpartor(type,mock);
         }
 
         [Test]
@@ -1385,15 +1396,44 @@ namespace Dynamitey.Tests
             Assert.AreEqual(Dynamic.InvokeBinaryOperator(1, ExpressionType.Add, 2), 3);
         }
 
-       
+        [Test]
+        public void TestInvokeBasicUnaryOperatorsDynamic()
+        {
+            RunUnaryMockTests(ExpressionType.Not);
+            RunUnaryMockTests(ExpressionType.Negate);
+            RunUnaryMockTests(ExpressionType.Increment);
+            RunUnaryMockTests(ExpressionType.Decrement);
+        
+
+
+        }
 
         [Test]
         public void TestInvokeBasicBinaryOperatorsDynamic()
         {
-            RunMockTests(ExpressionType.Add);
-            RunMockTests(ExpressionType.Subtract);
-            RunMockTests(ExpressionType.Divide);
-            RunMockTests(ExpressionType.Multiply);
+            RunBinaryMockTests(ExpressionType.Add);
+            RunBinaryMockTests(ExpressionType.Subtract);
+            RunBinaryMockTests(ExpressionType.Divide);
+            RunBinaryMockTests(ExpressionType.Multiply);
+            RunBinaryMockTests(ExpressionType.Modulo);
+
+            RunBinaryMockTests(ExpressionType.And);
+            RunBinaryMockTests(ExpressionType.Or);
+            RunBinaryMockTests(ExpressionType.ExclusiveOr);
+            RunBinaryMockTests(ExpressionType.LeftShift);
+            RunBinaryMockTests(ExpressionType.RightShift);
+
+            RunBinaryMockTests(ExpressionType.AddAssign);
+            RunBinaryMockTests(ExpressionType.SubtractAssign);
+            RunBinaryMockTests(ExpressionType.DivideAssign);
+            RunBinaryMockTests(ExpressionType.MultiplyAssign);
+            RunBinaryMockTests(ExpressionType.ModuloAssign);
+
+            RunBinaryMockTests(ExpressionType.AndAssign);
+            RunBinaryMockTests(ExpressionType.OrAssign);
+            RunBinaryMockTests(ExpressionType.ExclusiveOrAssign);
+            RunBinaryMockTests(ExpressionType.LeftShiftAssign);
+            RunBinaryMockTests(ExpressionType.RightShiftAssign);
         }
 
 

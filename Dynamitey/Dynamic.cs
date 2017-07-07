@@ -284,14 +284,10 @@ namespace Dynamitey
                     return !arg;
                 case ExpressionType.Negate:
                     return -arg;
-                case ExpressionType.PreDecrementAssign:
+                case ExpressionType.Decrement:
                     return --arg;
-                case ExpressionType.PreIncrementAssign:
+                case ExpressionType.Increment:
                     return ++arg;
-                case ExpressionType.PostDecrementAssign:
-                    return arg--;
-                case ExpressionType.PostIncrementAssign:
-                    return arg++;
                 default:
                     throw new ArgumentException("Unsupported Operator", "op");
             }
