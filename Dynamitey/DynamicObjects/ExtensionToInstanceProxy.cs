@@ -83,7 +83,7 @@ namespace Dynamitey.DynamicObjects
             if (!base.TryGetMember(binder, out result))
             {
 
-                var tInterface = CallTarget.GetType().GetTypeInfo().GetInterfaces().Single(it => it.Name == _extendedType.Name);
+                var tInterface = UnwrappedTarget().GetType().GetTypeInfo().GetInterfaces().Single(it => it.Name == _extendedType.Name);
                 var typeInfo = tInterface.GetTypeInfo();
                 result = new Invoker(binder.Name,
                                      typeInfo.IsGenericType ? typeInfo.GetGenericArguments() : new Type[] {},null, this);
