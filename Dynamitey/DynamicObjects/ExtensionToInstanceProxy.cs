@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Text;
 using Microsoft.CSharp.RuntimeBinder;
 using Dynamitey.Internal.Compat;
+using Dynamitey.Internal.Optimization;
 
 namespace Dynamitey.DynamicObjects
 {
@@ -55,13 +56,17 @@ namespace Dynamitey.DynamicObjects
             if(target is ExtensionToInstanceProxy)
                 throw new ArgumentException("Don't Nest ExtensionToInstance Objects");
 
-            if (IsExtendedType(target))
+            if (IsExtendedType(target) || IsExtendedType(Util.GetTargetContext(target,out Type _, out bool _)))
             {
                 return;
             }
 
             throw new ArgumentException(String.Format("Non a valid {0} to be wrapped.",_extendedType));
             
+        }
+
+        private object UnwrappedTarget(){
+            return Util.GetTargetContext(CallTarget, out Type _, out bool _);
         }
 
         /// <summary>
@@ -312,7 +317,7 @@ namespace Dynamitey.DynamicObjects
             var staticType = InvokeContext.CreateStatic;
             var nameArgs = InvokeMemberName.Create;
 
-            var tList = new List<object> { CallTarget };
+            var tList = new List<object> { UnwrappedTarget() };
             tList.AddRange(args);
 
             object result =null;
@@ -322,7 +327,7 @@ namespace Dynamitey.DynamicObjects
             var tGenericPossibles = new List<Type[]>();
             if (name.GenericArgs != null && name.GenericArgs.Length > 0)
             {
-                var tInterface = CallTarget.GetType().GetTypeInfo().GetInterfaces().Single(it => it.Name == _extendedType.Name);
+                var tInterface = UnwrappedTarget().GetType().GetTypeInfo().GetInterfaces().Single(it => it.Name == _extendedType.Name);
                 var tTypeGenerics = (tInterface.GetTypeInfo().IsGenericType ? tInterface.GetTypeInfo().GetGenericArguments()
                                             : new Type[] { }).Concat(name.GenericArgs).ToArray();
 

@@ -21,7 +21,7 @@ namespace Dynamitey.DynamicObjects
         /// </summary>
         /// <param name="target">The target.</param>
         public LinqInstanceProxy(dynamic target)
-            :base((object)target, typeof(IEnumerable<>), new[]{typeof(Enumerable)}, new[]{typeof(ILinq<>), typeof(IOrderedLinq<>)})
+            :base(new InvokeContext(target, typeof(object)), typeof(IEnumerable<>), new[]{typeof(Enumerable)}, new[]{typeof(ILinq<>), typeof(IOrderedLinq<>)})
         {
 
         }
