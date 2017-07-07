@@ -90,7 +90,7 @@ namespace Dynamitey.DynamicObjects
                 return false;
             foreach (var currenttype in types)
             {
-                if (type == null || type == currenttype)
+                if (type == null || type.Name == currenttype.Name)
                     type = currenttype;
                 else
                     type = typeof (object);

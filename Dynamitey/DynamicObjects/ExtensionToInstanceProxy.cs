@@ -351,6 +351,9 @@ namespace Dynamitey.DynamicObjects
                         exceptionList.Add(ex);
                     }
                 }
+                if(sucess){
+                    break;
+                }
             }
 
             if (!sucess)
@@ -372,8 +375,8 @@ namespace Dynamitey.DynamicObjects
                     }
 
                     if (InstanceHints.Select(it => tIsGeneric && it.GetTypeInfo().IsGenericType ? it.GetGenericTypeDefinition() : it)
-                            .Contains(tOutType))
-                    {
+                            .Any(it=> it.Name == tOutType.Name))
+                    { 
                         result = CreateSelf(result, _extendedType, _staticTypes, _instanceHints);
                     }
                 }
@@ -413,7 +416,7 @@ namespace Dynamitey.DynamicObjects
             bool genericDef = _extendedType.GetTypeInfo().IsGenericTypeDefinition;
 
             return target.GetType().GetTypeInfo().GetInterfaces().Any(
-                it => ((genericDef && it.GetTypeInfo().IsGenericType) ? it.GetGenericTypeDefinition() : it) == _extendedType);
+                it => ((genericDef && it.GetTypeInfo().IsGenericType) ? it.GetGenericTypeDefinition() : it).Name == _extendedType.Name);
 
         }
 
