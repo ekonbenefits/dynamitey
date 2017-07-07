@@ -1360,17 +1360,40 @@ namespace Dynamitey.Tests
             return tMock.Object;
         }
 
+        public class BinaryTestDynObject:DynamicObject{
+            ExpressionType _type;
+            public BinaryTestDynObject(ExpressionType type){
+                _type = type;
+            }
+
+            public override bool TryBinaryOperation(BinaryOperationBinder binder, object arg, out object result){
+                Assert.AreEqual(_type, binder.Operation);
+                result = _type;
+                return true;
+            }
+
+        }
+         private void RunMockTests(ExpressionType type){
+            var mock = new BinaryTestDynObject(type);
+            var dummy = new Object();
+            Dynamic.InvokeBinaryOperator(mock, type, dummy);
+        }
+
         [Test]
         public void TestInvokeAdd()
         {
             Assert.AreEqual(Dynamic.InvokeBinaryOperator(1, ExpressionType.Add, 2), 3);
         }
 
+       
+
         [Test]
-        public void TestInvokeAddDynamic()
+        public void TestInvokeBasicBinaryOperatorsDynamic()
         {
-            var tMock = CreateMock(ExpressionType.Add);
-            Dynamic.InvokeBinaryOperator(tMock, ExpressionType.Add, 4);
+            RunMockTests(ExpressionType.Add);
+            RunMockTests(ExpressionType.Subtract);
+            RunMockTests(ExpressionType.Divide);
+            RunMockTests(ExpressionType.Multiply);
         }
 
 
@@ -1379,16 +1402,6 @@ namespace Dynamitey.Tests
         {
             Assert.AreEqual(Dynamic.InvokeBinaryOperator(1, ExpressionType.Subtract, 2), -1);
         }
-
-
-        [Test]
-        public void TestInvokeSubtractDynamic()
-        {
-            var tType = ExpressionType.Subtract;
-            var tMock = CreateMock(tType);
-            Dynamic.InvokeBinaryOperator(tMock, tType, 4);
-        }
-
 
     }
 }
