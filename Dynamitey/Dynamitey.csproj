@@ -28,7 +28,7 @@
     <TargetFrameworkProfile>Profile158</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='portable40-net45+sl5+win8+wp8'">
-    <DefineConstants>$(DefineConstants);PORTABLE158</DefineConstants>
+    <DefineConstants>$(DefineConstants);PROFILE158</DefineConstants>
   </PropertyGroup>
   <ItemGroup Condition="'$(TargetFramework)'=='netstandard1.5'">
     <PackageReference Include="Microsoft.CSharp" Version="4.3.0" />
