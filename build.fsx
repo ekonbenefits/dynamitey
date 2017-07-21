@@ -68,12 +68,11 @@ Target "Build" (fun () ->
 
 Target "Test" (fun () ->
     trace " --- Test the libs --- "
-    let home = System.Environment.GetFolderPath(System.Environment.SpecialFolder.UserProfile)
     let testDir = "./Tests/bin/Release/net462/"
     !! (testDir + "Tests.dll")
                |> NUnit (fun p ->
                          { p with
-                               ToolPath = home @@ "/.nuget/packages/NUnit.Runners/2.6.2/tools"
+                               ToolPath = "./packages/nunit.runners/2.6.2/tools"
                                //DisableShadowCopy = true;
                                ExcludeCategory = "Performance"
                                OutputFile = testDir + "TestResults.xml" })
