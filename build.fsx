@@ -45,9 +45,14 @@ let commonBuild target =
 
 Target "Restore" (fun () ->
     trace " --- Restore Packages --- "
-    sln |> RestoreMSSolutionPackages (fun p ->
-         { p with
-             Retries = 4 })
+
+    //because nuget doesn't know how to find msbuild15 on linux 
+    let restoreProj = fun args ->
+                   directExec (fun info ->
+                       info.FileName <- "msbuild"
+                       info.Arguments <- "/t:restore " + args) |> ignore
+
+    sln |> restoreProj
  
 )
 
