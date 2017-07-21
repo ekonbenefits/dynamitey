@@ -29,6 +29,3 @@ script:
 branches:
   only:
     - master
-
-after_failure:
-  - ls ./packages
