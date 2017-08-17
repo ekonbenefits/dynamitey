@@ -25,6 +25,7 @@ for:
   - branches:
         except:
           - /v.*/
+    environment:
         vsuffix: alpha$(APPVEYOR_BUILD_NUMBER)
         is_prerelease: true
   - branches:
