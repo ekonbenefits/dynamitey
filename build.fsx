@@ -76,7 +76,7 @@ Target "Test" (fun () ->
                          { p with
                                ToolPath = "./packages/nunit.runners/2.6.2/tools"
                                //DisableShadowCopy = true;
-                               ExcludeCategory = "Performance,Impromptu"
+                               ExcludeCategory = "Performance"
                                OutputFile = testDir + "TestResults.xml" })
      
     let appveyor = environVarOrNone "APPVEYOR_JOB_ID"

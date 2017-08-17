@@ -1,23 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net462</TargetFramework>
   </PropertyGroup>
-
   <ItemGroup>
+    <PackageReference Include="ImpromptuInterface" Version="7.0.0-alpha9" />
     <PackageReference Include="Microsoft.CSharp" Version="4.3.0" />
     <PackageReference Include="System.Collections" Version="4.3.0" />
     <PackageReference Include="System.Runtime" Version="4.3.0" />
     <PackageReference Include="IronPython" Version="2.7.7" />
-    <PackageReference Include="ImpromptuInterface" Version="6.2.2" />
     <PackageReference Include="NUnit" Version="2.6.2" />
-     <PackageReference Include="FSharp.Core" Version="4.0.0" />
-     <PackageReference Include="Moq" Version="4.0.10827"/>
-     <PackageReference Include="NUnit.Runners" Version="2.6.2"/>
+    <PackageReference Include="FSharp.Core" Version="4.0.0" />
+    <PackageReference Include="Moq" Version="4.0.10827" />
+    <PackageReference Include="NUnit.Runners" Version="2.6.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dynamitey\Dynamitey.csproj" />
     <ProjectReference Include="..\SupportLibrary\SupportLibrary.csproj" />
   </ItemGroup>
-
 </Project>
