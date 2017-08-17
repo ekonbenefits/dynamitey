@@ -68,7 +68,9 @@ Target "Build" (fun () ->
 
 Target "Test" (fun () ->
     trace " --- Test the libs --- "
-    let testDir = "./Tests/bin/*/net462/"
+    let buildMode = getBuildParamOrDefault "configuration" "Release"
+
+    let testDir = sprintf "./Tests/bin/%s/net462/" buildMode
     !! (testDir + "Tests.dll")
                |> NUnit (fun p ->
                          { p with
