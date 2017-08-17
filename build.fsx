@@ -28,18 +28,18 @@ open Fake
 let sln = "./Dynamitey.sln"
 
 let commonBuild target =
-    let buildMode = getBuildParamOrDefault "buildMode" "Release"
+    let buildMode = getBuildParamOrDefault "configuration" "Release"
+    let vsuffix = getBuildParamOrDefault "vsuffix" ""
     let setParams defaults =
-            { defaults with
-                Verbosity = Some(Quiet)
-                Targets = [target]
-                Properties =
-                    [
-                        "Optimize", "True"
-                        "DebugSymbols", "True"
-                        "Configuration", buildMode
-                    ]
-             }
+                { defaults with
+                    Verbosity = Some(Quiet)
+                    Targets = [target]
+                    Properties =
+                        [
+                            "Configuration", buildMode
+                            "VersionSuffix", vsuffix
+                        ]
+                }
     build setParams sln
           |> DoNothing
 
@@ -74,7 +74,7 @@ Target "Test" (fun () ->
                          { p with
                                ToolPath = "./packages/nunit.runners/2.6.2/tools"
                                //DisableShadowCopy = true;
-                               ExcludeCategory = "Performance"
+                               ExcludeCategory = "Performance,Impromptu"
                                OutputFile = testDir + "TestResults.xml" })
      
     let appveyor = environVarOrNone "APPVEYOR_JOB_ID"

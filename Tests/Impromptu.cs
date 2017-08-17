@@ -9,7 +9,7 @@ using Dynamitey.SupportLibrary;
 
 namespace Dynamitey.Tests
 {
-    [TestFixture]
+    [TestFixture(Category = "Impromptu")]
     public class Impromptu:AssertionHelper
     {
 

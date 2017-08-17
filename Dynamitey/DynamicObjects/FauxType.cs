@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
-using System.Text;
 using System.Reflection;
 using Dynamitey.Internal.Compat;
 
@@ -51,6 +49,33 @@ namespace Dynamitey.DynamicObjects
             return GetContainedTypes().Contains(type);
         }
 
+    }
+
+
+
+    public class PropretySpecType : FauxType
+    {
+        public IDictionary<string, Type> PropertySpec { get; }
+
+        public PropretySpecType(IDictionary<string, Type> propertySpec)
+        {
+            PropertySpec = propertySpec;
+        }
+
+        public override IEnumerable<MemberInfo> GetMember(string binderName)
+        {
+            if (PropertySpec.TryGetValue(binderName, out var val))
+            {
+                return new[] {val.GetTypeInfo()};
+
+            }
+            return Enumerable.Empty<MemberInfo>();
+        }
+
+        public override Type[] GetContainedTypes()
+        {
+            return new Type []{};
+        }
     }
 
 

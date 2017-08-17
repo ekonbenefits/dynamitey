@@ -153,3 +153,5 @@ $RECYCLE.BIN/
 
 .fake/*
 .nuget/NuGet.exe
+
+.idea/*

@@ -37,13 +37,15 @@ namespace Dynamitey.DynamicObjects
         /// </value>
         FauxType EquivalentType { get; set; }
     }
+    
+    
 
 
     /// <summary>
     /// Dynamic Object that knows about the Impromtu Interface return types;
     /// Override Typical Dynamic Object methods, and use TypeForName to get the return type of an interface member.
     /// </summary>
-    public abstract class BaseObject : DynamicObject, IEquivalentType, IServiceProvider
+    public abstract class BaseObject : DynamicObject, IEquivalentType
 
     {
         /// <summary>
@@ -73,16 +75,26 @@ namespace Dynamitey.DynamicObjects
                .Where(it => it is PropertyInfo || it is MethodInfo || it is EventInfo)
                .Select(it =>
                            {
-                               var prop =it as PropertyInfo;
-                               if (prop != null)
-                                   return prop.PropertyType;
-                               var mem = it as MethodInfo;
-                               if (mem != null)
-                                   return mem.ReturnType;
-                               var eve = it as EventInfo;
-                               if (eve != null)
-                                   return eve.EventHandlerType;
-                               return typeof (object);
+
+                               switch (it)
+                               {
+                                  case PropertyInfo p:
+                                      return p.PropertyType;
+                                  case MethodInfo m:
+                                      return m.ReturnType;
+                                  case EventInfo e:
+                                      return e.EventHandlerType;
+#if NET40 || PROFILE158
+                                  case Type t:
+                                      return t;
+#else
+                                  case TypeInfo t:
+                                       return t.UnderlyingSystemType;
+#endif
+                                  default:
+                                      return typeof (object);
+                               }
+                               
                            }).ToList();
 
 ;
@@ -100,23 +112,5 @@ namespace Dynamitey.DynamicObjects
 
 
         FauxType IEquivalentType.EquivalentType { get; set; }
-     
-        object IServiceProvider.GetService(Type serviceType)
-        {
-            var aggreTypes =AggreType.MakeTypeAppendable(this);
-
-            if (!aggreTypes.ContainsType(serviceType))
-            {
-                aggreTypes.AddType(serviceType);
-                
-                if (serviceType.GetTypeInfo().IsInterface && Dynamic.Impromptu.IsAvailable)
-                {
-                    return Dynamic.Impromptu.DynamicActLike(this, aggreTypes.GetInterfaceTypes());
-                }
-
-            }
-
-            return this;
-        }
     }
 }
