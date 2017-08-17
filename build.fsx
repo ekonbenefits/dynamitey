@@ -71,7 +71,7 @@ Target "Test" (fun () ->
     let buildMode = getBuildParamOrDefault "configuration" "Release"
 
     let testDir = sprintf "./Tests/bin/%s/net462/" buildMode
-    !! (testDir + "Tests.dll")
+    !! (testDir + "Tests.exe")
                |> NUnit (fun p ->
                          { p with
                                ToolPath = "./packages/nunit.runners/2.6.2/tools"
