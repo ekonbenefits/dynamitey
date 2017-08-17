@@ -6,8 +6,6 @@
     <Company>Ekon Benefits</Company>
     <Authors />
     <Copyright>Copyright 2017 Ekon Benefits</Copyright>
-    <AssemblyVersion>2.0.3.0</AssemblyVersion>
-    <FileVersion>2.0.3.0</FileVersion>
     <PackageProjectUrl>https://github.com/ekonbenefits/dynamitey</PackageProjectUrl>
     <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
     <PackageTags>dynamic metaprogramming dlr reflection currying tuples expando latetypes</PackageTags>
