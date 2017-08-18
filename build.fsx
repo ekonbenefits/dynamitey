@@ -77,7 +77,7 @@ Target "Test" (fun () ->
 
     let netExe, netAppVeyor,coreAppVeyor =
         if buildServer = AppVeyor then
-            "nunit3-console","--result=myresults.xml;format=AppVeyor", " --logger=Appveyor"
+            "nunit3-console","--result=myresults.xml;format=AppVeyor", "--logger=trx;LogFileName=testresults.trx"
         else
             nunit3exe,"--noresult",""
 
@@ -88,10 +88,21 @@ Target "Test" (fun () ->
         failwithf ".net 4.0 tests failed"
    
     
-    if directExec (fun info ->  
-      info.FileName <- "dotnet" 
-      info.Arguments <- sprintf "test -f netcoreapp2.0 --filter=TestCategory!=Performance %s" coreAppVeyor ) |> not then
-        failwithf ".net core tests failed"
+    let tresults =
+      directExec (fun info ->  
+          info.FileName <- "dotnet" 
+          info.Arguments <- sprintf "test -f netcoreapp2.0 --filter=TestCategory!=Performance %s" coreAppVeyor )
+
+    let appveyor = environVarOrNone "APPVEYOR_JOB_ID"
+    match appveyor with
+        | Some(jobid) -> 
+             use webClient = new System.Net.WebClient()
+             webClient.UploadFile(sprintf "https://ci.appveyor.com/api/testresults/msunit/%s" jobid,"testresults.trx") |> ignore
+        | None -> ()
+
+    if tresults |> not then
+       failwithf ".net core tests failed"
+
 )    
 
 "Restore"
