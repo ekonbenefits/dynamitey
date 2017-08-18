@@ -257,7 +257,8 @@ namespace Dynamitey.DynamicObjects
             {
                 types = null;
             }
-            if (types != null)
+
+            if (types == null)
             {
                 try
                 { 
