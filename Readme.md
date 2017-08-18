@@ -20,4 +20,4 @@ PM> Install-Package Dynamitey
   - Manipulation of Tuples -- [wowzers](https://github.com/ekonbenefits/dynamitey/blob/master/Tests/TuplerTest.cs)
   - Inline Object Graph Intialization Syntax [whoa](https://github.com/ekonbenefits/dynamitey/wiki/UsageBuilder)
   - DynamicObject base types for many things -- [jenkies](https://github.com/ekonbenefits/dynamitey/wiki/UsageDynamic)
-  - Extension to instance method conversion -- [o_O] (https://github.com/ekonbenefits/dynamitey/blob/master/Tests/Linq.cs)
+  - Extension to instance method conversion -- [o_O](https://github.com/ekonbenefits/dynamitey/blob/master/Tests/Linq.cs)
