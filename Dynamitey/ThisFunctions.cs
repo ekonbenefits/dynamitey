@@ -15,6 +15,8 @@
 
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+using Dynamitey.Internal.Compat;
 
 namespace Dynamitey
 {
@@ -219,7 +221,7 @@ namespace Dynamitey
         /// </returns>
 		public static bool IsSpecialThisDelegate(this Delegate del){
 				var tType =del.GetType();
-				if(!tType.IsGenericType) return false;
+				if(!tType.GetTypeInfo().IsGenericType) return false;
 				var tGenDel =del.GetType().GetGenericTypeDefinition();
 				var tReturn =_specialThisDels.Contains(tGenDel);
 				return tReturn;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dynamitey.SupportLibrary1;
+using Dynamitey.SupportLibrary;
 using Microsoft.CSharp.RuntimeBinder;
 using NUnit.Framework;
 
@@ -17,21 +17,21 @@ namespace Dynamitey.Tests
         public void TestInvokePrivateMethod()
         {
             var tTest = new TestWithPrivateMethod();
-            Assert.That(Dynamic.InvokeMember(tTest, "Test"), Is.EqualTo(3));
+            Assert.That((object)Dynamic.InvokeMember(tTest, "Test"), Is.EqualTo(3));
         }
 
         [Test]
         public void TestInvokePrivateMethodAcrossAssemblyBoundries()
         {
             var tTest = new PublicType();
-            Assert.That(Dynamic.InvokeMember(tTest, "PrivateMethod", 3), Is.True);
+            Assert.That((object)Dynamic.InvokeMember(tTest, "PrivateMethod", 3), Is.True);
         }
 
         [Test]
         public void TestInvokeInternalTypeMethodAcrossAssemblyBoundries()
         {
             var tTest = PublicType.InternalInstance;
-            Assert.That(Dynamic.InvokeMember(tTest, "InternalMethod", 3), Is.True);
+            Assert.That((object)Dynamic.InvokeMember(tTest, "InternalMethod", 3), Is.True);
         }
 
         [Test]

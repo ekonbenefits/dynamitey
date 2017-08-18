@@ -15,29 +15,37 @@
 
 using System.Collections.Generic;
 using System.Dynamic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Threading;
 
 using Dynamitey.Internal;
 using Dynamitey.Internal.Optimization;
 using Microsoft.CSharp.RuntimeBinder;
 using System.Text.RegularExpressions;
+using Dynamitey.Internal.Compat;
 
 namespace Dynamitey
 {
     using System;
 
 
- 
+
 
     /// <summary>
     /// Main API
     /// </summary>
     public static class Dynamic
     {
-
+        /// <summary>
+        /// Clears the dynamic binding caches.
+        /// </summary>
+        public static void ClearCaches()
+        {
+            InvokeHelper.ClearAllCaches();
+        }
 
         private static readonly Type ComObjectType;
 
@@ -47,7 +55,7 @@ namespace Dynamitey
         {
             try
             {
-                ComObjectType = typeof(object).Assembly.GetType("System.__ComObject");
+                ComObjectType = typeof(object).GetTypeInfo().Assembly.GetType("System.__ComObject");
                 ComBinder = new DynamicObjects.LateType(
                 "System.Dynamic.ComBinder, System.Dynamic, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
             }
@@ -130,7 +138,7 @@ namespace Dynamitey
         /// <returns></returns>
         public static dynamic Linq(object enumerable)
         {
-            if(enumerable.GetType().GetInterfaces().Where(it=>it.IsGenericType)
+            if(enumerable.GetType().GetTypeInfo().GetInterfaces().Where(it=>it.GetTypeInfo().IsGenericType)
                 .All(it => it.GetGenericTypeDefinition() != typeof(IEnumerable<>)))
             {
                 var tEnum = enumerable as System.Collections.IEnumerable;
@@ -253,6 +261,10 @@ namespace Dynamitey
                     return leftArg | rightArg;
                 case ExpressionType.And:
                     return leftArg & rightArg;
+                case ExpressionType.OrElse:
+                    return leftArg || rightArg;
+                case ExpressionType.AndAlso:
+                    return leftArg && rightArg;
                 default:
                     throw new ArgumentException("Unsupported Operator", "op");
             }
@@ -529,7 +541,7 @@ namespace Dynamitey
         /// <returns></returns>
         public static dynamic Curry(Delegate target)
         {
-            return new Curry(target, target.Method.GetParameters().Length);
+            return new Curry(target, target.GetMethodInfo().GetParameters().Length);
         }
 
 
@@ -693,11 +705,12 @@ namespace Dynamitey
         /// <returns></returns>
         public static dynamic CoerceToDelegate(object invokeableObject, Type delegateType)
             {
-                if (!typeof(Delegate).IsAssignableFrom(delegateType.BaseType))
+                var delegateTypeInfo = delegateType.GetTypeInfo();
+                if (!typeof(Delegate).GetTypeInfo().IsAssignableFrom(delegateTypeInfo.BaseType))
                 {
                     return null;
                 }
-                var tDelMethodInfo = delegateType.GetMethod("Invoke");
+                var tDelMethodInfo = delegateTypeInfo.GetMethod("Invoke");
                 var tReturnType = tDelMethodInfo.ReturnType;
                 var tAction = tReturnType == typeof(void);
                 var tParams = tDelMethodInfo.GetParameters();
@@ -707,7 +720,7 @@ namespace Dynamitey
                                              : InvokeHelper.WrapFunc(tReturnType, invokeableObject, tLength);
 
 
-                if (!InvokeHelper.IsActionOrFunc(delegateType) || tParams.Any(it => it.ParameterType.IsValueType))
+                if (!InvokeHelper.IsActionOrFunc(delegateType) || tParams.Any(it => it.ParameterType.GetTypeInfo().IsValueType))
                 //Conditions that aren't contravariant;
                 {
                     Delegate tGetResult;
@@ -800,7 +813,8 @@ namespace Dynamitey
         /// <returns></returns>
         public static dynamic CoerceConvert(object target, Type type)
         {
-            if (target != null && !type.IsInstanceOfType(target) && !IsDBNull(target))
+            var typeInfo = type.GetTypeInfo();
+            if (target != null && !typeInfo.IsInstanceOfType(target) && !IsDBNull(target))
             {
 
                 var delegateConversion = CoerceToDelegate(target, type);
@@ -809,7 +823,7 @@ namespace Dynamitey
                     return delegateConversion;
 
 
-                if (type.IsInterface && Impromptu.IsAvailable)
+                if (typeInfo.IsInterface && Impromptu.IsAvailable)
                 {
 
 
@@ -841,20 +855,20 @@ namespace Dynamitey
                     catch (RuntimeBinderException)
                     {
                         Type tReducedType = type;
-                        if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
+                        if (typeInfo.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>))
                         {
-                            tReducedType = type.GetGenericArguments().First();
+                            tReducedType = typeInfo.GetGenericArguments().First();
                         }
 
-                        if (typeof (Enum).IsAssignableFrom(tReducedType) && target is string)
+                        if (typeof (Enum).GetTypeInfo().IsAssignableFrom(tReducedType) && target is string)
                         {
                             target = Enum.Parse(tReducedType, target as String, true);
 
                         }
-                        else if (target is IConvertible && typeof (IConvertible).IsAssignableFrom(tReducedType))
+                        else if (target is IConvertible && typeof (IConvertible).GetTypeInfo().IsAssignableFrom(tReducedType))
                         {
 
-                            target = Convert.ChangeType(target, tReducedType, Thread.CurrentThread.CurrentCulture);
+                            target = Convert.ChangeType(target, tReducedType, Net40.GetDefaultThreadCurrentCulture());
 
                         }
                         else
@@ -869,7 +883,7 @@ namespace Dynamitey
                                 else if (TypeConverterAttributeSL != null) 
                                 {
                                         var tAttributes =
-                                            tReducedType.GetCustomAttributes(TypeConverterAttributeSL, false);
+                                            tReducedType.GetTypeInfo().GetCustomAttributes(TypeConverterAttributeSL, false);
                                         dynamic attribute = tAttributes.FirstOrDefault();
                                         if (attribute != null)
                                         {
@@ -893,11 +907,11 @@ namespace Dynamitey
                     }
                 }
             }
-            else if (((target == null) || IsDBNull(target )) && type.IsValueType)
+            else if (((target == null) || IsDBNull(target )) && typeInfo.IsValueType)
             {
                 target = Dynamic.InvokeConstructor(type);
             }
-            else if (!type.IsInstanceOfType(target) && IsDBNull(target))
+            else if (!typeInfo.IsInstanceOfType(target) && IsDBNull(target))
             {
                 return null;
             }
@@ -913,7 +927,7 @@ namespace Dynamitey
         public static dynamic InvokeConstructor(Type type, params object[] args)
         {
             string[] tArgNames;
-            bool tValue = type.IsValueType;
+            bool tValue = type.GetTypeInfo().IsValueType;
             if (tValue && args.Length == 0)  //dynamic invocation doesn't see constructors of value types
             {
                 return Activator.CreateInstance(type);
@@ -935,7 +949,7 @@ namespace Dynamitey
         /// <returns></returns>
 		public static object FastDynamicInvoke(this Delegate del, params object[] args)
 		{
-		    if(del.Method.ReturnType == typeof(void)){
+		    if(del.GetMethodInfo().ReturnType == typeof(void)){
 				
 				InvokeHelper.FastDynamicInvokeAction(del, args);
 				return null;
@@ -974,7 +988,7 @@ namespace Dynamitey
             var tList = new List<string>();
             if (!dynamicOnly)
             {
-               tList.AddRange(target.GetType().GetProperties().Select(it => it.Name));
+               tList.AddRange(target.GetType().GetTypeInfo().GetProperties().Select(it => it.Name));
             }
 
             var tTarget = target as IDynamicMetaObjectProvider;
@@ -984,7 +998,7 @@ namespace Dynamitey
             }else
             {
 
-                if (ComObjectType != null && ComObjectType.IsInstanceOfType(target) && ComBinder.IsAvailable)
+                if (ComObjectType != null && ComObjectType.GetTypeInfo().IsInstanceOfType(target) && ComBinder.IsAvailable)
                 {
                     tList.AddRange(ComBinder.GetDynamicDataMemberNames(target));
                 }

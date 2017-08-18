@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using Dynamitey;
 
-namespace Dynamitey.SupportLibrary1
+namespace Dynamitey.SupportLibrary
 {
     public class TestEvent
     {
@@ -308,7 +308,7 @@ namespace Dynamitey.SupportLibrary1
     {
         public void Action()
         {
-            
+
         }
     }
 
@@ -364,6 +364,16 @@ namespace Dynamitey.SupportLibrary1
             return new List<T>();
         }
 
+    }
+
+    public class ForwardGenericMethodsTestClass
+    {
+        public string Value { get; set; }
+
+        public T Create<T>(int arg) where T : ForwardGenericMethodsTestClass, new()
+        {
+            return new T { Value = "test" + arg };
+        }
     }
 
 

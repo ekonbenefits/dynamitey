@@ -1,0 +1,14 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "0.1.0",
+    "command": "./build.fsx",
+    "args": ["Test"],
+    "windows":{
+        "command": "C:\\Program Files (x86)\\Microsoft SDKs\\F#\\4.1\\Framework\\v4.0\\fsi",
+        "args": ["--exec", "./build.fsx", "Test"]
+    },
+    "isShellCommand": true,
+    "showOutput": "always",
+    "problemMatcher":"$msCompile"
+}

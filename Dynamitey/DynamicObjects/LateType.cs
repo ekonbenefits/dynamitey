@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization;
+
 using System.Text;
 using Dynamitey.Internal.Optimization;
 
@@ -54,13 +54,31 @@ namespace Dynamitey.DynamicObjects
         }
 
         private readonly string TypeName;
-        
+
+
+        public static Type FindType(string typeName, Assembly assembly = null)
+        {
+            try
+            {
+                if (assembly != null)
+                {
+                    return assembly.GetType(typeName, false);
+                }
+                return Type.GetType(typeName, false);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+
         /// <summary>
         /// Initializes a new instance of the <see cref="LateType"/> class.
         /// </summary>
         /// <param name="typeName">Qualified Name of the type.</param>
         public LateType(string typeName)
-            : base(Type.GetType(typeName, false))
+            : base(FindType(typeName))
         {
             TypeName = typeName;
           
@@ -72,7 +90,7 @@ namespace Dynamitey.DynamicObjects
         /// <param name="assembly">The assembly.</param>
         /// <param name="typeName">Name of the type.</param>
         public LateType(Assembly assembly, string typeName)
-            : base(assembly.GetType(typeName, false))
+            : base(FindType(typeName, assembly))
         {
             TypeName = typeName;
 

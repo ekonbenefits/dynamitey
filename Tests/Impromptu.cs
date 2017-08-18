@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Dynamitey;
-using Dynamitey.SupportLibrary1;
+using Dynamitey.SupportLibrary;
+using ImpromptuInterface;
 
 namespace Dynamitey.Tests
 {
-    [TestFixture]
+    [TestFixture(Category = "Impromptu")]
     public class Impromptu:AssertionHelper
     {
 
@@ -40,20 +41,6 @@ namespace Dynamitey.Tests
             ISimpleStringMethod tActsLike = Interfacing << new DynamicObjects.Dictionary();
 
             Assert.AreEqual(false, tActsLike.StartsWith("Te"));
-
-
-
-        }
-
-        [Test]
-        public void DictionaryInterfaceGetServiceNullMethodsTest()
-        {
-
-            var provider = new DynamicObjects.Dictionary() as IServiceProvider;
-
-            var actsLike = (ISimpleStringMethod)provider.GetService(typeof(ISimpleStringMethod));
-
-            Assert.AreEqual(false, actsLike.StartsWith("Te"));
 
 
 

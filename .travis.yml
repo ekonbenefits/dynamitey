@@ -1,17 +1,26 @@
 # Travis-CI Build for dynamitey 
 # see travis-ci.org for details
 
-language: objective-c
+language: csharp
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: required
+    - os: osx
+      osx_image: "xcode8.3"
 
-env:
-  global:
-    - EnableNuGetPackageRestore=true
-  matrix:
-    - MONO_VER="3.2.4"
-before_install:
-  # Make sure mono is installed,
-  - wget "http://download.mono-project.com/archive/${MONO_VER}/macos-10-x86/MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.pkg"
-  - sudo installer -pkg "MonoFramework-MDK-${MONO_VER}.macos10.xamarin.x86.pkg" -target /
+solution: Dynamitey.sln
+    
+mono: latest
+dotnet: 2.0.0
+
+install:
+  - msbuild /ver
+
 script:
-  - xbuild
-  - .ci/nunit.sh Tests/bin/Debug/Tests.dll
+  - ./build.fsx
+
+branches:
+  only:
+    - master

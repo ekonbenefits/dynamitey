@@ -17,10 +17,10 @@ using System;
 using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Reflection;
 using Dynamitey.Internal.Optimization;
+using Dynamitey.Internal.Compat;
 
 namespace Dynamitey.DynamicObjects
 {
@@ -28,7 +28,7 @@ namespace Dynamitey.DynamicObjects
     /// <summary>
     /// Interface for simplistic builder options
     /// </summary>
-    public interface IImpromptuBuilder
+    public interface IBuilder
     {  
         
         /// <summary>
@@ -121,7 +121,7 @@ namespace Dynamitey.DynamicObjects
     /// </summary>
     /// <typeparam name="TObjectProtoType">The type of the object proto type.</typeparam>
    
-    public class Builder<TObjectProtoType>: BaseObject, IImpromptuBuilder
+    public class Builder<TObjectProtoType>: BaseObject, IBuilder
     {
         /// <summary>
         /// Build factory storage
@@ -134,8 +134,8 @@ namespace Dynamitey.DynamicObjects
         /// </summary>
 		public Builder(){
             _buildType = new Dictionary<string, Activate>();
-			Setup = new SetupTrampoline(this);
-			Object = new BuilderTrampoline(this);
+			Setup = new SetupTrampoline<TObjectProtoType>(this);
+			Object = new BuilderTrampoline<TObjectProtoType>(this);
 		}
 		
         /// <summary>
@@ -260,7 +260,7 @@ namespace Dynamitey.DynamicObjects
         /// Creates a Prototype object.
         /// </summary>
         /// <value>The object.</value>
-        public dynamic Object { get; private set; }
+        public dynamic Object { get; }
 
         /// <summary>
         /// Sets up object builder
@@ -292,7 +292,7 @@ namespace Dynamitey.DynamicObjects
         ///<summary>
         /// Trampoline for builder
         ///</summary>
-        public class BuilderTrampoline:DynamicObject
+        public class BuilderTrampoline<TObjectProtoType> : DynamicObject
         {
             Builder<TObjectProtoType> _buider;
 
@@ -326,7 +326,7 @@ namespace Dynamitey.DynamicObjects
         /// <summary>
         /// Trampoline for setup builder
         /// </summary>
-        public class SetupTrampoline : DynamicObject
+        public class SetupTrampoline<TObjectProtoType> : DynamicObject
         {
 			Builder<TObjectProtoType> _buider;
 
@@ -411,7 +411,8 @@ namespace Dynamitey.DynamicObjects
             result = InvokeHelper(binder.CallInfo, args,tBuildType);
             if (TryTypeForName(binder.Name, out tType))
             {
-                if (tType.IsInterface && result != null && !tType.IsAssignableFrom(result.GetType()))
+                var typeInfo = tType.GetTypeInfo();
+                if (typeInfo.IsInterface && result != null && !typeInfo.IsAssignableFrom(result.GetType()))
                 {
                    // result = Impromptu.DynamicActLike(result, tType);
                 }

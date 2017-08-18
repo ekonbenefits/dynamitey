@@ -58,21 +58,21 @@ namespace Dynamitey.Tests
         {
             var tup = Tuple.Create(1, 2, 3, 4, 5);
 
-            Assert.That(Tupler.Size(tup),Is.EqualTo(5));
+            Assert.That((object)Tupler.Size(tup),Is.EqualTo(5));
         }
         [Test]
         public void DynamicTupleSize8()
         {
             var tup = Tuple.Create(1, 2, 3, 4, 5,6,7,8);
 
-            Assert.That(Tupler.Size(tup), Is.EqualTo(8));
+            Assert.That((object)Tupler.Size(tup), Is.EqualTo(8));
         }
         [Test]
         public void DynamicTupleSize20()
         {
             var tup = Tupler.Create(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20);
 
-            Assert.That(Tupler.Size(tup), Is.EqualTo(20));
+            Assert.That((object)Tupler.Size(tup), Is.EqualTo(20));
         }
 
         [Test]
@@ -80,7 +80,7 @@ namespace Dynamitey.Tests
         {
             var tup =Tuple.Create(1, 2, 3, 4, 5);
             var exp=Enumerable.Range(1,5).ToList();
-            Assert.That(Tupler.ToList(tup),Is.EqualTo(exp));
+            Assert.That((object)Tupler.ToList(tup),Is.EqualTo(exp));
 
         }
 
@@ -89,7 +89,7 @@ namespace Dynamitey.Tests
         {
             var tup = Tuple.Create(1, 2, 3, 4, 5, 6, 7, 8);
             var exp = Enumerable.Range(1, 8).ToList();
-            Assert.That(Tupler.ToList(tup), Is.EqualTo(exp));
+            Assert.That((object)Tupler.ToList(tup), Is.EqualTo(exp));
         }
 
         [Test]
@@ -97,7 +97,7 @@ namespace Dynamitey.Tests
         {
             var tup = Tupler.Create(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
             var exp = Enumerable.Range(1, 20).ToList();
-            Assert.That(Tupler.ToList(tup), Is.EqualTo(exp));
+            Assert.That((object)Tupler.ToList(tup), Is.EqualTo(exp));
         }
 
 
@@ -107,8 +107,8 @@ namespace Dynamitey.Tests
         {
             var exp = Enumerable.Range(1, 5).ToList();
             var tup = exp.ToTuple();
-            Assert.That(Tupler.IsTuple(tup), Is.True);
-            Assert.That(Tupler.ToList(tup), Is.EqualTo(exp));
+            Assert.That((object)Tupler.IsTuple(tup), Is.True);
+            Assert.That((object)Tupler.ToList(tup), Is.EqualTo(exp));
 
         }
 
@@ -117,8 +117,8 @@ namespace Dynamitey.Tests
         {
             var exp = Enumerable.Range(1, 8).ToList();
             var tup = exp.ToTuple();
-            Assert.That(Tupler.IsTuple(tup), Is.True);
-            Assert.That(Tupler.ToList(tup), Is.EqualTo(exp));
+            Assert.That((object)Tupler.IsTuple(tup), Is.True);
+            Assert.That((object)Tupler.ToList(tup), Is.EqualTo(exp));
         }
 
         [Test]
@@ -127,8 +127,8 @@ namespace Dynamitey.Tests
     
             var exp = Enumerable.Range(1, 20).ToList();
             var tup = exp.ToTuple();
-            Assert.That(Tupler.IsTuple(tup), Is.True);
-            Assert.That(Tupler.ToList(tup), Is.EqualTo(exp));
+            Assert.That((object)Tupler.IsTuple(tup), Is.True);
+            Assert.That((object)Tupler.ToList(tup), Is.EqualTo(exp));
         }
 
 
@@ -137,21 +137,21 @@ namespace Dynamitey.Tests
         public void DynamicTupleIndex()
         {
             var tup = Tupler.Create(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
-            Assert.That(Tupler.Index(tup,5), Is.EqualTo(6));
+            Assert.That((object)Tupler.Index(tup,5), Is.EqualTo(6));
         }
 
         [Test]
         public void DynamicTupleIndex7()
         {
             var tup = Tupler.Create(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
-            Assert.That(Tupler.Index(tup, 7), Is.EqualTo(8));
+            Assert.That((object)Tupler.Index(tup, 7), Is.EqualTo(8));
         }
 
         [Test]
         public void DynamicTupleIndex19()
         {
             var tup = Tupler.Create(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
-            Assert.That(Tupler.Index(tup, 19), Is.EqualTo(20));
+            Assert.That((object)Tupler.Index(tup, 19), Is.EqualTo(20));
         }
     }
 }

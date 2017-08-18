@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dynamitey.SupportLibrary1;
+using Dynamitey.SupportLibrary;
 using NUnit.Framework;
 
 namespace Dynamitey.Tests
@@ -288,7 +288,7 @@ namespace Dynamitey.Tests
             var curried = Dynamic.Curry(adder);
 
           
-            Assert.That(curried << "1" << "2" << "3", Is.EqualTo("123"));
+            Assert.That((object)(curried << "1" << "2" << "3"), Is.EqualTo("123"));
         }
 
 
@@ -300,7 +300,7 @@ namespace Dynamitey.Tests
             var curried = Dynamic.Curry(adder);
 
 
-            Assert.That( "1" | ( "2" | ("3" | curried)), Is.EqualTo("321"));
+            Assert.That((object) ("1" | ( "2" | ("3" | curried))), Is.EqualTo("321"));
         }
     }
 }

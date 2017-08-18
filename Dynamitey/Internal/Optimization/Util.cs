@@ -21,11 +21,9 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
-using System.Threading;
 using Dynamitey.DynamicObjects;
 using Microsoft.CSharp.RuntimeBinder;
-
+using Dynamitey.Internal.Compat;
 
 
 namespace Dynamitey.Internal.Optimization
@@ -62,10 +60,9 @@ namespace Dynamitey.Internal.Optimization
                 return false;
 
             var type = target as Type ?? target.GetType();
-
-            return type.IsNotPublic
-                   && Attribute.IsDefined(
-                       type,
+            var typeinfo = type.GetTypeInfo();
+            return typeinfo.IsNotPublic
+                   && typeinfo.IsDefined(
                        typeof(CompilerGeneratedAttribute),
                        false);
         }
@@ -161,12 +158,12 @@ namespace Dynamitey.Internal.Optimization
 
                     return false;
                 }
-                if (typeof (Delegate).IsAssignableFrom(tType))
+                if (typeof (Delegate).GetTypeInfo().IsAssignableFrom(tType))
                 {
                     result = new BaseForwarder.AddRemoveMarker();
                 }
 
-                if (tType.IsValueType)
+                if (tType.GetTypeInfo().IsValueType)
                 {
                     result = Dynamic.InvokeConstructor(tType);
                 }

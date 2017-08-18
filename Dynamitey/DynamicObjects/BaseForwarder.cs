@@ -18,7 +18,6 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization;
 using System.Text;
 using Dynamitey.Internal.Optimization;
 using Microsoft.CSharp;
@@ -239,9 +238,53 @@ namespace Dynamitey.DynamicObjects
 
             object[] tArgs = Util.NameArgsIfNecessary(binder.CallInfo, args);
 
+
+            Type[] types = null;
+
+            try
+            { 
+                //.net core
+                // Try and pull generic arguments from binder
+                IList<Type> typeList = Dynamic.InvokeGet(binder,
+                    "TypeArguments");
+                if (typeList != null)
+                {
+                    types = typeList.ToArray();
+                }
+
+            }
+            catch (RuntimeBinderException)
+            {
+                types = null;
+            }
+
+            if (types == null)
+            {
+                try
+                { 
+                    //.net 4.0
+                    // Try and pull generic arguments from binder
+                    IList<Type> typeList = Dynamic.InvokeGet(binder,
+                        "Microsoft.CSharp.RuntimeBinder.ICSharpInvokeOrInvokeMemberBinder.TypeArguments");
+                    if (typeList != null)
+                    {
+
+                        types = typeList.ToArray();
+
+                    }
+
+                }
+                catch (RuntimeBinderException)
+                {
+                    types = null;
+                }
+            }
+
+            var name = InvokeMemberName.Create;
+            var fullName = name(binder.Name, types);
             try
             {
-                result = Dynamic.InvokeMember(CallTarget, binder.Name, tArgs);
+                result = Dynamic.InvokeMember(CallTarget, fullName, tArgs);
                
             }
             catch (RuntimeBinderException)
@@ -249,7 +292,7 @@ namespace Dynamitey.DynamicObjects
                 result = null;
                 try
                 {
-                    Dynamic.InvokeMemberAction(CallTarget, binder.Name, tArgs);
+                    Dynamic.InvokeMemberAction(CallTarget, fullName, tArgs);
                 }
                 catch (RuntimeBinderException)
                 {

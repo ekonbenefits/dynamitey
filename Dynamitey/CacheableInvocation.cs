@@ -4,6 +4,8 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using Dynamitey.Internal.Optimization;
 using Microsoft.CSharp.RuntimeBinder;
+using System.Reflection;
+using Dynamitey.Internal.Compat;
 
 namespace Dynamitey
 {
@@ -261,7 +263,7 @@ namespace Dynamitey
             {
                 case InvocationKind.Constructor:
                     var tTarget = (Type) target;
-                    return InvokeHelper.InvokeConstructorCallSite(tTarget, tTarget.IsValueType, args, _argNames,
+                    return InvokeHelper.InvokeConstructorCallSite(tTarget, tTarget.GetTypeInfo().IsValueType, args, _argNames,
                                                                   ref _callSite);
                 case InvocationKind.Convert:
                     return InvokeHelper.InvokeConvertCallSite(target, _convertExplicit, _convertType, _context,

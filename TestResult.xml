@@ -1,0 +1,800 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<test-run id="2" testcasecount="214" result="Passed" total="182" passed="182" failed="0" inconclusive="0" skipped="0" asserts="385" engine-version="3.7.0.0" clr-version="4.0.30319.42000" start-time="2017-08-18 02:57:59Z" end-time="2017-08-18 02:58:04Z" duration="4.993157">
+  <command-line><![CDATA[/Users/jay/github/dynamitey/packages/nunit.consolerunner/3.7.0/tools/nunit3-console.exe --labels=All "--where=cat != Performance" ./Tests/bin/Release/net462/Tests.exe]]></command-line>
+  <filter>
+    <not>
+      <cat>Performance</cat>
+    </not>
+  </filter>
+  <test-suite type="Assembly" id="0-1224" name="Tests.exe" fullname="/Users/jay/github/dynamitey/Tests/bin/Release/net462/Tests.exe" runstate="Runnable" testcasecount="214" result="Passed" start-time="2017-08-18 02:58:00Z" end-time="2017-08-18 02:58:04Z" duration="4.067841" total="182" passed="182" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="385">
+    <environment framework-version="3.7.1.0" clr-version="4.0.30319.42000" os-version="Unix 16.7.0.0" platform="Unix" cwd="/Users/jay/github/dynamitey" machine-name="katniss.lan" user="jay" user-domain="katniss.lan" culture="en-US" uiculture="en-US" os-architecture="x64" />
+    <settings>
+      <setting name="DisposeRunners" value="True" />
+      <setting name="WorkDirectory" value="/Users/jay/github/dynamitey" />
+      <setting name="ImageRuntimeVersion" value="4.0.30319" />
+      <setting name="ImageTargetFrameworkName" value=".NETFramework,Version=v4.6.2" />
+      <setting name="ImageRequiresX86" value="False" />
+      <setting name="ImageRequiresDefaultAppDomainAssemblyResolver" value="False" />
+      <setting name="NumberOfTestWorkers" value="4" />
+    </settings>
+    <properties>
+      <property name="_PID" value="14074" />
+      <property name="_APPDOMAIN" value="domain-" />
+    </properties>
+    <test-suite type="TestSuite" id="0-1225" name="Dynamitey" fullname="Dynamitey" runstate="Runnable" testcasecount="214" result="Passed" start-time="2017-08-18 02:58:00Z" end-time="2017-08-18 02:58:04Z" duration="4.051946" total="182" passed="182" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="385">
+      <properties />
+      <test-suite type="TestSuite" id="0-1226" name="Tests" fullname="Dynamitey.Tests" runstate="Runnable" testcasecount="214" result="Passed" start-time="2017-08-18 02:58:00Z" end-time="2017-08-18 02:58:04Z" duration="4.049176" total="182" passed="182" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="385">
+        <properties />
+        <test-suite type="TestFixture" id="0-1000" name="Curry" fullname="Dynamitey.Tests.Curry" classname="Dynamitey.Tests.Curry" runstate="Runnable" testcasecount="23" result="Passed" start-time="2017-08-18 02:58:00Z" end-time="2017-08-18 02:58:01Z" duration="0.895074" total="23" passed="23" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="34">
+          <properties />
+          <test-case id="0-1021" name="BasicCurryTest" fullname="Dynamitey.Tests.Curry.BasicCurryTest" methodname="BasicCurryTest" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="1696345105" result="Passed" start-time="2017-08-18 02:58:00Z" end-time="2017-08-18 02:58:01Z" duration="0.335576" asserts="4">
+            <properties />
+          </test-case>
+          <test-case id="0-1017" name="BoundedCurryCont" fullname="Dynamitey.Tests.Curry.BoundedCurryCont" methodname="BoundedCurryCont" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="490778140" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.137516" asserts="3">
+            <properties />
+          </test-case>
+          <test-case id="0-1022" name="CurryLeftPipeTest" fullname="Dynamitey.Tests.Curry.CurryLeftPipeTest" methodname="CurryLeftPipeTest" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="438963864" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.011774" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1023" name="CurryRightPipeTest" fullname="Dynamitey.Tests.Curry.CurryRightPipeTest" methodname="CurryRightPipeTest" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="720857294" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.009728" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1003" name="TestBasicConvertDelegateCurry" fullname="Dynamitey.Tests.Curry.TestBasicConvertDelegateCurry" methodname="TestBasicConvertDelegateCurry" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="403683623" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.043986" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1007" name="TestBasicConvertDelegateCurryParamValueType" fullname="Dynamitey.Tests.Curry.TestBasicConvertDelegateCurryParamValueType" methodname="TestBasicConvertDelegateCurryParamValueType" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="467963955" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.015106" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1004" name="TestBasicConvertDelegateCurryReturnValueType" fullname="Dynamitey.Tests.Curry.TestBasicConvertDelegateCurryReturnValueType" methodname="TestBasicConvertDelegateCurryReturnValueType" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="1336834135" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.006215" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1008" name="TestBasicConvertMoreCurryParamValueType" fullname="Dynamitey.Tests.Curry.TestBasicConvertMoreCurryParamValueType" methodname="TestBasicConvertMoreCurryParamValueType" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="2141329338" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.006889" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1009" name="TestBasicConvertMoreMoreCurryParamValueType" fullname="Dynamitey.Tests.Curry.TestBasicConvertMoreMoreCurryParamValueType" methodname="TestBasicConvertMoreMoreCurryParamValueType" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="1675575714" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.015954" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1005" name="TestBasicConvertNonGenericDelegate" fullname="Dynamitey.Tests.Curry.TestBasicConvertNonGenericDelegate" methodname="TestBasicConvertNonGenericDelegate" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="591002522" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.014075" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1006" name="TestBasicConvertNonGenericDelegateAction" fullname="Dynamitey.Tests.Curry.TestBasicConvertNonGenericDelegateAction" methodname="TestBasicConvertNonGenericDelegateAction" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="1617794641" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.016568" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1001" name="TestBasicDelegateCurry" fullname="Dynamitey.Tests.Curry.TestBasicDelegateCurry" methodname="TestBasicDelegateCurry" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="1283827233" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.005558" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1002" name="TestBasicNamedCurry" fullname="Dynamitey.Tests.Curry.TestBasicNamedCurry" methodname="TestBasicNamedCurry" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="136992051" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.005249" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1018" name="TestCurryNamedMethods" fullname="Dynamitey.Tests.Curry.TestCurryNamedMethods" methodname="TestCurryNamedMethods" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="813893259" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.011757" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1014" name="TestDynamicMethodCurry" fullname="Dynamitey.Tests.Curry.TestDynamicMethodCurry" methodname="TestDynamicMethodCurry" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="2067523163" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.022601" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1010" name="TestPococMethodCurry" fullname="Dynamitey.Tests.Curry.TestPococMethodCurry" methodname="TestPococMethodCurry" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="1776733355" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.008254" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1019" name="TestPococMethodPartialApply" fullname="Dynamitey.Tests.Curry.TestPococMethodPartialApply" methodname="TestPococMethodPartialApply" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="576146724" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.003845" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1011" name="TestStaticMethodCurry" fullname="Dynamitey.Tests.Curry.TestStaticMethodCurry" methodname="TestStaticMethodCurry" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="628655389" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.013858" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1012" name="TestStaticMethodLongCurry" fullname="Dynamitey.Tests.Curry.TestStaticMethodLongCurry" methodname="TestStaticMethodLongCurry" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="2004129468" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.061739" asserts="0">
+            <properties />
+            <output><![CDATA[2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48,50,52,54,56,58,60,62,64,66,68,70,72,74,76,78,80,82,84,86,88,90,92,94,96,98,100
+]]></output>
+          </test-case>
+          <test-case id="0-1013" name="TestStaticMethodLongCurry2" fullname="Dynamitey.Tests.Curry.TestStaticMethodLongCurry2" methodname="TestStaticMethodLongCurry2" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="1102850621" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.054528" asserts="0">
+            <properties />
+            <output><![CDATA[0123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899
+]]></output>
+          </test-case>
+          <test-case id="0-1015" name="UnboundedCurry" fullname="Dynamitey.Tests.Curry.UnboundedCurry" methodname="UnboundedCurry" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="162029370" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.007535" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1016" name="UnboundedCurryCont" fullname="Dynamitey.Tests.Curry.UnboundedCurryCont" methodname="UnboundedCurryCont" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="220570920" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.008807" asserts="3">
+            <properties />
+          </test-case>
+          <test-case id="0-1020" name="UnboundedPartialApply" fullname="Dynamitey.Tests.Curry.UnboundedPartialApply" methodname="UnboundedPartialApply" classname="Dynamitey.Tests.Curry" runstate="Runnable" seed="1705341809" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.012569" asserts="4">
+            <properties />
+          </test-case>
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1024" name="DynamicObjs" fullname="Dynamitey.Tests.DynamicObjs" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" testcasecount="28" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:02Z" duration="1.006061" total="28" passed="28" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="96">
+          <properties />
+          <test-case id="0-1037" name="DictionaryMethodsOutTest" fullname="Dynamitey.Tests.DynamicObjs.DictionaryMethodsOutTest" methodname="DictionaryMethodsOutTest" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="1292964848" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.031527" asserts="4">
+            <properties />
+          </test-case>
+          <test-case id="0-1035" name="DictionaryMethodsTest" fullname="Dynamitey.Tests.DynamicObjs.DictionaryMethodsTest" methodname="DictionaryMethodsTest" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="1888222603" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.026906" asserts="4">
+            <properties />
+          </test-case>
+          <test-case id="0-1038" name="DictionaryMethodsTestWithPropertyAccess" fullname="Dynamitey.Tests.DynamicObjs.DictionaryMethodsTestWithPropertyAccess" methodname="DictionaryMethodsTestWithPropertyAccess" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="825779862" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.018852" asserts="3">
+            <properties />
+          </test-case>
+          <test-case id="0-1039" name="DictionaryNullMethodsTest" fullname="Dynamitey.Tests.DynamicObjs.DictionaryNullMethodsTest" methodname="DictionaryNullMethodsTest" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="1223670623" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.006197" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1043" name="DynamicAnnonymousWrapper" fullname="Dynamitey.Tests.DynamicObjs.DynamicAnnonymousWrapper" methodname="DynamicAnnonymousWrapper" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="449885773" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.030546" asserts="6">
+            <properties />
+          </test-case>
+          <test-case id="0-1040" name="DynamicDictionaryWrappedTest" fullname="Dynamitey.Tests.DynamicObjs.DynamicDictionaryWrappedTest" methodname="DynamicDictionaryWrappedTest" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="1198858309" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.011271" asserts="4">
+            <properties />
+          </test-case>
+          <test-case id="0-1042" name="DynamicObjectEqualsTest" fullname="Dynamitey.Tests.DynamicObjs.DynamicObjectEqualsTest" methodname="DynamicObjectEqualsTest" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="1545402529" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.009657" asserts="3">
+            <properties />
+          </test-case>
+          <test-case id="0-1031" name="ForwardAnonTest" fullname="Dynamitey.Tests.DynamicObjs.ForwardAnonTest" methodname="ForwardAnonTest" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="2006528908" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.016044" asserts="3">
+            <properties />
+          </test-case>
+          <test-case id="0-1034" name="ForwardDynamicTest" fullname="Dynamitey.Tests.DynamicObjs.ForwardDynamicTest" methodname="ForwardDynamicTest" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="1229209861" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.028410" asserts="3">
+            <properties />
+          </test-case>
+          <test-case id="0-1033" name="ForwardGenericMethodsTest" fullname="Dynamitey.Tests.DynamicObjs.ForwardGenericMethodsTest" methodname="ForwardGenericMethodsTest" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="1691511659" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.006713" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1036" name="ForwardMethodsTest" fullname="Dynamitey.Tests.DynamicObjs.ForwardMethodsTest" methodname="ForwardMethodsTest" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="236784144" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.020247" asserts="4">
+            <properties />
+          </test-case>
+          <test-case id="0-1032" name="ForwardVoidTest" fullname="Dynamitey.Tests.DynamicObjs.ForwardVoidTest" methodname="ForwardVoidTest" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="1991725161" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.003618" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="0-1025" name="GetterAnonTest" fullname="Dynamitey.Tests.DynamicObjs.GetterAnonTest" methodname="GetterAnonTest" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="864013086" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.009711" asserts="3">
+            <properties />
+          </test-case>
+          <test-case id="0-1027" name="GetterArrayTest" fullname="Dynamitey.Tests.DynamicObjs.GetterArrayTest" methodname="GetterArrayTest" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="349490125" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.024691" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1030" name="GetterDynamicTest" fullname="Dynamitey.Tests.DynamicObjs.GetterDynamicTest" methodname="GetterDynamicTest" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="977266072" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.019628" asserts="3">
+            <properties />
+          </test-case>
+          <test-case id="0-1028" name="GetterEventTest" fullname="Dynamitey.Tests.DynamicObjs.GetterEventTest" methodname="GetterEventTest" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="424854619" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.026883" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1029" name="GetterEventTest2" fullname="Dynamitey.Tests.DynamicObjs.GetterEventTest2" methodname="GetterEventTest2" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="668697137" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.011233" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1026" name="GetterVoidTest" fullname="Dynamitey.Tests.DynamicObjs.GetterVoidTest" methodname="GetterVoidTest" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="588266588" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.001846" asserts="0">
+            <properties />
+          </test-case>
+          <test-case id="0-1041" name="InterfaceDictionaryWrappedTest" fullname="Dynamitey.Tests.DynamicObjs.InterfaceDictionaryWrappedTest" methodname="InterfaceDictionaryWrappedTest" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="1729828016" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:01Z" duration="0.055831" asserts="13">
+            <properties />
+          </test-case>
+          <test-case id="0-1044" name="TestAnonInterface" fullname="Dynamitey.Tests.DynamicObjs.TestAnonInterface" methodname="TestAnonInterface" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="1430094309" result="Passed" start-time="2017-08-18 02:58:01Z" end-time="2017-08-18 02:58:02Z" duration="0.051542" asserts="4">
+            <properties />
+          </test-case>
+          <test-case id="0-1045" name="TestBuilder" fullname="Dynamitey.Tests.DynamicObjs.TestBuilder" methodname="TestBuilder" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="915337007" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.022035" asserts="4">
+            <properties />
+          </test-case>
+          <test-case id="0-1047" name="TestClayFactorySyntax" fullname="Dynamitey.Tests.DynamicObjs.TestClayFactorySyntax" methodname="TestClayFactorySyntax" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="2008779707" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.068823" asserts="11">
+            <properties />
+          </test-case>
+          <test-case id="0-1051" name="TestCodeDomLateTypeBind" fullname="Dynamitey.Tests.DynamicObjs.TestCodeDomLateTypeBind" methodname="TestCodeDomLateTypeBind" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="1274599281" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.296100" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1048" name="TestFactoryListSyntax" fullname="Dynamitey.Tests.DynamicObjs.TestFactoryListSyntax" methodname="TestFactoryListSyntax" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="1891181677" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.025996" asserts="4">
+            <properties />
+          </test-case>
+          <test-case id="0-1052" name="TestLateLibrarybind" fullname="Dynamitey.Tests.DynamicObjs.TestLateLibrarybind" methodname="TestLateLibrarybind" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="318651645" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.043592" asserts="3">
+            <properties />
+          </test-case>
+          <test-case id="0-1049" name="TestQuicListSyntax" fullname="Dynamitey.Tests.DynamicObjs.TestQuicListSyntax" methodname="TestQuicListSyntax" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="848127100" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.017475" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1050" name="TestRecorder" fullname="Dynamitey.Tests.DynamicObjs.TestRecorder" methodname="TestRecorder" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="820369284" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.023505" asserts="3">
+            <properties />
+          </test-case>
+          <test-case id="0-1046" name="TestSetupOtherTypes" fullname="Dynamitey.Tests.DynamicObjs.TestSetupOtherTypes" methodname="TestSetupOtherTypes" classname="Dynamitey.Tests.DynamicObjs" runstate="Runnable" seed="642822706" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.028195" asserts="6">
+            <properties />
+          </test-case>
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1053" name="ExpandoObjs" fullname="Dynamitey.Tests.ExpandoObjs" classname="Dynamitey.Tests.ExpandoObjs" runstate="Runnable" testcasecount="2" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.039595" total="2" passed="2" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="10">
+          <properties />
+          <test-case id="0-1054" name="TestExpando" fullname="Dynamitey.Tests.ExpandoObjs.TestExpando" methodname="TestExpando" classname="Dynamitey.Tests.ExpandoObjs" runstate="Runnable" seed="335812586" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.016095" asserts="5">
+            <properties />
+          </test-case>
+          <test-case id="0-1055" name="TestExpando2" fullname="Dynamitey.Tests.ExpandoObjs.TestExpando2" methodname="TestExpando2" classname="Dynamitey.Tests.ExpandoObjs" runstate="Runnable" seed="473210877" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.018184" asserts="5">
+            <properties />
+          </test-case>
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1056" name="Impromptu" fullname="Dynamitey.Tests.Impromptu" classname="Dynamitey.Tests.Impromptu" runstate="Runnable" testcasecount="4" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.110832" total="4" passed="4" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="6">
+          <properties>
+            <property name="Category" value="Impromptu" />
+          </properties>
+          <test-case id="0-1058" name="DictionaryCurriedAcctlikeNullMethodsTest" fullname="Dynamitey.Tests.Impromptu.DictionaryCurriedAcctlikeNullMethodsTest" methodname="DictionaryCurriedAcctlikeNullMethodsTest" classname="Dynamitey.Tests.Impromptu" runstate="Runnable" seed="937155176" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.051798" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1057" name="DictionaryInterfaceNullMethodsTest" fullname="Dynamitey.Tests.Impromptu.DictionaryInterfaceNullMethodsTest" methodname="DictionaryInterfaceNullMethodsTest" classname="Dynamitey.Tests.Impromptu" runstate="Runnable" seed="1256018280" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.002701" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1059" name="TestBuilderActLikeAnon" fullname="Dynamitey.Tests.Impromptu.TestBuilderActLikeAnon" methodname="TestBuilderActLikeAnon" classname="Dynamitey.Tests.Impromptu" runstate="Runnable" seed="575371779" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.040859" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1060" name="TestBuilderActLikeNamed" fullname="Dynamitey.Tests.Impromptu.TestBuilderActLikeNamed" methodname="TestBuilderActLikeNamed" classname="Dynamitey.Tests.Impromptu" runstate="Runnable" seed="443490820" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.004847" asserts="2">
+            <properties />
+          </test-case>
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1061" name="Invoke" fullname="Dynamitey.Tests.Invoke" classname="Dynamitey.Tests.Invoke" runstate="Runnable" testcasecount="86" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:03Z" duration="0.879445" total="86" passed="86" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="171">
+          <properties />
+          <test-case id="0-1069" name="TestCacheableConstruct" fullname="Dynamitey.Tests.Invoke.TestCacheableConstruct" methodname="TestCacheableConstruct" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1275937143" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.007051" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1071" name="TestCacheableConstructOptional" fullname="Dynamitey.Tests.Invoke.TestCacheableConstructOptional" methodname="TestCacheableConstructOptional" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1323043406" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.001594" asserts="3">
+            <properties />
+          </test-case>
+          <test-case id="0-1074" name="TestCacheableConstructValueType" fullname="Dynamitey.Tests.Invoke.TestCacheableConstructValueType" methodname="TestCacheableConstructValueType" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="764162622" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.014391" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1065" name="TestCacheableDyanmicSetAndPocoSetAndSetNull" fullname="Dynamitey.Tests.Invoke.TestCacheableDyanmicSetAndPocoSetAndSetNull" methodname="TestCacheableDyanmicSetAndPocoSetAndSetNull" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="2058388683" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.004517" asserts="3">
+            <properties />
+          </test-case>
+          <test-case id="0-1139" name="TestCacheableDynamicAddAssign" fullname="Dynamitey.Tests.Invoke.TestCacheableDynamicAddAssign" methodname="TestCacheableDynamicAddAssign" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="2139603772" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.026341" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1141" name="TestCacheableDynamicSubtractAssign" fullname="Dynamitey.Tests.Invoke.TestCacheableDynamicSubtractAssign" methodname="TestCacheableDynamicSubtractAssign" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="965762150" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.020962" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1089" name="TestCacheableGet" fullname="Dynamitey.Tests.Invoke.TestCacheableGet" methodname="TestCacheableGet" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="457205339" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.001017" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1122" name="TestCacheableGetDynamic" fullname="Dynamitey.Tests.Invoke.TestCacheableGetDynamic" methodname="TestCacheableGetDynamic" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="2145013977" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.002578" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1088" name="TestCacheableImplicitConvert" fullname="Dynamitey.Tests.Invoke.TestCacheableImplicitConvert" methodname="TestCacheableImplicitConvert" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1111963497" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.006213" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1094" name="TestCacheableIndexer" fullname="Dynamitey.Tests.Invoke.TestCacheableIndexer" methodname="TestCacheableIndexer" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="690033843" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.002648" asserts="6">
+            <properties />
+          </test-case>
+          <test-case id="0-1132" name="TestCacheableIsEventAndIsNotEvent" fullname="Dynamitey.Tests.Invoke.TestCacheableIsEventAndIsNotEvent" methodname="TestCacheableIsEventAndIsNotEvent" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1895178688" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.002233" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1098" name="TestCacheableMethodDynamicPassAndGetValue" fullname="Dynamitey.Tests.Invoke.TestCacheableMethodDynamicPassAndGetValue" methodname="TestCacheableMethodDynamicPassAndGetValue" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1983119105" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.003865" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1108" name="TestCacheableMethodDynamicPassVoid" fullname="Dynamitey.Tests.Invoke.TestCacheableMethodDynamicPassVoid" methodname="TestCacheableMethodDynamicPassVoid" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="685824872" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.003650" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1109" name="TestCacheableMethodDynamicUnknowns" fullname="Dynamitey.Tests.Invoke.TestCacheableMethodDynamicUnknowns" methodname="TestCacheableMethodDynamicUnknowns" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="2005095868" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.008879" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1103" name="TestCacheableMethodPocoOverloadingPassAndGetValueArgOptional" fullname="Dynamitey.Tests.Invoke.TestCacheableMethodPocoOverloadingPassAndGetValueArgOptional" methodname="TestCacheableMethodPocoOverloadingPassAndGetValueArgOptional" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="2008021831" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.001656" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1135" name="TestCacheablePocoAddAssign" fullname="Dynamitey.Tests.Invoke.TestCacheablePocoAddAssign" methodname="TestCacheablePocoAddAssign" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="305010396" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.003187" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1137" name="TestCacheablePocoSubtractAssign" fullname="Dynamitey.Tests.Invoke.TestCacheablePocoSubtractAssign" methodname="TestCacheablePocoSubtractAssign" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="977312271" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.003000" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1081" name="TestCacheablePrimativeDateTimeObjectNullableAndGuidNoParams" fullname="Dynamitey.Tests.Invoke.TestCacheablePrimativeDateTimeObjectNullableAndGuidNoParams" methodname="TestCacheablePrimativeDateTimeObjectNullableAndGuidNoParams" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="960259669" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.015758" asserts="6">
+            <properties />
+          </test-case>
+          <test-case id="0-1096" name="TestCacheableSetIndexer" fullname="Dynamitey.Tests.Invoke.TestCacheableSetIndexer" methodname="TestCacheableSetIndexer" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1295837946" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.005758" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1083" name="TestCacheableStaticCall" fullname="Dynamitey.Tests.Invoke.TestCacheableStaticCall" methodname="TestCacheableStaticCall" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1754830170" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.001483" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1130" name="TestCacheableStaticDateTimeMethod" fullname="Dynamitey.Tests.Invoke.TestCacheableStaticDateTimeMethod" methodname="TestCacheableStaticDateTimeMethod" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1673396321" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.020716" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1124" name="TestCacheableStaticGet" fullname="Dynamitey.Tests.Invoke.TestCacheableStaticGet" methodname="TestCacheableStaticGet" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1151963529" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.017034" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1128" name="TestCacheableStaticSet" fullname="Dynamitey.Tests.Invoke.TestCacheableStaticSet" methodname="TestCacheableStaticSet" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="450296842" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.001647" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1100" name="TestCachedMethodStaticOverloadingPassAndGetValue" fullname="Dynamitey.Tests.Invoke.TestCachedMethodStaticOverloadingPassAndGetValue" methodname="TestCachedMethodStaticOverloadingPassAndGetValue" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="786951351" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:02Z" duration="0.002880" asserts="4">
+            <properties />
+          </test-case>
+          <test-case id="0-1086" name="TestCoerceConverterColor" fullname="Dynamitey.Tests.Invoke.TestCoerceConverterColor" methodname="TestCoerceConverterColor" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1909097723" result="Passed" start-time="2017-08-18 02:58:02Z" end-time="2017-08-18 02:58:03Z" duration="0.096473" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1087" name="TestCoerceConverterDBNULL" fullname="Dynamitey.Tests.Invoke.TestCoerceConverterDBNULL" methodname="TestCoerceConverterDBNULL" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="249342895" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.006519" asserts="3">
+            <properties />
+          </test-case>
+          <test-case id="0-1068" name="TestConstruct" fullname="Dynamitey.Tests.Invoke.TestConstruct" methodname="TestConstruct" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="708882738" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.002479" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1077" name="TestConstructDateTimeNoParams" fullname="Dynamitey.Tests.Invoke.TestConstructDateTimeNoParams" methodname="TestConstructDateTimeNoParams" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1092235480" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.001775" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1080" name="TestConstructGuid" fullname="Dynamitey.Tests.Invoke.TestConstructGuid" methodname="TestConstructGuid" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1363650507" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.001741" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1079" name="TestConstructNullableprimativetype" fullname="Dynamitey.Tests.Invoke.TestConstructNullableprimativetype" methodname="TestConstructNullableprimativetype" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1922141263" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.001568" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1078" name="TestConstructOBjectNoParams" fullname="Dynamitey.Tests.Invoke.TestConstructOBjectNoParams" methodname="TestConstructOBjectNoParams" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1075159224" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.002754" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1070" name="TestConstructOptional" fullname="Dynamitey.Tests.Invoke.TestConstructOptional" methodname="TestConstructOptional" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1155778069" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.001968" asserts="3">
+            <properties />
+          </test-case>
+          <test-case id="0-1076" name="TestConstructprimativetype" fullname="Dynamitey.Tests.Invoke.TestConstructprimativetype" methodname="TestConstructprimativetype" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1481837191" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.001700" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1073" name="TestConstructValueType" fullname="Dynamitey.Tests.Invoke.TestConstructValueType" methodname="TestConstructValueType" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="2131422172" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.003548" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1075" name="TestConstructValueTypeJustDynamic" fullname="Dynamitey.Tests.Invoke.TestConstructValueTypeJustDynamic" methodname="TestConstructValueTypeJustDynamic" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="874755041" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.001583" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1066" name="TestConvert" fullname="Dynamitey.Tests.Invoke.TestConvert" methodname="TestConvert" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1465345550" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.018326" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1067" name="TestConvertCacheable" fullname="Dynamitey.Tests.Invoke.TestConvertCacheable" methodname="TestConvertCacheable" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1683682853" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.001457" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1138" name="TestDynamicAddAssign" fullname="Dynamitey.Tests.Invoke.TestDynamicAddAssign" methodname="TestDynamicAddAssign" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="2052694187" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.015911" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1142" name="TestDynamicMemberNamesExpando" fullname="Dynamitey.Tests.Invoke.TestDynamicMemberNamesExpando" methodname="TestDynamicMemberNamesExpando" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1598081148" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.009097" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1143" name="TestDynamicMemberNamesImpromput" fullname="Dynamitey.Tests.Invoke.TestDynamicMemberNamesImpromput" methodname="TestDynamicMemberNamesImpromput" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="2086724996" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.003587" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1062" name="TestDynamicSet" fullname="Dynamitey.Tests.Invoke.TestDynamicSet" methodname="TestDynamicSet" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="460840371" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.003779" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1140" name="TestDynamicSubtractAssign" fullname="Dynamitey.Tests.Invoke.TestDynamicSubtractAssign" methodname="TestDynamicSubtractAssign" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1796415730" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.012125" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1112" name="TestGetDynamic" fullname="Dynamitey.Tests.Invoke.TestGetDynamic" methodname="TestGetDynamic" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1862201887" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.005503" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1113" name="TestGetDynamicChained" fullname="Dynamitey.Tests.Invoke.TestGetDynamicChained" methodname="TestGetDynamicChained" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="87913980" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.015709" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1121" name="TestGetDynamicChainedOne" fullname="Dynamitey.Tests.Invoke.TestGetDynamicChainedOne" methodname="TestGetDynamicChainedOne" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="973217138" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.003238" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1114" name="TestGetDynamicChainedWithIndexes" fullname="Dynamitey.Tests.Invoke.TestGetDynamicChainedWithIndexes" methodname="TestGetDynamicChainedWithIndexes" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1133058740" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.033138" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1090" name="TestGetIndexer" fullname="Dynamitey.Tests.Invoke.TestGetIndexer" methodname="TestGetIndexer" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="230892949" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.003145" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1093" name="TestGetIndexerArray" fullname="Dynamitey.Tests.Invoke.TestGetIndexerArray" methodname="TestGetIndexerArray" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1088253778" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.004612" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1091" name="TestGetIndexerValue" fullname="Dynamitey.Tests.Invoke.TestGetIndexerValue" methodname="TestGetIndexerValue" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1948355804" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.001013" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1092" name="TestGetLengthArray" fullname="Dynamitey.Tests.Invoke.TestGetLengthArray" methodname="TestGetLengthArray" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="398251523" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.001843" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1085" name="TestImplicitConvert" fullname="Dynamitey.Tests.Invoke.TestImplicitConvert" methodname="TestImplicitConvert" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1275420256" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.002882" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1144" name="TestInvokeAdd" fullname="Dynamitey.Tests.Invoke.TestInvokeAdd" methodname="TestInvokeAdd" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1879403412" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.005444" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1146" name="TestInvokeBasicBinaryOperatorsDynamic" fullname="Dynamitey.Tests.Invoke.TestInvokeBasicBinaryOperatorsDynamic" methodname="TestInvokeBasicBinaryOperatorsDynamic" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1819216783" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.021298" asserts="20">
+            <properties />
+          </test-case>
+          <test-case id="0-1145" name="TestInvokeBasicUnaryOperatorsDynamic" fullname="Dynamitey.Tests.Invoke.TestInvokeBasicUnaryOperatorsDynamic" methodname="TestInvokeBasicUnaryOperatorsDynamic" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="902067639" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.008393" asserts="4">
+            <properties />
+          </test-case>
+          <test-case id="0-1147" name="TestInvokeSubtract" fullname="Dynamitey.Tests.Invoke.TestInvokeSubtract" methodname="TestInvokeSubtract" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1457275360" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.002178" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1131" name="TestIsEvent" fullname="Dynamitey.Tests.Invoke.TestIsEvent" methodname="TestIsEvent" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="504718496" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.002916" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1133" name="TestIsNotEvent" fullname="Dynamitey.Tests.Invoke.TestIsNotEvent" methodname="TestIsNotEvent" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="827007549" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.012631" asserts="5">
+            <properties />
+          </test-case>
+          <test-case id="0-1097" name="TestMethodDynamicPassAndGetValue" fullname="Dynamitey.Tests.Invoke.TestMethodDynamicPassAndGetValue" methodname="TestMethodDynamicPassAndGetValue" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1664443988" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.007976" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1107" name="TestMethodDynamicPassVoid" fullname="Dynamitey.Tests.Invoke.TestMethodDynamicPassVoid" methodname="TestMethodDynamicPassVoid" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1011735166" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.003852" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1110" name="TestMethodPocoGetValue" fullname="Dynamitey.Tests.Invoke.TestMethodPocoGetValue" methodname="TestMethodPocoGetValue" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="2092967095" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.002718" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1104" name="TestMethodPocoOverloadingPass2AndGetValueArgOptional" fullname="Dynamitey.Tests.Invoke.TestMethodPocoOverloadingPass2AndGetValueArgOptional" methodname="TestMethodPocoOverloadingPass2AndGetValueArgOptional" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1163796258" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.002585" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1101" name="TestMethodPocoOverloadingPassAndGetValueArg" fullname="Dynamitey.Tests.Invoke.TestMethodPocoOverloadingPassAndGetValueArg" methodname="TestMethodPocoOverloadingPassAndGetValueArg" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="688066667" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.008142" asserts="4">
+            <properties />
+          </test-case>
+          <test-case id="0-1102" name="TestMethodPocoOverloadingPassAndGetValueArgOptional" fullname="Dynamitey.Tests.Invoke.TestMethodPocoOverloadingPassAndGetValueArgOptional" methodname="TestMethodPocoOverloadingPassAndGetValueArgOptional" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="754019248" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.002431" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1105" name="TestMethodPocoOverloadingPassAndGetValueNull" fullname="Dynamitey.Tests.Invoke.TestMethodPocoOverloadingPassAndGetValueNull" methodname="TestMethodPocoOverloadingPassAndGetValueNull" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1191707614" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.014661" asserts="6">
+            <properties />
+          </test-case>
+          <test-case id="0-1111" name="TestMethodPocoPassAndGetValue" fullname="Dynamitey.Tests.Invoke.TestMethodPocoPassAndGetValue" methodname="TestMethodPocoPassAndGetValue" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1182789454" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.004518" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1099" name="TestMethodStaticOverloadingPassAndGetValue" fullname="Dynamitey.Tests.Invoke.TestMethodStaticOverloadingPassAndGetValue" methodname="TestMethodStaticOverloadingPassAndGetValue" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="335841650" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.004884" asserts="4">
+            <properties />
+          </test-case>
+          <test-case id="0-1072" name="TestOptionalArgumentActivationNoneAndCacheable" fullname="Dynamitey.Tests.Invoke.TestOptionalArgumentActivationNoneAndCacheable" methodname="TestOptionalArgumentActivationNoneAndCacheable" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="806795175" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.004912" asserts="3">
+            <properties />
+          </test-case>
+          <test-case id="0-1106" name="TestOutMethod" fullname="Dynamitey.Tests.Invoke.TestOutMethod" methodname="TestOutMethod" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1838703612" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.007339" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1134" name="TestPocoAddAssign" fullname="Dynamitey.Tests.Invoke.TestPocoAddAssign" methodname="TestPocoAddAssign" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="116821860" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.002808" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1063" name="TestPocoSet" fullname="Dynamitey.Tests.Invoke.TestPocoSet" methodname="TestPocoSet" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="300678335" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.000992" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1136" name="TestPocoSubtractAssign" fullname="Dynamitey.Tests.Invoke.TestPocoSubtractAssign" methodname="TestPocoSubtractAssign" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1245959699" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.002238" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1118" name="TestSetDynamicAllAnonymous" fullname="Dynamitey.Tests.Invoke.TestSetDynamicAllAnonymous" methodname="TestSetDynamicAllAnonymous" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="294486906" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.011261" asserts="3">
+            <properties />
+          </test-case>
+          <test-case id="0-1117" name="TestSetDynamicAllDict" fullname="Dynamitey.Tests.Invoke.TestSetDynamicAllDict" methodname="TestSetDynamicAllDict" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1117660865" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.020467" asserts="3">
+            <properties />
+          </test-case>
+          <test-case id="0-1119" name="TestSetDynamicAllNamed" fullname="Dynamitey.Tests.Invoke.TestSetDynamicAllNamed" methodname="TestSetDynamicAllNamed" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1901852669" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.009342" asserts="3">
+            <properties />
+          </test-case>
+          <test-case id="0-1115" name="TestSetDynamicChained" fullname="Dynamitey.Tests.Invoke.TestSetDynamicChained" methodname="TestSetDynamicChained" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="571571906" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.007263" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1120" name="TestSetDynamicChainedOne" fullname="Dynamitey.Tests.Invoke.TestSetDynamicChainedOne" methodname="TestSetDynamicChainedOne" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1413268435" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.003507" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1116" name="TestSetDynamicChainedWithInexes" fullname="Dynamitey.Tests.Invoke.TestSetDynamicChainedWithInexes" methodname="TestSetDynamicChainedWithInexes" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="2107081468" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.023612" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1095" name="TestSetIndexer" fullname="Dynamitey.Tests.Invoke.TestSetIndexer" methodname="TestSetIndexer" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="2101265618" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.005603" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1082" name="TestStaticCall" fullname="Dynamitey.Tests.Invoke.TestStaticCall" methodname="TestStaticCall" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="379760909" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.001890" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1129" name="TestStaticDateTimeMethod" fullname="Dynamitey.Tests.Invoke.TestStaticDateTimeMethod" methodname="TestStaticDateTimeMethod" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="565588657" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.001925" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1123" name="TestStaticGet" fullname="Dynamitey.Tests.Invoke.TestStaticGet" methodname="TestStaticGet" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1168048740" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.002480" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1125" name="TestStaticGet2" fullname="Dynamitey.Tests.Invoke.TestStaticGet2" methodname="TestStaticGet2" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1281553644" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.003874" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1126" name="TestStaticGet3" fullname="Dynamitey.Tests.Invoke.TestStaticGet3" methodname="TestStaticGet3" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="100263873" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.001702" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1084" name="TestStaticPropertySetFollowedByGetTest" fullname="Dynamitey.Tests.Invoke.TestStaticPropertySetFollowedByGetTest" methodname="TestStaticPropertySetFollowedByGetTest" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="247100471" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.004843" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1127" name="TestStaticSet" fullname="Dynamitey.Tests.Invoke.TestStaticSet" methodname="TestStaticSet" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="789839009" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.000296" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1064" name="TestStructSet" fullname="Dynamitey.Tests.Invoke.TestStructSet" methodname="TestStructSet" classname="Dynamitey.Tests.Invoke" runstate="Runnable" seed="1862284824" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.001369" asserts="1">
+            <properties />
+          </test-case>
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1148" name="Linq" fullname="Dynamitey.Tests.Linq" classname="Dynamitey.Tests.Linq" runstate="Runnable" testcasecount="5" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:04Z" duration="0.748008" total="5" passed="5" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="4">
+          <properties />
+          <test-case id="0-1150" name="MoreGenericsDynamicLinq" fullname="Dynamitey.Tests.Linq.MoreGenericsDynamicLinq" methodname="MoreGenericsDynamicLinq" classname="Dynamitey.Tests.Linq" runstate="Runnable" seed="2006370602" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.057933" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1153" name="PrintOutInterface" fullname="Dynamitey.Tests.Linq.PrintOutInterface" methodname="PrintOutInterface" classname="Dynamitey.Tests.Linq" runstate="Runnable" seed="644567036" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:03Z" duration="0.014323" asserts="0">
+            <properties />
+            <output><![CDATA[public interface ILinq<TSource>:IEnumerable<TSource>
+{
+	TSource Aggregate(Func<TSource,TSource,TSource> func);
+	TAccumulate Aggregate<TAccumulate>(TAccumulate seed,Func<TAccumulate,TSource,TAccumulate> func);
+	TResult Aggregate<TAccumulate,TResult>(TAccumulate seed,Func<TAccumulate,TSource,TAccumulate> func,Func<TAccumulate,TResult> resultSelector);
+	Boolean All(Func<TSource,Boolean> predicate);
+	Boolean Any();
+	Boolean Any(Func<TSource,Boolean> predicate);
+	ILinq<TSource> Append(TSource element);
+	ILinq<TSource> AsEnumerable();
+	Double Average(Func<TSource,Int32> selector);
+	Nullable<Double> Average(Func<TSource,Nullable<Int32>> selector);
+	Double Average(Func<TSource,Int64> selector);
+	Nullable<Double> Average(Func<TSource,Nullable<Int64>> selector);
+	Single Average(Func<TSource,Single> selector);
+	Nullable<Single> Average(Func<TSource,Nullable<Single>> selector);
+	Double Average(Func<TSource,Double> selector);
+	Nullable<Double> Average(Func<TSource,Nullable<Double>> selector);
+	Decimal Average(Func<TSource,Decimal> selector);
+	Nullable<Decimal> Average(Func<TSource,Nullable<Decimal>> selector);
+	ILinq<TResult> Cast<TResult>();
+	ILinq<TSource> Concat(IEnumerable<TSource> second);
+	Boolean Contains(TSource value);
+	Boolean Contains(TSource value,IEqualityComparer<TSource> comparer);
+	Int32 Count();
+	Int32 Count(Func<TSource,Boolean> predicate);
+	ILinq<TSource> DefaultIfEmpty();
+	ILinq<TSource> DefaultIfEmpty(TSource defaultValue);
+	ILinq<TSource> Distinct();
+	ILinq<TSource> Distinct(IEqualityComparer<TSource> comparer);
+	TSource ElementAt(Int32 index);
+	TSource ElementAtOrDefault(Int32 index);
+	ILinq<TSource> Except(IEnumerable<TSource> second);
+	ILinq<TSource> Except(IEnumerable<TSource> second,IEqualityComparer<TSource> comparer);
+	TSource First();
+	TSource First(Func<TSource,Boolean> predicate);
+	TSource FirstOrDefault();
+	TSource FirstOrDefault(Func<TSource,Boolean> predicate);
+	ILinq<IGrouping<TKey,TSource>> GroupBy<TKey>(Func<TSource,TKey> keySelector);
+	ILinq<IGrouping<TKey,TSource>> GroupBy<TKey>(Func<TSource,TKey> keySelector,IEqualityComparer<TKey> comparer);
+	ILinq<IGrouping<TKey,TElement>> GroupBy<TKey,TElement>(Func<TSource,TKey> keySelector,Func<TSource,TElement> elementSelector);
+	ILinq<IGrouping<TKey,TElement>> GroupBy<TKey,TElement>(Func<TSource,TKey> keySelector,Func<TSource,TElement> elementSelector,IEqualityComparer<TKey> comparer);
+	ILinq<TResult> GroupBy<TKey,TResult>(Func<TSource,TKey> keySelector,Func<TKey,IEnumerable<TSource>,TResult> resultSelector);
+	ILinq<TResult> GroupBy<TKey,TElement,TResult>(Func<TSource,TKey> keySelector,Func<TSource,TElement> elementSelector,Func<TKey,IEnumerable<TElement>,TResult> resultSelector);
+	ILinq<TResult> GroupBy<TKey,TResult>(Func<TSource,TKey> keySelector,Func<TKey,IEnumerable<TSource>,TResult> resultSelector,IEqualityComparer<TKey> comparer);
+	ILinq<TResult> GroupBy<TKey,TElement,TResult>(Func<TSource,TKey> keySelector,Func<TSource,TElement> elementSelector,Func<TKey,IEnumerable<TElement>,TResult> resultSelector,IEqualityComparer<TKey> comparer);
+	ILinq<TResult> GroupJoin<TInner,TKey,TResult>(IEnumerable<TInner> inner,Func<TSource,TKey> outerKeySelector,Func<TInner,TKey> innerKeySelector,Func<TSource,IEnumerable<TInner>,TResult> resultSelector);
+	ILinq<TResult> GroupJoin<TInner,TKey,TResult>(IEnumerable<TInner> inner,Func<TSource,TKey> outerKeySelector,Func<TInner,TKey> innerKeySelector,Func<TSource,IEnumerable<TInner>,TResult> resultSelector,IEqualityComparer<TKey> comparer);
+	ILinq<TSource> Intersect(IEnumerable<TSource> second);
+	ILinq<TSource> Intersect(IEnumerable<TSource> second,IEqualityComparer<TSource> comparer);
+	ILinq<TResult> Join<TInner,TKey,TResult>(IEnumerable<TInner> inner,Func<TSource,TKey> outerKeySelector,Func<TInner,TKey> innerKeySelector,Func<TSource,TInner,TResult> resultSelector);
+	ILinq<TResult> Join<TInner,TKey,TResult>(IEnumerable<TInner> inner,Func<TSource,TKey> outerKeySelector,Func<TInner,TKey> innerKeySelector,Func<TSource,TInner,TResult> resultSelector,IEqualityComparer<TKey> comparer);
+	TSource Last();
+	TSource Last(Func<TSource,Boolean> predicate);
+	TSource LastOrDefault();
+	TSource LastOrDefault(Func<TSource,Boolean> predicate);
+	Int64 LongCount();
+	Int64 LongCount(Func<TSource,Boolean> predicate);
+	TSource Max();
+	Int32 Max(Func<TSource,Int32> selector);
+	Nullable<Int32> Max(Func<TSource,Nullable<Int32>> selector);
+	Int64 Max(Func<TSource,Int64> selector);
+	Nullable<Int64> Max(Func<TSource,Nullable<Int64>> selector);
+	Single Max(Func<TSource,Single> selector);
+	Nullable<Single> Max(Func<TSource,Nullable<Single>> selector);
+	Double Max(Func<TSource,Double> selector);
+	Nullable<Double> Max(Func<TSource,Nullable<Double>> selector);
+	Decimal Max(Func<TSource,Decimal> selector);
+	Nullable<Decimal> Max(Func<TSource,Nullable<Decimal>> selector);
+	TResult Max<TResult>(Func<TSource,TResult> selector);
+	TSource Min();
+	Int32 Min(Func<TSource,Int32> selector);
+	Nullable<Int32> Min(Func<TSource,Nullable<Int32>> selector);
+	Int64 Min(Func<TSource,Int64> selector);
+	Nullable<Int64> Min(Func<TSource,Nullable<Int64>> selector);
+	Single Min(Func<TSource,Single> selector);
+	Nullable<Single> Min(Func<TSource,Nullable<Single>> selector);
+	Double Min(Func<TSource,Double> selector);
+	Nullable<Double> Min(Func<TSource,Nullable<Double>> selector);
+	Decimal Min(Func<TSource,Decimal> selector);
+	Nullable<Decimal> Min(Func<TSource,Nullable<Decimal>> selector);
+	TResult Min<TResult>(Func<TSource,TResult> selector);
+	ILinq<TResult> OfType<TResult>();
+	IOrderedLinq<TSource> OrderBy<TKey>(Func<TSource,TKey> keySelector);
+	IOrderedLinq<TSource> OrderBy<TKey>(Func<TSource,TKey> keySelector,IComparer<TKey> comparer);
+	IOrderedLinq<TSource> OrderByDescending<TKey>(Func<TSource,TKey> keySelector);
+	IOrderedLinq<TSource> OrderByDescending<TKey>(Func<TSource,TKey> keySelector,IComparer<TKey> comparer);
+	ILinq<TSource> Prepend(TSource element);
+	ILinq<TSource> Reverse();
+	ILinq<TResult> Select<TResult>(Func<TSource,TResult> selector);
+	ILinq<TResult> Select<TResult>(Func<TSource,Int32,TResult> selector);
+	ILinq<TResult> SelectMany<TResult>(Func<TSource,IEnumerable<TResult>> selector);
+	ILinq<TResult> SelectMany<TResult>(Func<TSource,Int32,IEnumerable<TResult>> selector);
+	ILinq<TResult> SelectMany<TCollection,TResult>(Func<TSource,Int32,IEnumerable<TCollection>> collectionSelector,Func<TSource,TCollection,TResult> resultSelector);
+	ILinq<TResult> SelectMany<TCollection,TResult>(Func<TSource,IEnumerable<TCollection>> collectionSelector,Func<TSource,TCollection,TResult> resultSelector);
+	Boolean SequenceEqual(IEnumerable<TSource> second);
+	Boolean SequenceEqual(IEnumerable<TSource> second,IEqualityComparer<TSource> comparer);
+	TSource Single();
+	TSource Single(Func<TSource,Boolean> predicate);
+	TSource SingleOrDefault();
+	TSource SingleOrDefault(Func<TSource,Boolean> predicate);
+	ILinq<TSource> Skip(Int32 count);
+	ILinq<TSource> SkipLast(Int32 count);
+	ILinq<TSource> SkipWhile(Func<TSource,Boolean> predicate);
+	ILinq<TSource> SkipWhile(Func<TSource,Int32,Boolean> predicate);
+	Int32 Sum(Func<TSource,Int32> selector);
+	Nullable<Int32> Sum(Func<TSource,Nullable<Int32>> selector);
+	Int64 Sum(Func<TSource,Int64> selector);
+	Nullable<Int64> Sum(Func<TSource,Nullable<Int64>> selector);
+	Single Sum(Func<TSource,Single> selector);
+	Nullable<Single> Sum(Func<TSource,Nullable<Single>> selector);
+	Double Sum(Func<TSource,Double> selector);
+	Nullable<Double> Sum(Func<TSource,Nullable<Double>> selector);
+	Decimal Sum(Func<TSource,Decimal> selector);
+	Nullable<Decimal> Sum(Func<TSource,Nullable<Decimal>> selector);
+	ILinq<TSource> Take(Int32 count);
+	ILinq<TSource> TakeLast(Int32 count);
+	ILinq<TSource> TakeWhile(Func<TSource,Boolean> predicate);
+	ILinq<TSource> TakeWhile(Func<TSource,Int32,Boolean> predicate);
+	TSource[] ToArray();
+	Dictionary<TKey,TSource> ToDictionary<TKey>(Func<TSource,TKey> keySelector);
+	Dictionary<TKey,TSource> ToDictionary<TKey>(Func<TSource,TKey> keySelector,IEqualityComparer<TKey> comparer);
+	Dictionary<TKey,TElement> ToDictionary<TKey,TElement>(Func<TSource,TKey> keySelector,Func<TSource,TElement> elementSelector);
+	Dictionary<TKey,TElement> ToDictionary<TKey,TElement>(Func<TSource,TKey> keySelector,Func<TSource,TElement> elementSelector,IEqualityComparer<TKey> comparer);
+	HashSet<TSource> ToHashSet();
+	HashSet<TSource> ToHashSet(IEqualityComparer<TSource> comparer);
+	List<TSource> ToList();
+	ILookup<TKey,TSource> ToLookup<TKey>(Func<TSource,TKey> keySelector);
+	ILookup<TKey,TSource> ToLookup<TKey>(Func<TSource,TKey> keySelector,IEqualityComparer<TKey> comparer);
+	ILookup<TKey,TElement> ToLookup<TKey,TElement>(Func<TSource,TKey> keySelector,Func<TSource,TElement> elementSelector);
+	ILookup<TKey,TElement> ToLookup<TKey,TElement>(Func<TSource,TKey> keySelector,Func<TSource,TElement> elementSelector,IEqualityComparer<TKey> comparer);
+	ILinq<TSource> Union(IEnumerable<TSource> second);
+	ILinq<TSource> Union(IEnumerable<TSource> second,IEqualityComparer<TSource> comparer);
+	ILinq<TSource> Where(Func<TSource,Boolean> predicate);
+	ILinq<TSource> Where(Func<TSource,Int32,Boolean> predicate);
+	ILinq<TResult> Zip<TSecond,TResult>(IEnumerable<TSecond> second,Func<TSource,TSecond,TResult> resultSelector);
+}
+
+public interface IOrderedLinq<TSource> : ILinq<TSource>, IOrderedEnumerable<TSource>
+{
+	IOrderedLinq<TSource> ThenBy<TKey>(Func<TSource,TKey> keySelector);
+	IOrderedLinq<TSource> ThenBy<TKey>(Func<TSource,TKey> keySelector,IComparer<TKey> comparer);
+	IOrderedLinq<TSource> ThenByDescending<TKey>(Func<TSource,TKey> keySelector);
+	IOrderedLinq<TSource> ThenByDescending<TKey>(Func<TSource,TKey> keySelector,IComparer<TKey> comparer);
+}
+
+//Skipped Methods
+//Double Average(IEnumerable<Int32> source);
+//Nullable<Double> Average(IEnumerable<Nullable<Int32>> source);
+//Double Average(IEnumerable<Int64> source);
+//Nullable<Double> Average(IEnumerable<Nullable<Int64>> source);
+//Single Average(IEnumerable<Single> source);
+//Nullable<Single> Average(IEnumerable<Nullable<Single>> source);
+//Double Average(IEnumerable<Double> source);
+//Nullable<Double> Average(IEnumerable<Nullable<Double>> source);
+//Decimal Average(IEnumerable<Decimal> source);
+//Nullable<Decimal> Average(IEnumerable<Nullable<Decimal>> source);
+//Int32 Max(IEnumerable<Int32> source);
+//Nullable<Int32> Max(IEnumerable<Nullable<Int32>> source);
+//Int64 Max(IEnumerable<Int64> source);
+//Nullable<Int64> Max(IEnumerable<Nullable<Int64>> source);
+//Double Max(IEnumerable<Double> source);
+//Nullable<Double> Max(IEnumerable<Nullable<Double>> source);
+//Single Max(IEnumerable<Single> source);
+//Nullable<Single> Max(IEnumerable<Nullable<Single>> source);
+//Decimal Max(IEnumerable<Decimal> source);
+//Nullable<Decimal> Max(IEnumerable<Nullable<Decimal>> source);
+//Int32 Min(IEnumerable<Int32> source);
+//Nullable<Int32> Min(IEnumerable<Nullable<Int32>> source);
+//Int64 Min(IEnumerable<Int64> source);
+//Nullable<Int64> Min(IEnumerable<Nullable<Int64>> source);
+//Single Min(IEnumerable<Single> source);
+//Nullable<Single> Min(IEnumerable<Nullable<Single>> source);
+//Double Min(IEnumerable<Double> source);
+//Nullable<Double> Min(IEnumerable<Nullable<Double>> source);
+//Decimal Min(IEnumerable<Decimal> source);
+//Nullable<Decimal> Min(IEnumerable<Nullable<Decimal>> source);
+//ILinq<Int32> Range(Int32 start,Int32 count);
+//ILinq<TResult> Repeat<TResult>(TResult element,Int32 count);
+//Int32 Sum(IEnumerable<Int32> source);
+//Nullable<Int32> Sum(IEnumerable<Nullable<Int32>> source);
+//Int64 Sum(IEnumerable<Int64> source);
+//Nullable<Int64> Sum(IEnumerable<Nullable<Int64>> source);
+//Single Sum(IEnumerable<Single> source);
+//Nullable<Single> Sum(IEnumerable<Nullable<Single>> source);
+//Double Sum(IEnumerable<Double> source);
+//Nullable<Double> Sum(IEnumerable<Nullable<Double>> source);
+//Decimal Sum(IEnumerable<Decimal> source);
+//Nullable<Decimal> Sum(IEnumerable<Nullable<Decimal>> source);
+]]></output>
+          </test-case>
+          <test-case id="0-1152" name="PythonDynamicLinq" fullname="Dynamitey.Tests.Linq.PythonDynamicLinq" methodname="PythonDynamicLinq" classname="Dynamitey.Tests.Linq" runstate="Runnable" seed="429381325" result="Passed" start-time="2017-08-18 02:58:03Z" end-time="2017-08-18 02:58:04Z" duration="0.551734" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1151" name="PythonDynamicLinqGenericArgs" fullname="Dynamitey.Tests.Linq.PythonDynamicLinqGenericArgs" methodname="PythonDynamicLinqGenericArgs" classname="Dynamitey.Tests.Linq" runstate="Runnable" seed="1820592141" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.080170" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1149" name="SimpleLinqDynamicLinq" fullname="Dynamitey.Tests.Linq.SimpleLinqDynamicLinq" methodname="SimpleLinqDynamicLinq" classname="Dynamitey.Tests.Linq" runstate="Runnable" seed="2053675288" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.031164" asserts="1">
+            <properties />
+          </test-case>
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1154" name="MimicTest" fullname="Dynamitey.Tests.MimicTest" classname="Dynamitey.Tests.MimicTest" runstate="Runnable" testcasecount="12" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.158149" total="12" passed="12" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="36">
+          <properties />
+          <test-case id="0-1163" name="Binary" fullname="Dynamitey.Tests.MimicTest.Binary" methodname="Binary" classname="Dynamitey.Tests.MimicTest" runstate="Runnable" seed="2095842143" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.011562" asserts="8">
+            <properties />
+          </test-case>
+          <test-case id="0-1157" name="Call_Method" fullname="Dynamitey.Tests.MimicTest.Call_Method" methodname="Call_Method" classname="Dynamitey.Tests.MimicTest" runstate="Runnable" seed="1551305444" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.011689" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1158" name="Call_Method_With_Parameters" fullname="Dynamitey.Tests.MimicTest.Call_Method_With_Parameters" methodname="Call_Method_With_Parameters" classname="Dynamitey.Tests.MimicTest" runstate="Runnable" seed="1595074022" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.017423" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1161" name="Cast" fullname="Dynamitey.Tests.MimicTest.Cast" methodname="Cast" classname="Dynamitey.Tests.MimicTest" runstate="Runnable" seed="308747842" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.018249" asserts="6">
+            <properties />
+          </test-case>
+          <test-case id="0-1159" name="Get_Index" fullname="Dynamitey.Tests.MimicTest.Get_Index" methodname="Get_Index" classname="Dynamitey.Tests.MimicTest" runstate="Runnable" seed="1344352282" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.013848" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1155" name="Get_Property" fullname="Dynamitey.Tests.MimicTest.Get_Property" methodname="Get_Property" classname="Dynamitey.Tests.MimicTest" runstate="Runnable" seed="1264933380" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.010102" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1164" name="Inheritance_Int" fullname="Dynamitey.Tests.MimicTest.Inheritance_Int" methodname="Inheritance_Int" classname="Dynamitey.Tests.MimicTest" runstate="Runnable" seed="1649454998" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.002696" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1166" name="Inheritance_No_Match" fullname="Dynamitey.Tests.MimicTest.Inheritance_No_Match" methodname="Inheritance_No_Match" classname="Dynamitey.Tests.MimicTest" runstate="Runnable" seed="1689324818" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.006071" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1165" name="Inheritance_String" fullname="Dynamitey.Tests.MimicTest.Inheritance_String" methodname="Inheritance_String" classname="Dynamitey.Tests.MimicTest" runstate="Runnable" seed="42242401" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.002464" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1160" name="Set_Index" fullname="Dynamitey.Tests.MimicTest.Set_Index" methodname="Set_Index" classname="Dynamitey.Tests.MimicTest" runstate="Runnable" seed="356011127" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.009625" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1156" name="Set_Property" fullname="Dynamitey.Tests.MimicTest.Set_Property" methodname="Set_Property" classname="Dynamitey.Tests.MimicTest" runstate="Runnable" seed="435349412" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.008847" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1162" name="Unary" fullname="Dynamitey.Tests.MimicTest.Unary" methodname="Unary" classname="Dynamitey.Tests.MimicTest" runstate="Runnable" seed="1292103573" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.015998" asserts="13">
+            <properties />
+          </test-case>
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1167" name="PrivateTest" fullname="Dynamitey.Tests.PrivateTest" classname="Dynamitey.Tests.PrivateTest" runstate="Runnable" testcasecount="7" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.027669" total="7" passed="7" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="7">
+          <properties />
+          <test-case id="0-1172" name="TestCacheableDoNotExposePrivateMethod" fullname="Dynamitey.Tests.PrivateTest.TestCacheableDoNotExposePrivateMethod" methodname="TestCacheableDoNotExposePrivateMethod" classname="Dynamitey.Tests.PrivateTest" runstate="Runnable" seed="470294114" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.001658" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1173" name="TestCacheableExposePrivateMethodViaInstance" fullname="Dynamitey.Tests.PrivateTest.TestCacheableExposePrivateMethodViaInstance" methodname="TestCacheableExposePrivateMethodViaInstance" classname="Dynamitey.Tests.PrivateTest" runstate="Runnable" seed="563202736" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.001060" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1174" name="TestCacheableExposePrivateMethodViaType" fullname="Dynamitey.Tests.PrivateTest.TestCacheableExposePrivateMethodViaType" methodname="TestCacheableExposePrivateMethodViaType" classname="Dynamitey.Tests.PrivateTest" runstate="Runnable" seed="337710871" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.000367" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1171" name="TestInvokeDoNotExposePrivateMethod" fullname="Dynamitey.Tests.PrivateTest.TestInvokeDoNotExposePrivateMethod" methodname="TestInvokeDoNotExposePrivateMethod" classname="Dynamitey.Tests.PrivateTest" runstate="Runnable" seed="624201285" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.001549" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1170" name="TestInvokeInternalTypeMethodAcrossAssemblyBoundries" fullname="Dynamitey.Tests.PrivateTest.TestInvokeInternalTypeMethodAcrossAssemblyBoundries" methodname="TestInvokeInternalTypeMethodAcrossAssemblyBoundries" classname="Dynamitey.Tests.PrivateTest" runstate="Runnable" seed="1040052446" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.002006" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1168" name="TestInvokePrivateMethod" fullname="Dynamitey.Tests.PrivateTest.TestInvokePrivateMethod" methodname="TestInvokePrivateMethod" classname="Dynamitey.Tests.PrivateTest" runstate="Runnable" seed="1387972470" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.001343" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1169" name="TestInvokePrivateMethodAcrossAssemblyBoundries" fullname="Dynamitey.Tests.PrivateTest.TestInvokePrivateMethodAcrossAssemblyBoundries" methodname="TestInvokePrivateMethodAcrossAssemblyBoundries" classname="Dynamitey.Tests.PrivateTest" runstate="Runnable" seed="822398791" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.002104" asserts="1">
+            <properties />
+          </test-case>
+        </test-suite>
+        <test-suite type="TestFixture" id="0-1208" name="TuplerTest" fullname="Dynamitey.Tests.TuplerTest" classname="Dynamitey.Tests.TuplerTest" runstate="Runnable" testcasecount="15" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.161985" total="15" passed="15" failed="0" warnings="0" inconclusive="0" skipped="0" asserts="21">
+          <properties />
+          <test-case id="0-1211" name="DynamicCreateLongTypedTuple" fullname="Dynamitey.Tests.TuplerTest.DynamicCreateLongTypedTuple" methodname="DynamicCreateLongTypedTuple" classname="Dynamitey.Tests.TuplerTest" runstate="Runnable" seed="517847893" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.024512" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1209" name="DynamicCreateTypedTuple" fullname="Dynamitey.Tests.TuplerTest.DynamicCreateTypedTuple" methodname="DynamicCreateTypedTuple" classname="Dynamitey.Tests.TuplerTest" runstate="Runnable" seed="357422467" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.002268" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1210" name="DynamicCreateTypedTuple8" fullname="Dynamitey.Tests.TuplerTest.DynamicCreateTypedTuple8" methodname="DynamicCreateTypedTuple8" classname="Dynamitey.Tests.TuplerTest" runstate="Runnable" seed="624716792" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.004095" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1218" name="DynamicListToTuple" fullname="Dynamitey.Tests.TuplerTest.DynamicListToTuple" methodname="DynamicListToTuple" classname="Dynamitey.Tests.TuplerTest" runstate="Runnable" seed="30651120" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.015493" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1220" name="DynamicListToTuple20" fullname="Dynamitey.Tests.TuplerTest.DynamicListToTuple20" methodname="DynamicListToTuple20" classname="Dynamitey.Tests.TuplerTest" runstate="Runnable" seed="1660771912" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.052925" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1219" name="DynamicListToTuplet8" fullname="Dynamitey.Tests.TuplerTest.DynamicListToTuplet8" methodname="DynamicListToTuplet8" classname="Dynamitey.Tests.TuplerTest" runstate="Runnable" seed="411338359" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.010542" asserts="2">
+            <properties />
+          </test-case>
+          <test-case id="0-1221" name="DynamicTupleIndex" fullname="Dynamitey.Tests.TuplerTest.DynamicTupleIndex" methodname="DynamicTupleIndex" classname="Dynamitey.Tests.TuplerTest" runstate="Runnable" seed="530967868" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.002617" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1223" name="DynamicTupleIndex19" fullname="Dynamitey.Tests.TuplerTest.DynamicTupleIndex19" methodname="DynamicTupleIndex19" classname="Dynamitey.Tests.TuplerTest" runstate="Runnable" seed="1524563420" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.003234" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1222" name="DynamicTupleIndex7" fullname="Dynamitey.Tests.TuplerTest.DynamicTupleIndex7" methodname="DynamicTupleIndex7" classname="Dynamitey.Tests.TuplerTest" runstate="Runnable" seed="1926026719" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.001986" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1212" name="DynamicTupleSize" fullname="Dynamitey.Tests.TuplerTest.DynamicTupleSize" methodname="DynamicTupleSize" classname="Dynamitey.Tests.TuplerTest" runstate="Runnable" seed="2012322829" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.000354" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1214" name="DynamicTupleSize20" fullname="Dynamitey.Tests.TuplerTest.DynamicTupleSize20" methodname="DynamicTupleSize20" classname="Dynamitey.Tests.TuplerTest" runstate="Runnable" seed="1293976974" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.001938" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1213" name="DynamicTupleSize8" fullname="Dynamitey.Tests.TuplerTest.DynamicTupleSize8" methodname="DynamicTupleSize8" classname="Dynamitey.Tests.TuplerTest" runstate="Runnable" seed="977426712" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.000424" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1215" name="DynamicTupleToList" fullname="Dynamitey.Tests.TuplerTest.DynamicTupleToList" methodname="DynamicTupleToList" classname="Dynamitey.Tests.TuplerTest" runstate="Runnable" seed="1465658642" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.000530" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1217" name="DynamicTupleToList20" fullname="Dynamitey.Tests.TuplerTest.DynamicTupleToList20" methodname="DynamicTupleToList20" classname="Dynamitey.Tests.TuplerTest" runstate="Runnable" seed="1359224135" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.003125" asserts="1">
+            <properties />
+          </test-case>
+          <test-case id="0-1216" name="DynamicTupleToList8" fullname="Dynamitey.Tests.TuplerTest.DynamicTupleToList8" methodname="DynamicTupleToList8" classname="Dynamitey.Tests.TuplerTest" runstate="Runnable" seed="491244976" result="Passed" start-time="2017-08-18 02:58:04Z" end-time="2017-08-18 02:58:04Z" duration="0.000442" asserts="1">
+            <properties />
+          </test-case>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -1,8 +1,24 @@
-# Dynamitey [![Build Status](https://travis-ci.org/ekonbenefits/dynamitey.png?branch=master)](https://travis-ci.org/ekonbenefits/dynamitey)
+# Dynamitey  
 
 (pronounced dyna-mighty) flexes DLR muscle to do meta-mazing things in .net
 
-This is a Portable Class Library for  .NET 4.5, Silverlight 4 & 5, WinRT, Win Phone 8; And .net 4.0 Library
+Dynamitey is available Nuget [![NuGet](https://img.shields.io/nuget/dt/Dynamitey.svg)](https://www.nuget.org/packages/Dynamitey/)
+
+You can find the latest bleed edge on MyGet [![MyGet Pre Release](https://img.shields.io/myget/dynamitey-ci/vpre/Dynamitey.svg)](https://www.myget.org/feed/dynamitey-ci/package/nuget/Dynamitey)
+
+Platform | Status
+-------- | ------
+Windows | [![Build status](https://ci.appveyor.com/api/projects/status/kctdnnmctakj1j9w/branch/master?svg=true)](https://ci.appveyor.com/project/jbtule/dynamitey/branch/master)
+Mac     | [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/ekonbenefits/dynamitey/branches/master/2)](https://travis-ci.org/ekonbenefits/dynamitey)
+Linux   | [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/ekonbenefits/dynamitey/branches/master/1)](https://travis-ci.org/ekonbenefits/dynamitey)
+
+Compiled For|
+--------|
+.Net Std 1.5 |
+.Net 4.0  |
+Portable .NET 4.5, Silverlight 4 & 5, WinRT, Win Phone 8 |
+
+
 
 [Change Log](https://github.com/ekonbenefits/dynamitey/wiki/ChangeLog)
 
@@ -19,4 +35,4 @@ PM> Install-Package Dynamitey
   - Manipulation of Tuples -- [wowzers](https://github.com/ekonbenefits/dynamitey/blob/master/Tests/TuplerTest.cs)
   - Inline Object Graph Intialization Syntax [whoa](https://github.com/ekonbenefits/dynamitey/wiki/UsageBuilder)
   - DynamicObject base types for many things -- [jenkies](https://github.com/ekonbenefits/dynamitey/wiki/UsageDynamic)
-  - Extension to instance method conversion -- [o_O] (https://github.com/ekonbenefits/dynamitey/blob/master/Tests/Linq.cs)
+  - Extension to instance method conversion -- [o_O](https://github.com/ekonbenefits/dynamitey/blob/master/Tests/Linq.cs)

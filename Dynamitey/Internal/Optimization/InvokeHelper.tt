@@ -24,9 +24,37 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Reflection;
 
-namespace Dynamitey.Internal.Optimization
-{
-  
+namespace Dynamitey.Internal.Optimization {
+
+<# var cacheTypes = new []{"", "Get", "Set", "Constructor", "Member", "Direct"}; #>
+
+<# foreach(var name in cacheTypes){ #>
+    internal static class Binder<#=name#>Cache<T> where T : class
+    {
+        private static IDictionary<BinderHash<T>, CallSite<T>> _cache;
+
+        private static readonly object _cacheLock = new object();
+
+        internal static IDictionary<BinderHash<T>, CallSite<T>> Cache
+        {
+            get
+            {
+                lock (_cacheLock)
+                {
+                    return _cache ?? (_cache = new Dictionary<BinderHash<T>, CallSite<T>>());
+                }
+            }
+        }
+
+        internal static readonly Action ClearCache = () =>
+        {
+            lock (_cacheLock)
+            {
+                _cache = null;
+            }
+        };
+    }
+<# } #>
 
     internal static partial class InvokeHelper
     {
@@ -187,7 +215,6 @@ namespace Dynamitey.Internal.Optimization
 
 
 
-		#if !__MonoCS__
 		internal static Delegate WrapFuncHelper<TReturn>(dynamic invokable, int length)
         {
 			 switch(length){
@@ -203,34 +230,6 @@ namespace Dynamitey.Internal.Optimization
 					return new DynamicFunc<TReturn>(args=>(TReturn)Dynamic.Invoke((object)invokable,args));
 			}
         }
-		#endif
-
-		internal static class MonoConvertCallSite<T>{
-			internal static CallSite CallSite;
-		}
-	    
-		internal static Delegate WrapFuncHelperMono<TReturn>(dynamic invokable, int length)
-        {
-			 switch(length){
-#region Optimizations
-			 <# for(int i=0; i <= 16; i++){ 
-				var tobjectArgs = String.Join(",",Enumerable.Repeat(" object",i).Concat(new[]{" TReturn"}));
-  				var tArgList = String.Join(",",Enumerable.Range(0,i).Select(it=>"a"+(it+1)));
-#>  					case <#=i#>:
-						return new Func<<#=tobjectArgs#>>((<#=tArgList#>)=>{
-								 object tResult= invokable(<#=tArgList#>);
-						         return (TReturn) InvokeConvertCallSite(tResult, true, typeof(TReturn), typeof(object), ref MonoConvertCallSite<TReturn>.CallSite);
-						 });
-<# } #>
-#endregion		
-				default:
-						return new DynamicFunc<TReturn>(args=>{
-								object tResult= Dynamic.Invoke((object)invokable,args);
-								return (TReturn) InvokeConvertCallSite(tResult, true, typeof(TReturn), typeof(object), ref MonoConvertCallSite<TReturn>.CallSite);
-						});
-			}
-        }
-
 
         internal static Delegate WrapAction(dynamic invokable, int length)
         {

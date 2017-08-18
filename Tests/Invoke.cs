@@ -6,7 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Xml.Linq;
-using Dynamitey.SupportLibrary1;
+using Dynamitey.SupportLibrary;
 using Microsoft.CSharp.RuntimeBinder;
 using Moq;
 using NUnit.Framework;
@@ -15,6 +15,13 @@ namespace Dynamitey.Tests
 {
     public class Invoke:AssertionHelper
     {
+        [TestFixtureTearDown]
+        public void DestroyCaches()
+        {
+            Dynamic.ClearCaches();
+        }
+
+
         [Test]
         public void TestDynamicSet()
         {
@@ -342,8 +349,8 @@ namespace Dynamitey.Tests
 
             var color =Dynamic.CoerceConvert(colorString, typeof (Color));
 
-            Assert.That(color,Is.TypeOf<Color>());
-            Assert.That(color, Is.EqualTo(Color.PaleVioletRed));
+            Assert.That((object)color,Is.TypeOf<Color>());
+            Assert.That((object)color, Is.EqualTo(Color.PaleVioletRed));
 
         }
 
@@ -1353,6 +1360,36 @@ namespace Dynamitey.Tests
             return tMock.Object;
         }
 
+        public class OperatorTestDynObject:DynamicObject{
+            ExpressionType _type;
+            public OperatorTestDynObject(ExpressionType type){
+                _type = type;
+            }
+
+            public override bool TryBinaryOperation(BinaryOperationBinder binder, object arg, out object result){
+                Assert.AreEqual(_type, binder.Operation);
+                result = _type;
+                return true;
+            }
+
+            public override bool TryUnaryOperation(UnaryOperationBinder binder, out object result){
+                Assert.AreEqual(_type, binder.Operation);
+                result = _type;
+                return true;
+            }
+
+        }
+         private void RunBinaryMockTests(ExpressionType type){
+            var mock = new OperatorTestDynObject(type);
+            var dummy = new Object();
+            Dynamic.InvokeBinaryOperator(mock, type, dummy);
+        }
+
+        private void RunUnaryMockTests(ExpressionType type){
+            var mock = new OperatorTestDynObject(type);
+            Dynamic.InvokeUnaryOpartor(type,mock);
+        }
+
         [Test]
         public void TestInvokeAdd()
         {
@@ -1360,10 +1397,43 @@ namespace Dynamitey.Tests
         }
 
         [Test]
-        public void TestInvokeAddDynamic()
+        public void TestInvokeBasicUnaryOperatorsDynamic()
         {
-            var tMock = CreateMock(ExpressionType.Add);
-            Dynamic.InvokeBinaryOperator(tMock, ExpressionType.Add, 4);
+            RunUnaryMockTests(ExpressionType.Not);
+            RunUnaryMockTests(ExpressionType.Negate);
+            RunUnaryMockTests(ExpressionType.Increment);
+            RunUnaryMockTests(ExpressionType.Decrement);
+        
+
+
+        }
+
+        [Test]
+        public void TestInvokeBasicBinaryOperatorsDynamic()
+        {
+            RunBinaryMockTests(ExpressionType.Add);
+            RunBinaryMockTests(ExpressionType.Subtract);
+            RunBinaryMockTests(ExpressionType.Divide);
+            RunBinaryMockTests(ExpressionType.Multiply);
+            RunBinaryMockTests(ExpressionType.Modulo);
+
+            RunBinaryMockTests(ExpressionType.And);
+            RunBinaryMockTests(ExpressionType.Or);
+            RunBinaryMockTests(ExpressionType.ExclusiveOr);
+            RunBinaryMockTests(ExpressionType.LeftShift);
+            RunBinaryMockTests(ExpressionType.RightShift);
+
+            RunBinaryMockTests(ExpressionType.AddAssign);
+            RunBinaryMockTests(ExpressionType.SubtractAssign);
+            RunBinaryMockTests(ExpressionType.DivideAssign);
+            RunBinaryMockTests(ExpressionType.MultiplyAssign);
+            RunBinaryMockTests(ExpressionType.ModuloAssign);
+
+            RunBinaryMockTests(ExpressionType.AndAssign);
+            RunBinaryMockTests(ExpressionType.OrAssign);
+            RunBinaryMockTests(ExpressionType.ExclusiveOrAssign);
+            RunBinaryMockTests(ExpressionType.LeftShiftAssign);
+            RunBinaryMockTests(ExpressionType.RightShiftAssign);
         }
 
 
@@ -1372,16 +1442,6 @@ namespace Dynamitey.Tests
         {
             Assert.AreEqual(Dynamic.InvokeBinaryOperator(1, ExpressionType.Subtract, 2), -1);
         }
-
-
-        [Test]
-        public void TestInvokeSubtractDynamic()
-        {
-            var tType = ExpressionType.Subtract;
-            var tMock = CreateMock(tType);
-            Dynamic.InvokeBinaryOperator(tMock, tType, 4);
-        }
-
 
     }
 }

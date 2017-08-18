@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.Serialization;
-using System.Text;
 using System.Reflection;
+using Dynamitey.Internal.Compat;
+
 namespace Dynamitey.DynamicObjects
 {
 
@@ -49,6 +49,33 @@ namespace Dynamitey.DynamicObjects
             return GetContainedTypes().Contains(type);
         }
 
+    }
+
+
+
+    public class PropretySpecType : FauxType
+    {
+        public IDictionary<string, Type> PropertySpec { get; }
+
+        public PropretySpecType(IDictionary<string, Type> propertySpec)
+        {
+            PropertySpec = propertySpec;
+        }
+
+        public override IEnumerable<MemberInfo> GetMember(string binderName)
+        {
+            if (PropertySpec.TryGetValue(binderName, out var val))
+            {
+                return new[] {val.GetTypeInfo()};
+
+            }
+            return Enumerable.Empty<MemberInfo>();
+        }
+
+        public override Type[] GetContainedTypes()
+        {
+            return new Type []{};
+        }
     }
 
 
@@ -99,7 +126,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns></returns>
         public override IEnumerable<MemberInfo> GetMember(string binderName)
         {
-            return TargetType.GetMember(binderName);
+            return TargetType.GetTypeInfo().GetMember(binderName);
         }
 
         /// <summary>
@@ -158,7 +185,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns></returns>
         public Type[] GetInterfaceTypes()
         {
-            return Types.SelectMany(it => it.GetContainedTypes()).Where(it => it.IsInterface).ToArray();
+            return Types.SelectMany(it => it.GetContainedTypes()).Where(it => it.GetTypeInfo().IsInterface).ToArray();
         }
 
         /// <summary>

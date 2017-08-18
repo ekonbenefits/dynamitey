@@ -148,3 +148,11 @@ $RECYCLE.BIN/
 .DS_Store
 
 /dist/*.nupkg
+
+*.userprefs
+
+.fake/*
+.nuget/NuGet.exe
+
+.idea/*
+.vs/*
