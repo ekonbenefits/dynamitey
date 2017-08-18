@@ -68,16 +68,20 @@ Target "Build" (fun () ->
 
 Target "Test" (fun () ->
     trace " --- Test the libs --- "
+    
+    let nunit3exe = "./packages/nunit.consolerunner/3.7.0/tools/nunit3-console.exe"
+
     let buildMode = getBuildParamOrDefault "configuration" "Release"
 
+    
+
+
     let testDir = sprintf "./Tests/bin/%s/net462/" buildMode
-    !! (testDir + "Tests.exe")
-               |> NUnit (fun p ->
-                         { p with
-                               ToolPath = "./packages/nunit.runners/2.6.2/tools"
-                               //DisableShadowCopy = true;
-                               ExcludeCategory = "Performance"
-                               OutputFile = testDir + "TestResults.xml" })
+
+    if directExec (fun info ->  
+      info.FileName <- nunit3exe
+      info.Arguments <- sprintf "--labels=All --where='cat != Performance' %s --out=%s" (testDir + "Tests.exe") (testDir + "TestResults.xml") ) |> not then
+        failwithf ".net 4.0 tests failed"
      
     let appveyor = environVarOrNone "APPVEYOR_JOB_ID"
     match appveyor with
@@ -86,8 +90,11 @@ Target "Test" (fun () ->
             webClient.UploadFile(sprintf "https://ci.appveyor.com/api/testresults/nunit/%s" jobid, testDir + "TestResults.xml") |> ignore
         | None -> ()
     
-    
-)
+    if directExec (fun info ->  
+      info.FileName <- "dotnet" 
+      info.Arguments <- sprintf "test -f netcoreapp2.0 --filter=TestCategory!=Performance --logger=trx" ) |> not then
+        failwithf ".net core tests failed"
+)    
 
 "Restore"
   ==> "Build"
