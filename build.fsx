@@ -91,7 +91,7 @@ Target "Test" (fun () ->
     let s2 =
         directExec (fun info ->  
           info.FileName <- "dotnet" 
-          info.Arguments <- sprintf "test Tests/Tests.csproj -f netcoreapp2.0 --no-build --no-restore --filter=TestCategory!=Performance %s" coreAppVeyor )
+          info.Arguments <- sprintf "test Tests/Tests.csproj -f netcoreapp2.0 --no-build --no-restore --filter=TestCategory!=Performance %s --configuration=%s" coreAppVeyor buildMode)
 
     let appveyor = environVarOrNone "APPVEYOR_JOB_ID"
     match appveyor with
