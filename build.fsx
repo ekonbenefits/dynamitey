@@ -85,7 +85,7 @@ Target "Test" (fun () ->
     let s1 = 
         directExec (fun info ->  
           info.FileName <- netExe
-          info.Arguments <- sprintf "--labels=All %s --where=\"cat != Performance\" %s" netAppVeyor (testDir + "Tests.exe")) )
+          info.Arguments <- sprintf "--labels=All %s --where=\"cat != Performance\" %s"     netAppVeyor (testDir + "Tests.exe"))
        
     
     let s2 =

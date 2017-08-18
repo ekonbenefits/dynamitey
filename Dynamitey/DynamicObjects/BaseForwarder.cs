@@ -240,21 +240,43 @@ namespace Dynamitey.DynamicObjects
 
 
             Type[] types = null;
+
             try
-            { // Try and pull generic arguments from binder
+            { 
+                //.net core
+                // Try and pull generic arguments from binder
                 IList<Type> typeList = Dynamic.InvokeGet(binder,
-                    "Microsoft.CSharp.RuntimeBinder.ICSharpInvokeOrInvokeMemberBinder.TypeArguments");
+                    "TypeArguments");
                 if (typeList != null)
                 {
-
                     types = typeList.ToArray();
-
                 }
 
             }
             catch (RuntimeBinderException)
             {
                 types = null;
+            }
+            if (types != null)
+            {
+                try
+                { 
+                    //.net 4.0
+                    // Try and pull generic arguments from binder
+                    IList<Type> typeList = Dynamic.InvokeGet(binder,
+                        "Microsoft.CSharp.RuntimeBinder.ICSharpInvokeOrInvokeMemberBinder.TypeArguments");
+                    if (typeList != null)
+                    {
+
+                        types = typeList.ToArray();
+
+                    }
+
+                }
+                catch (RuntimeBinderException)
+                {
+                    types = null;
+                }
             }
 
             var name = InvokeMemberName.Create;
