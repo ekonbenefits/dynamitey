@@ -97,7 +97,7 @@ Target "Test" (fun () ->
     match appveyor with
         | Some(jobid) -> 
              use webClient = new System.Net.WebClient()
-             webClient.UploadFile(sprintf "https://ci.appveyor.com/api/testresults/msunit/%s" jobid,"testresults.trx") |> ignore
+             webClient.UploadFile(sprintf "https://ci.appveyor.com/api/testresults/msunit/%s" jobid,"./Tests/TestResults/testresults.trx") |> ignore
         | None -> ()
 
     if tresults |> not then
