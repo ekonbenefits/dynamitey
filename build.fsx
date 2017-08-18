@@ -73,20 +73,17 @@ Target "Test" (fun () ->
 
     let buildMode = getBuildParamOrDefault "configuration" "Release"
 
-    
-
-
     let testDir = sprintf "./Tests/bin/%s/net462/" buildMode
 
-    let netAppVeyor,coreAppVeyor =
+    let netExe, netAppVeyor,coreAppVeyor =
         if buildServer = AppVeyor then
-            "--result=myresults.xml;format=AppVeyor", " --logger=Appveyor"
+            "nunit3-console","--result=myresults.xml;format=AppVeyor", " --logger=Appveyor"
         else
-            "--noresult",""
+            nunit3exe,"--noresult",""
 
 
     if directExec (fun info ->  
-      info.FileName <- nunit3exe
+      info.FileName <- netExe
       info.Arguments <- sprintf "--labels=All %s --where=\"cat != Performance\" %s" netAppVeyor (testDir + "Tests.exe")) |> not then
         failwithf ".net 4.0 tests failed"
    
