@@ -100,7 +100,7 @@ Target "Test" (fun () ->
              webClient.UploadFile(sprintf "https://ci.appveyor.com/api/testresults/mstest/%s" jobid,"./Tests/TestResults/testresults.trx") |> ignore
         | None -> ()
 
-    if(not s1 && not s2) then
+    if(not s1 || not s2) then
         failwith "Tests failed"
 
 )    
