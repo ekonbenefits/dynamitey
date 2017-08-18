@@ -85,13 +85,13 @@ Target "Test" (fun () ->
     let s1 = 
         directExec (fun info ->  
           info.FileName <- netExe
-          info.Arguments <- sprintf "--labels=All %s --where=\"cat != Performance\" %s" netAppVeyor (testDir + "Tests.exe")) ) |> ignore
+          info.Arguments <- sprintf "--labels=All %s --where=\"cat != Performance\" %s" netAppVeyor (testDir + "Tests.exe")) )
        
     
     let s2 =
         directExec (fun info ->  
           info.FileName <- "dotnet" 
-          info.Arguments <- sprintf "test -f netcoreapp2.0 --filter=TestCategory!=Performance %s" coreAppVeyor ) |> ignore
+          info.Arguments <- sprintf "test -f netcoreapp2.0 --filter=TestCategory!=Performance %s" coreAppVeyor )
 
     let appveyor = environVarOrNone "APPVEYOR_JOB_ID"
     match appveyor with
