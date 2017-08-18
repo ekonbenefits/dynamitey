@@ -82,16 +82,16 @@ Target "Test" (fun () ->
             nunit3exe,"--noresult",""
 
 
-    if directExec (fun info ->  
-      info.FileName <- netExe
-      info.Arguments <- sprintf "--labels=All %s --where=\"cat != Performance\" %s" netAppVeyor (testDir + "Tests.exe")) |> not then
-        failwithf ".net 4.0 tests failed"
-   
+    let s1 = 
+        directExec (fun info ->  
+          info.FileName <- netExe
+          info.Arguments <- sprintf "--labels=All %s --where=\"cat != Performance\" %s" netAppVeyor (testDir + "Tests.exe")) ) |> ignore
+       
     
-    let tresults =
-      directExec (fun info ->  
+    let s2 =
+        directExec (fun info ->  
           info.FileName <- "dotnet" 
-          info.Arguments <- sprintf "test -f netcoreapp2.0 --filter=TestCategory!=Performance %s" coreAppVeyor )
+          info.Arguments <- sprintf "test -f netcoreapp2.0 --filter=TestCategory!=Performance %s" coreAppVeyor ) |> ignore
 
     let appveyor = environVarOrNone "APPVEYOR_JOB_ID"
     match appveyor with
@@ -100,8 +100,8 @@ Target "Test" (fun () ->
              webClient.UploadFile(sprintf "https://ci.appveyor.com/api/testresults/mstest/%s" jobid,"./Tests/TestResults/testresults.trx") |> ignore
         | None -> ()
 
-    if tresults |> not then
-       failwithf ".net core tests failed"
+    if(not s1 && not s2) then
+        failwith "Tests failed"
 
 )    
 
