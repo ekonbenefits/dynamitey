@@ -80,7 +80,7 @@ Target "Test" (fun () ->
 
     if directExec (fun info ->  
       info.FileName <- nunit3exe
-      info.Arguments <- sprintf "--labels=All --where='cat != Performance' %s --out=%s" (testDir + "Tests.exe") (testDir + "TestResults.xml") ) |> not then
+      info.Arguments <- sprintf "--labels=All --where=\"cat != Performance\" %s --out=%s" (testDir + "Tests.exe") (testDir + "TestResults.xml") ) |> not then
         failwithf ".net 4.0 tests failed"
      
     let appveyor = environVarOrNone "APPVEYOR_JOB_ID"
