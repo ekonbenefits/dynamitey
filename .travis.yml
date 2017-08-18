@@ -10,13 +10,9 @@ matrix:
     - os: osx
 
 solution: Dynamitey.sln
-
-env:
-  global:
-    - EnableNuGetPackageRestore=true
     
-mono: beta
-dotnet: 1.0.4
+mono: latest
+dotnet: 2.0.0
 
 install:
   - msbuild /ver
