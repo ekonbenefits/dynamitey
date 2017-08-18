@@ -29,7 +29,7 @@ namespace Dynamitey
         /// New Builder
         /// </summary>
         /// <returns></returns>
-        public static IImpromptuBuilder New()
+        public static IBuilder New()
         {
             return new Builder<ChainableDictionary>();
         }
@@ -41,7 +41,7 @@ namespace Dynamitey
         /// </summary>
         /// <typeparam name="TObjectPrototype">The type of the object prototype.</typeparam>
         /// <returns></returns>
-        public static IImpromptuBuilder New<TObjectPrototype>() where TObjectPrototype : new()
+        public static IBuilder New<TObjectPrototype>() where TObjectPrototype : new()
         {
             return new Builder<TObjectPrototype>();
         }

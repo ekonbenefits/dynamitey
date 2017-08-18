@@ -28,7 +28,7 @@ namespace Dynamitey.DynamicObjects
     /// <summary>
     /// Interface for simplistic builder options
     /// </summary>
-    public interface IImpromptuBuilder
+    public interface IBuilder
     {  
         
         /// <summary>
@@ -121,7 +121,7 @@ namespace Dynamitey.DynamicObjects
     /// </summary>
     /// <typeparam name="TObjectProtoType">The type of the object proto type.</typeparam>
    
-    public class Builder<TObjectProtoType>: BaseObject, IImpromptuBuilder
+    public class Builder<TObjectProtoType>: BaseObject, IBuilder
     {
         /// <summary>
         /// Build factory storage
