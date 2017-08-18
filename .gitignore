@@ -155,3 +155,4 @@ $RECYCLE.BIN/
 .nuget/NuGet.exe
 
 .idea/*
+.vs/*

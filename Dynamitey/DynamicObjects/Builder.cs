@@ -260,7 +260,7 @@ namespace Dynamitey.DynamicObjects
         /// Creates a Prototype object.
         /// </summary>
         /// <value>The object.</value>
-        public dynamic Object { get; private set; }
+        public dynamic Object { get; }
 
         /// <summary>
         /// Sets up object builder
