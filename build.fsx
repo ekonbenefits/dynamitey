@@ -78,21 +78,22 @@ Target "Test" (fun () ->
 
     let testDir = sprintf "./Tests/bin/%s/net462/" buildMode
 
+    let netAppVeyor,coreAppVeyor =
+        if buildServer = AppVeyor then
+            "--result=myresults.xml;format=AppVeyor", " --logger=Appveyor"
+        else
+            "--noresult",""
+
+
     if directExec (fun info ->  
       info.FileName <- nunit3exe
-      info.Arguments <- sprintf "--labels=All --where=\"cat != Performance\" %s --out=%s" (testDir + "Tests.exe") (testDir + "TestResults.xml") ) |> not then
+      info.Arguments <- sprintf "--labels=All %s --where=\"cat != Performance\" %s" netAppVeyor (testDir + "Tests.exe")) |> not then
         failwithf ".net 4.0 tests failed"
-     
-    let appveyor = environVarOrNone "APPVEYOR_JOB_ID"
-    match appveyor with
-        | Some(jobid) -> 
-            use webClient = new System.Net.WebClient()
-            webClient.UploadFile(sprintf "https://ci.appveyor.com/api/testresults/nunit/%s" jobid, testDir + "TestResults.xml") |> ignore
-        | None -> ()
+   
     
     if directExec (fun info ->  
       info.FileName <- "dotnet" 
-      info.Arguments <- sprintf "test -f netcoreapp2.0 --filter=TestCategory!=Performance --logger=trx" ) |> not then
+      info.Arguments <- sprintf "test -f netcoreapp2.0 --filter=TestCategory!=Performance %s" coreAppVeyor ) |> not then
         failwithf ".net core tests failed"
 )    
 
