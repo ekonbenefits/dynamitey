@@ -134,8 +134,8 @@ namespace Dynamitey.DynamicObjects
         /// </summary>
 		public Builder(){
             _buildType = new Dictionary<string, Activate>();
-			Setup = new SetupTrampoline(this);
-			Object = new BuilderTrampoline(this);
+			Setup = new SetupTrampoline<TObjectProtoType>(this);
+			Object = new BuilderTrampoline<TObjectProtoType>(this);
 		}
 		
         /// <summary>
@@ -292,7 +292,7 @@ namespace Dynamitey.DynamicObjects
         ///<summary>
         /// Trampoline for builder
         ///</summary>
-        public class BuilderTrampoline:DynamicObject
+        public class BuilderTrampoline<TObjectProtoType> : DynamicObject
         {
             Builder<TObjectProtoType> _buider;
 
@@ -326,7 +326,7 @@ namespace Dynamitey.DynamicObjects
         /// <summary>
         /// Trampoline for setup builder
         /// </summary>
-        public class SetupTrampoline : DynamicObject
+        public class SetupTrampoline<TObjectProtoType> : DynamicObject
         {
 			Builder<TObjectProtoType> _buider;
 
