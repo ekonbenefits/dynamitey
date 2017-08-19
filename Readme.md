@@ -20,7 +20,7 @@ Portable .NET 4.5, Silverlight 4 & 5, WinRT, Win Phone 8 |
 
 
 
-[Change Log](https://github.com/ekonbenefits/dynamitey/wiki/ChangeLog)
+[Change Log](https://github.com/ekonbenefits/dynamitey/releases)
 
 Install with [Nuget](https://nuget.org/packages/Dynamitey/):
 ```
