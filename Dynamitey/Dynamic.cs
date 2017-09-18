@@ -47,21 +47,40 @@ namespace Dynamitey
             InvokeHelper.ClearAllCaches();
         }
 
-        private static readonly Type ComObjectType;
+    
 
-        private static readonly dynamic ComBinder;
+        private static readonly dynamic ComBinder
+            = new DynamicObjects.LateType("System.Dynamic.ComBinder, System.Dynamic, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
+        
+        
+        internal static readonly dynamic Impromptu
+            = new DynamicObjects.LateType("ImpromptuInterface.Impromptu, ImpromptuInterface, PublicKeyToken=0b1781c923b2975b");
+    
+        internal static readonly dynamic TypeDescriptor
+             = new DynamicObjects.LateType("System.ComponentModel.TypeDescriptor, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089");
+    
+
+        private static readonly Type ComObjectType;
+        internal static readonly Type TypeConverterAttributeSL;
 
         static Dynamic()
         {
             try
             {
                 ComObjectType = typeof(object).GetTypeInfo().Assembly.GetType("System.__ComObject");
-                ComBinder = new DynamicObjects.LateType(
-                "System.Dynamic.ComBinder, System.Dynamic, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
             }
             catch
             {
-                
+                ComObjectType = null;
+            }
+            try
+            {
+                TypeConverterAttributeSL
+                    = Type.GetType("System.ComponentModel.TypeConverter, System, Version=5.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e", false);  
+            }
+            catch
+            {
+                TypeConverterAttributeSL = null;
             }
         }
         /// <summary>
@@ -795,15 +814,6 @@ namespace Dynamitey
         {
             return enumerable.Cast<Object>().Select(it => InvokeConvert(it, typeof (T), explict)).Cast<T>();
         } 
-
-        internal static readonly dynamic Impromptu
-            = new DynamicObjects.LateType("ImpromptuInterface.Impromptu, ImpromptuInterface, PublicKeyToken=0b1781c923b2975b");
-
-        internal static readonly dynamic TypeDescriptor
-             = new DynamicObjects.LateType("System.ComponentModel.TypeDescriptor, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089");
-
-        internal static readonly Type TypeConverterAttributeSL
-            = Type.GetType("System.ComponentModel.TypeConverter, System, Version=5.0.5.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e", false);
 
         /// <summary>
         /// Goes the extra mile to convert target to type.
