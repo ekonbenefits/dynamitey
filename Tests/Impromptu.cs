@@ -33,6 +33,43 @@ namespace Dynamitey.Tests
 
         }
 
+        [Test]
+        public void PropertySpecTest()
+        
+        {	var testProp = new Dictionary<String,Type>(){
+                {"test", typeof(bool)}
+            };
+            
+            var baseObj = new DynamicObjects.Dictionary();
+            var output = ImpromptuInterface.Impromptu.ActLikeProperties(baseObj,testProp);
+
+            if (baseObj.TryTypeForName("test", out Type ot))
+            {
+                Assert.AreEqual(typeof(bool), ot);
+            }
+            else
+            {
+                Assert.Fail("Could not find property spec for member");
+            }
+        }
+        
+        [Test]
+        public void InterfaceSpecTest()
+        
+        {	
+            var baseObj = new DynamicObjects.Dictionary();
+            var output = ImpromptuInterface.Impromptu.ActLike<ISimpeleClassProps>(baseObj);
+
+            if (baseObj.TryTypeForName("Prop2", out Type ot))
+            {
+                Assert.AreEqual(typeof(long), ot);
+            }
+            else
+            {
+                Assert.Fail("Could not find property spec for member");
+            }
+        }
+
 
         [Test]
         public void DictionaryCurriedAcctlikeNullMethodsTest()

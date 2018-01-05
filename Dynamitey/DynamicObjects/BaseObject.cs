@@ -72,7 +72,6 @@ namespace Dynamitey.DynamicObjects
                 return false;
 
            var types = eqType.EquivalentType.GetMember(binderName)
-               .Where(it => it is PropertyInfo || it is MethodInfo || it is EventInfo)
                .Select(it =>
                            {
 
