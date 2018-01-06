@@ -37,6 +37,8 @@ namespace Dynamitey.DynamicObjects
         /// <returns></returns>
         public abstract Type[] GetContainedTypes();
 
+        public abstract IEnumerable<string> GetMemberNames();
+
         /// <summary>
         /// Determines whether the specified type contains the type.
         /// </summary>
@@ -70,6 +72,11 @@ namespace Dynamitey.DynamicObjects
 
             }
             return Enumerable.Empty<MemberInfo>();
+        }
+
+        public override IEnumerable<string> GetMemberNames()
+        {
+            return PropertySpec.Keys;
         }
 
         public override Type[] GetContainedTypes()
@@ -127,6 +134,17 @@ namespace Dynamitey.DynamicObjects
         public override IEnumerable<MemberInfo> GetMember(string binderName)
         {
             return TargetType.GetTypeInfo().GetMember(binderName);
+        }
+
+        public override IEnumerable<string> GetMemberNames()
+        {
+      
+            var members = TargetType.GetTypeInfo()
+                .GetMembers(BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Instance)
+                .Where(it=> !((it as MethodInfo)?.IsHideBySig ?? false))
+                .Select(it => it.Name)
+                .Distinct();
+            return members.ToList();
         }
 
         /// <summary>
@@ -188,6 +206,11 @@ namespace Dynamitey.DynamicObjects
             return Types.SelectMany(it => it.GetContainedTypes()).Where(it => it.GetTypeInfo().IsInterface).ToArray();
         }
 
+        public override IEnumerable<string> GetMemberNames()
+        {
+            return Types.SelectMany(it => it.GetMemberNames()).Distinct();
+        }
+
         /// <summary>
         /// Adds the type.
         /// </summary>
@@ -195,7 +218,9 @@ namespace Dynamitey.DynamicObjects
         public void AddType(Type type)
         {
             if (!ContainsType(type))
+            {
                 Types.Add(type);
+            }
         }
 
         /// <summary>

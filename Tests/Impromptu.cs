@@ -5,8 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
 using Dynamitey;
+using Dynamitey.DynamicObjects;
 using Dynamitey.SupportLibrary;
 using ImpromptuInterface;
+using NUnit.Framework.Constraints;
 
 namespace Dynamitey.Tests
 {
@@ -22,20 +24,46 @@ namespace Dynamitey.Tests
         [Test]
         public void DictionaryInterfaceNullMethodsTest()
         {
-
             dynamic tNew = new DynamicObjects.Dictionary();
 
             ISimpleStringMethod tActsLike = ImpromptuInterface.Impromptu.ActLike(tNew);
 
             Assert.AreEqual(false, tActsLike.StartsWith("Te"));
+        }
 
 
+        [Test]
+        public void FauxTypeTest()
+        {
+            var testProp = new Dictionary<String,Type>(){
+                {"test", typeof(bool)}
+            };
+
+            
+            var propType = new PropretySpecType(testProp);
+
+            var propMembers = propType.GetMemberNames();
+            Expect(propMembers, Contains("test"));
+            
+            var realType = new RealType(typeof(ISimpeleClassProps));
+            var realMembers = realType.GetMemberNames();
+
+            Expect(realMembers, Contains("Prop2"));
+
+            
+
+            var aggrType = new AggreType(propType, realType);
+            
+            var aggrMembers = aggrType.GetMemberNames();
+
+            Expect(aggrMembers, Contains("Prop2"));
+            Expect(aggrMembers, Contains("test"));
 
         }
+        
 
         [Test]
         public void PropertySpecTest()
-        
         {	var testProp = new Dictionary<String,Type>(){
                 {"test", typeof(bool)}
             };
@@ -55,7 +83,6 @@ namespace Dynamitey.Tests
         
         [Test]
         public void InterfaceSpecTest()
-        
         {	
             var baseObj = new DynamicObjects.Dictionary();
             var output = ImpromptuInterface.Impromptu.ActLike<ISimpeleClassProps>(baseObj);
