@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using Dynamitey.SupportLibrary;
 using NUnit.Framework;
 using Microsoft.FSharp.Reflection;
+using System.Globalization;
 
 namespace Dynamitey.Tests
 {
     [TestFixture]
     [Category("Performance")]
-    public class SpeedTest:AssertionHelper
+    public class SpeedTest : AssertionHelper
     {
         [TestFixtureSetUp]
         public void WarmUpDlr()
@@ -73,7 +74,7 @@ namespace Dynamitey.Tests
                                     var tOut = tPropertyInfo.GetValue(tAnon, null);
                                 };
 
-            var elapsed = Timer.Go(2*TimeIt.Million);
+            var elapsed = Timer.Go(2 * TimeIt.Million);
 
 
             Console.WriteLine("Impromptu: " + elapsed.Item1);
@@ -113,7 +114,7 @@ namespace Dynamitey.Tests
                 var tOut = Activator.CreateInstance(typeof(Tuple<string>), "Test");
             });
 
-             var elapsed = Timer.Go();
+            var elapsed = Timer.Go();
 
             Console.WriteLine("Impromptu: " + elapsed.Item1);
             Console.WriteLine("Refelection: " + elapsed.Item2);
@@ -124,16 +125,16 @@ namespace Dynamitey.Tests
         [Test]
         public void ConstructorNoARgTimed()
         {
-            Timer.Action1=(() => { var tOut = Dynamic.InvokeConstructor(typeof(List<string>)); });
-            Timer.Action2=(() =>
-            {
-                var tOut = Activator.CreateInstance(typeof(List<string>));
-            });
-            Timer.Action3=(() =>
-            {
-                var tOut = Activator.CreateInstance<List<string>>();
-            });
-               
+            Timer.Action1 = (() => { var tOut = Dynamic.InvokeConstructor(typeof(List<string>)); });
+            Timer.Action2 = (() =>
+              {
+                  var tOut = Activator.CreateInstance(typeof(List<string>));
+              });
+            Timer.Action3 = (() =>
+              {
+                  var tOut = Activator.CreateInstance<List<string>>();
+              });
+
             var elapsed = Timer.GoThree();
 
             Console.WriteLine("Impromptu: " + elapsed.Item1);
@@ -149,16 +150,16 @@ namespace Dynamitey.Tests
         public void CachableConstructorNoARgTimed()
         {
             var tCachedInvoke = new CacheableInvocation(InvocationKind.Constructor);
-            Timer.Action1=(() => { var tOut = tCachedInvoke.Invoke(typeof(List<string>)); });
-            Timer.Action2=(() =>
-            {
-                var tOut = Activator.CreateInstance(typeof(List<string>));
-            });
-            Timer.Action3=(() =>
-            {
-                var tOut = Activator.CreateInstance<List<string>>();
-            });
-                    
+            Timer.Action1 = (() => { var tOut = tCachedInvoke.Invoke(typeof(List<string>)); });
+            Timer.Action2 = (() =>
+              {
+                  var tOut = Activator.CreateInstance(typeof(List<string>));
+              });
+            Timer.Action3 = (() =>
+              {
+                  var tOut = Activator.CreateInstance<List<string>>();
+              });
+
             var elapsed = Timer.GoThree();
 
             Console.WriteLine("Impromptu: " + elapsed.Item1);
@@ -177,13 +178,13 @@ namespace Dynamitey.Tests
 
 
 
-            Timer.Action1=(() => { var tOut = Dynamic.InvokeConstructor(typeof(DateTime), 2010, 1, 20); });
-            Timer.Action2=(() =>
-            {
-                var tOut = Activator.CreateInstance(typeof(DateTime), 2010, 1, 20);
-            });
+            Timer.Action1 = (() => { var tOut = Dynamic.InvokeConstructor(typeof(DateTime), 2010, 1, 20); });
+            Timer.Action2 = (() =>
+              {
+                  var tOut = Activator.CreateInstance(typeof(DateTime), 2010, 1, 20);
+              });
 
-               
+
             var elapsed = Timer.Go();
 
             Console.WriteLine("Impromptu: " + elapsed.Item1);
@@ -198,13 +199,13 @@ namespace Dynamitey.Tests
 
 
             var tCachedInvoke = new CacheableInvocation(InvocationKind.Constructor, argCount: 3);
-            Timer.Action1=(() => { var tOut = tCachedInvoke.Invoke(typeof(DateTime), 2010, 1, 20); });
-            Timer.Action2=(() =>
-            {
-                var tOut = Activator.CreateInstance(typeof(DateTime), 2010, 1, 20);
-            });
+            Timer.Action1 = (() => { var tOut = tCachedInvoke.Invoke(typeof(DateTime), 2010, 1, 20); });
+            Timer.Action2 = (() =>
+              {
+                  var tOut = Activator.CreateInstance(typeof(DateTime), 2010, 1, 20);
+              });
 
-              var elapsed = Timer.Go();
+            var elapsed = Timer.Go();
 
             Console.WriteLine("Impromptu: " + elapsed.Item1);
             Console.WriteLine("Refelection: " + elapsed.Item2);
@@ -223,14 +224,14 @@ namespace Dynamitey.Tests
             var tValue = 1;
 
 
-            Timer.Action1=(() => { var tOut = Dynamic.InvokeMember(tValue, "ToString"); });
+            Timer.Action1 = (() => { var tOut = Dynamic.InvokeMember(tValue, "ToString"); });
             var tMethodInfo = tValue.GetType().GetMethod("ToString", new Type[] { });
-            Timer.Action2=(() =>
-            {
-                var tOut = tMethodInfo.Invoke(tValue, new object[] { });
-            });
+            Timer.Action2 = (() =>
+              {
+                  var tOut = tMethodInfo.Invoke(tValue, new object[] { });
+              });
 
-            var elapsed = Timer.Go(2* TimeIt.Million);
+            var elapsed = Timer.Go(2 * TimeIt.Million);
 
             Console.WriteLine("Impromptu: " + elapsed.Item1);
             Console.WriteLine("Refelection: " + elapsed.Item2);
@@ -247,14 +248,14 @@ namespace Dynamitey.Tests
 
 
             var tCachedInvoke = new CacheableInvocation(InvocationKind.InvokeMember, "ToString");
-            Timer.Action1=(() => { var tOut = tCachedInvoke.Invoke(tValue); });
+            Timer.Action1 = (() => { var tOut = tCachedInvoke.Invoke(tValue); });
             var tMethodInfo = tValue.GetType().GetMethod("ToString", new Type[] { });
-            Timer.Action2=(() =>
-            {
-                var tOut = tMethodInfo.Invoke(tValue, new object[] { });
-            });
+            Timer.Action2 = (() =>
+              {
+                  var tOut = tMethodInfo.Invoke(tValue, new object[] { });
+              });
 
-                  var elapsed = Timer.Go(3* TimeIt.Million);
+            var elapsed = Timer.Go(3 * TimeIt.Million);
 
             Console.WriteLine("Impromptu: " + elapsed.Item1);
             Console.WriteLine("Refelection: " + elapsed.Item2);
@@ -273,12 +274,12 @@ namespace Dynamitey.Tests
 
             var tStaticType = typeof(DateTime);
             var tTarget = InvokeContext.CreateStatic(tStaticType);
-            Timer.Action1=(() => { var tOut = Dynamic.InvokeGet(tTarget, "Today"); });
+            Timer.Action1 = (() => { var tOut = Dynamic.InvokeGet(tTarget, "Today"); });
             var tMethodInfo = typeof(DateTime).GetProperty("Today").GetGetMethod();
-            Timer.Action2=(() =>
-            {
-                var tOut = tMethodInfo.Invoke(tStaticType, new object[] { });
-            });
+            Timer.Action2 = (() =>
+              {
+                  var tOut = tMethodInfo.Invoke(tStaticType, new object[] { });
+              });
 
             var elapsed = Timer.Go(3 * TimeIt.Million);
 
@@ -296,16 +297,16 @@ namespace Dynamitey.Tests
             var tContext = InvokeContext.CreateStatic(tStaticType);
             var tCachedInvoke = new CacheableInvocation(InvocationKind.Get, "Today", context: tContext);
 
-            Timer.Action1=(() =>
-            {
-                var tOut = tCachedInvoke.Invoke(tStaticType);
-            });
+            Timer.Action1 = (() =>
+              {
+                  var tOut = tCachedInvoke.Invoke(tStaticType);
+              });
             var tMethodInfo = typeof(DateTime).GetProperty("Today").GetGetMethod();
 
-            Timer.Action2=(() =>
-            {
-                var tOut = tMethodInfo.Invoke(tStaticType, new object[] { });
-            });
+            Timer.Action2 = (() =>
+              {
+                  var tOut = tMethodInfo.Invoke(tStaticType, new object[] { });
+              });
 
 
             var elapsed = Timer.Go(3 * TimeIt.Million);
@@ -323,16 +324,16 @@ namespace Dynamitey.Tests
             Assert.Ignore("Visual Studio slows down dynamic too much in debug mode");
 #endif
             var tStaticType = typeof(DateTime);
-            var tTarget =  InvokeContext.CreateStatic(tStaticType);
+            var tTarget = InvokeContext.CreateStatic(tStaticType);
             string tDate = "01/20/2009";
-            Timer.Action1=(() => { var tOut = Dynamic.InvokeMember(tTarget, "Parse", tDate); });
+            Timer.Action1 = (() => { var tOut = Dynamic.InvokeMember(tTarget, "Parse", tDate); });
             var tMethodInfo = typeof(DateTime).GetMethod("Parse", new[] { typeof(string) });
-            Timer.Action2=(() =>
-            {
-                var tOut = tMethodInfo.Invoke(tStaticType, new object[] { tDate });
-            });
+            Timer.Action2 = (() =>
+              {
+                  var tOut = tMethodInfo.Invoke(tStaticType, new object[] { tDate });
+              });
 
-               var elapsed = Timer.Go();
+            var elapsed = Timer.Go();
 
             Console.WriteLine("Impromptu: " + elapsed.Item1);
             Console.WriteLine("Refelection: " + elapsed.Item2);
@@ -345,19 +346,19 @@ namespace Dynamitey.Tests
         {
 
             var tStaticType = typeof(DateTime);
-            var tContext =  InvokeContext.CreateStatic(tStaticType);
+            var tContext = InvokeContext.CreateStatic(tStaticType);
             string tDate = "01/20/2009";
 
-            var tCachedInvoke = new CacheableInvocation(InvocationKind.InvokeMember, "Parse", argCount: 1,
+            var tCachedInvoke = new CacheableInvocation(InvocationKind.InvokeMember, "Parse", argCount: 2,
                                                         context: tContext);
-            Timer.Action1=(() => { var tOut = tCachedInvoke.Invoke(tStaticType, tDate); });
-            var tMethodInfo = typeof(DateTime).GetMethod("Parse", new[] { typeof(string) });
-            Timer.Action2=(() =>
-            {
-                var tOut = tMethodInfo.Invoke(tStaticType, new object[] { tDate });
-            });
+            Timer.Action1 = (() => { var tOut = tCachedInvoke.Invoke(tStaticType, new object[] { tDate, CultureInfo.GetCultureInfo("en-US") }); });
+            var tMethodInfo = typeof(DateTime).GetMethod("Parse", new[] { typeof(string), typeof(CultureInfo) });
+            Timer.Action2 = (() =>
+              {
+                  var tOut = tMethodInfo.Invoke(tStaticType, new object[] { tDate, CultureInfo.GetCultureInfo("en-US") });
+              });
 
-             var elapsed = Timer.Go();
+            var elapsed = Timer.Go();
 
             Console.WriteLine("Impromptu: " + elapsed.Item1);
             Console.WriteLine("Refelection: " + elapsed.Item2);
@@ -365,7 +366,7 @@ namespace Dynamitey.Tests
             Assert.Less(elapsed.Item1, elapsed.Item2);
         }
 
-          [Test]
+        [Test]
         public void MethodPocoGetValuePassNullTimed()
         {
 #if DEBUG
@@ -375,15 +376,15 @@ namespace Dynamitey.Tests
             var tValue = new OverloadingMethPoco();
 
 
-            Timer.Action1=(() => { var tOut = Dynamic.InvokeMember(tValue, "Func", null); });
-            var tMethodInfo = tValue.GetType().GetMethod("Func", new Type[] { typeof(object)});
-            Timer.Action2=(() =>
-            {
-                var tOut = tMethodInfo.Invoke(tValue, new object[] { null});
-            });
+            Timer.Action1 = (() => { var tOut = Dynamic.InvokeMember(tValue, "Func", null); });
+            var tMethodInfo = tValue.GetType().GetMethod("Func", new Type[] { typeof(object) });
+            Timer.Action2 = (() =>
+              {
+                  var tOut = tMethodInfo.Invoke(tValue, new object[] { null });
+              });
 
-          
-             var elapsed = Timer.Go(3 * TimeIt.Million);
+
+            var elapsed = Timer.Go(3 * TimeIt.Million);
 
             Console.WriteLine("Impromptu: " + elapsed.Item1);
             Console.WriteLine("Refelection: " + elapsed.Item2);
@@ -402,15 +403,15 @@ namespace Dynamitey.Tests
 
 
 
-            var tCachedInvoke = new CacheableInvocation(InvocationKind.InvokeMember, "Func", argCount:1);
+            var tCachedInvoke = new CacheableInvocation(InvocationKind.InvokeMember, "Func", argCount: 1);
 
-            Timer.Action1=(() => { var tOut = tCachedInvoke.Invoke(tValue, null); });
+            Timer.Action1 = (() => { var tOut = tCachedInvoke.Invoke(tValue, null); });
             var tMethodInfo = tValue.GetType().GetMethod("Func", new Type[] { typeof(object) });
-            Timer.Action2=(() =>
-            {
-                var tOut = tMethodInfo.Invoke(tValue, new object[] { null });
-            });
-                
+            Timer.Action2 = (() =>
+              {
+                  var tOut = tMethodInfo.Invoke(tValue, new object[] { null });
+              });
+
             var elapsed = Timer.Go();
 
             Console.WriteLine("Impromptu: " + elapsed.Item1);
@@ -429,17 +430,19 @@ namespace Dynamitey.Tests
             var tValue = new OverloadingMethPoco();
 
 
-            Timer.Action1=(() => { 
-                var tOut = Dynamic.InvokeMember(tValue, "Func", null); 
-                var tOut2 = Dynamic.InvokeMember(tValue, "Func", 2); });
+            Timer.Action1 = (() =>
+            {
+                var tOut = Dynamic.InvokeMember(tValue, "Func", null);
+                var tOut2 = Dynamic.InvokeMember(tValue, "Func", 2);
+            });
 
             var tMethodInfo = tValue.GetType().GetMethod("Func", new Type[] { typeof(object) });
             var tMethodInfo2 = tValue.GetType().GetMethod("Func", new Type[] { typeof(int) });
-            Timer.Action2=(() =>
-            {
-                var tOut = tMethodInfo.Invoke(tValue, new object[] { null });
-                var tOut2 = tMethodInfo2.Invoke(tValue, new object[] { 2 });
-            });
+            Timer.Action2 = (() =>
+              {
+                  var tOut = tMethodInfo.Invoke(tValue, new object[] { null });
+                  var tOut2 = tMethodInfo2.Invoke(tValue, new object[] { 2 });
+              });
 
             var elapsed = Timer.Go(3 * TimeIt.Million);
 
@@ -455,23 +458,23 @@ namespace Dynamitey.Tests
             var tValue = new OverloadingMethPoco();
 
             var tCachedInvoke = new CacheableInvocation(InvocationKind.InvokeMember, "Func", 1);
-            Timer.Action1=(() =>
-            {
-                var tOut = tCachedInvoke.Invoke(tValue, null);
-                var tOut2 = tCachedInvoke.Invoke(tValue, 2);
-            });
+            Timer.Action1 = (() =>
+              {
+                  var tOut = tCachedInvoke.Invoke(tValue, null);
+                  var tOut2 = tCachedInvoke.Invoke(tValue, 2);
+              });
 
             var tMethodInfo = tValue.GetType().GetMethod("Func", new Type[] { typeof(object) });
             var tMethodInfo2 = tValue.GetType().GetMethod("Func", new Type[] { typeof(int) });
-            Timer.Action2=(() =>
-            {
-                var tOut = tMethodInfo.Invoke(tValue, new object[] { null });
-                var tOut2 = tMethodInfo2.Invoke(tValue, new object[] { 2 });
-            });
-                   
+            Timer.Action2 = (() =>
+              {
+                  var tOut = tMethodInfo.Invoke(tValue, new object[] { null });
+                  var tOut2 = tMethodInfo2.Invoke(tValue, new object[] { 2 });
+              });
+
             var elapsed = Timer.Go();
 
-             Console.WriteLine("Impromptu: " + elapsed.Item1);
+            Console.WriteLine("Impromptu: " + elapsed.Item1);
             Console.WriteLine("Refelection: " + elapsed.Item2);
             Console.WriteLine("Impromptu VS Reflection: {0}", TimeIt.RelativeSpeed(elapsed));
             Assert.Less(elapsed.Item1, elapsed.Item2);
@@ -488,16 +491,16 @@ namespace Dynamitey.Tests
 
 
 
-            Timer.Action1=(() => { var tOut = Dynamic.InvokeMember(tValue, "IndexOf", "45", 0, 14, StringComparison.InvariantCulture); });
+            Timer.Action1 = (() => { var tOut = Dynamic.InvokeMember(tValue, "IndexOf", "45", 0, 14, StringComparison.InvariantCulture); });
             var tMethodInfo = tValue.GetType().GetMethod("IndexOf", new Type[] { typeof(string), typeof(int), typeof(int), typeof(StringComparison) });
-            Timer.Action2=(() =>
-                                        {
-                                            var tOut = tMethodInfo.Invoke(tValue, new object[] { "45", 0, 14, StringComparison.InvariantCulture });
-                                        });
+            Timer.Action2 = (() =>
+                                          {
+                                              var tOut = tMethodInfo.Invoke(tValue, new object[] { "45", 0, 14, StringComparison.InvariantCulture });
+                                          });
 
-               var elapsed = Timer.Go();
+            var elapsed = Timer.Go();
 
-             Console.WriteLine("Impromptu: " + elapsed.Item1);
+            Console.WriteLine("Impromptu: " + elapsed.Item1);
             Console.WriteLine("Refelection: " + elapsed.Item2);
             Console.WriteLine("Impromptu VS Reflection: {0}", TimeIt.RelativeSpeed(elapsed));
             Assert.Less(elapsed.Item1, elapsed.Item2);
@@ -512,24 +515,24 @@ namespace Dynamitey.Tests
 
 
             var tCachedInvoke = new CacheableInvocation(InvocationKind.InvokeMember, "IndexOf", 4);
-            Timer.Action1=(() =>
-                                       {
-                                           var tOut = tCachedInvoke.Invoke(tValue,"45", 0, 14, StringComparison.InvariantCulture);
-                                       });
+            Timer.Action1 = (() =>
+                                         {
+                                             var tOut = tCachedInvoke.Invoke(tValue, "45", 0, 14, StringComparison.InvariantCulture);
+                                         });
             var tMethodInfo = tValue.GetType().GetMethod("IndexOf", new Type[] { typeof(string), typeof(int), typeof(int), typeof(StringComparison) });
-            Timer.Action2=(() =>
-            {
-                var tOut = tMethodInfo.Invoke(tValue, new object[] { "45", 0, 14, StringComparison.InvariantCulture });
-            });
+            Timer.Action2 = (() =>
+              {
+                  var tOut = tMethodInfo.Invoke(tValue, new object[] { "45", 0, 14, StringComparison.InvariantCulture });
+              });
 
-             var elapsed = Timer.Go();
+            var elapsed = Timer.Go();
 
-             Console.WriteLine("Impromptu: " + elapsed.Item1);
+            Console.WriteLine("Impromptu: " + elapsed.Item1);
             Console.WriteLine("Refelection: " + elapsed.Item2);
             Console.WriteLine("Impromptu VS Reflection: {0}", TimeIt.RelativeSpeed(elapsed));
             Assert.Less(elapsed.Item1, elapsed.Item2);
         }
- 
+
 
         [Test]
         public void MethodPocoVoidTimed()
@@ -538,17 +541,17 @@ namespace Dynamitey.Tests
 #if DEBUG
             Assert.Ignore("Visual Studio slows down dynamic too much in debug mode");
 #endif
-            var tValue = new Dictionary<object,object>();
+            var tValue = new Dictionary<object, object>();
 
 
 
-            Timer.Action1=(() => Dynamic.InvokeMemberAction(tValue, "Clear"));
+            Timer.Action1 = (() => Dynamic.InvokeMemberAction(tValue, "Clear"));
             var tMethodInfo = tValue.GetType().GetMethod("Clear", new Type[] { });
-            Timer.Action2=(() => tMethodInfo.Invoke(tValue, new object[] { }));
+            Timer.Action2 = (() => tMethodInfo.Invoke(tValue, new object[] { }));
 
-             var elapsed = Timer.Go(5 * TimeIt.Million);
+            var elapsed = Timer.Go(5 * TimeIt.Million);
 
-             Console.WriteLine("Impromptu: " + elapsed.Item1);
+            Console.WriteLine("Impromptu: " + elapsed.Item1);
             Console.WriteLine("Refelection: " + elapsed.Item2);
             Console.WriteLine("Impromptu VS Reflection: {0}", TimeIt.RelativeSpeed(elapsed));
             Assert.Less(elapsed.Item1, elapsed.Item2);
@@ -563,19 +566,19 @@ namespace Dynamitey.Tests
 
             var tCachedInvoke = new CacheableInvocation(InvocationKind.InvokeMemberAction, "Clear");
 
-            Timer.Action1=(() => tCachedInvoke.Invoke(tValue));
+            Timer.Action1 = (() => tCachedInvoke.Invoke(tValue));
             var tMethodInfo = tValue.GetType().GetMethod("Clear", new Type[] { });
-            Timer.Action2=(() => tMethodInfo.Invoke(tValue, new object[] { }));
-               
+            Timer.Action2 = (() => tMethodInfo.Invoke(tValue, new object[] { }));
+
             var elapsed = Timer.Go();
-                  
+
             Console.WriteLine("Impromptu: " + elapsed.Item1);
             Console.WriteLine("Refelection: " + elapsed.Item2);
             Console.WriteLine("Impromptu VS Reflection: {0}", TimeIt.RelativeSpeed(elapsed));
             Assert.Less(elapsed.Item1, elapsed.Item2);
         }
 
-    
+
 
 
         [Test]
@@ -585,7 +588,7 @@ namespace Dynamitey.Tests
 #if DEBUG
             Assert.Ignore("Visual Studio slows down dynamic too much in debug mode");
 #endif
-            
+
             var tPoco1 = new PropPoco();
             var tPoco2 = new PropPoco();
             var tSetValue = "1";
@@ -594,7 +597,7 @@ namespace Dynamitey.Tests
             var tPropertyInfo = tPoco2.GetType().GetProperty("Prop1");
             Timer.Action2 = () => tPropertyInfo.SetValue(tPoco2, tSetValue, new object[] { });
 
-            var elapsed = Timer.Go(5* TimeIt.Million);
+            var elapsed = Timer.Go(5 * TimeIt.Million);
 
             Console.WriteLine("Impromptu: " + elapsed.Item1);
             Console.WriteLine("Refelection: " + elapsed.Item2);
@@ -670,15 +673,15 @@ namespace Dynamitey.Tests
         }
 
 
-            [Test]
+        [Test]
         public void FastDynamicInvoke()
         {
             Func<int, bool> tFunc = it => it > 10;
-             Timer.Action1 =(() => tFunc.FastDynamicInvoke(5));
+            Timer.Action1 = (() => tFunc.FastDynamicInvoke(5));
 
-              Timer.Action2 = (() => tFunc.DynamicInvoke(5));
+            Timer.Action2 = (() => tFunc.DynamicInvoke(5));
 
-  
+
             var elapsed = Timer.Go();
 
             Console.WriteLine("Impromptu: " + elapsed.Item1);
@@ -691,10 +694,10 @@ namespace Dynamitey.Tests
         public void FastDynamicInvokeAction()
         {
             Action<int> tFunc = it => it.ToString();
-              Timer.Action1 = (() => tFunc.FastDynamicInvoke(5));
+            Timer.Action1 = (() => tFunc.FastDynamicInvoke(5));
 
-             Timer.Action2 = (() => tFunc.DynamicInvoke(5));
-            
+            Timer.Action2 = (() => tFunc.DynamicInvoke(5));
+
             var elapsed = Timer.Go();
 
             Console.WriteLine("Impromptu: " + elapsed.Item1);
@@ -730,9 +733,9 @@ namespace Dynamitey.Tests
 
             object tup = Tupler.Create(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
 
-            Timer.Action1 = () => Tupler.Index(tup,14);
+            Timer.Action1 = () => Tupler.Index(tup, 14);
 
-            Timer.Action2 = () => FSharpValue.GetTupleField(tup,14);
+            Timer.Action2 = () => FSharpValue.GetTupleField(tup, 14);
 
             var elapsed = Timer.Go(50000);
 
@@ -742,7 +745,7 @@ namespace Dynamitey.Tests
             Console.WriteLine("Impromptu VS FSharp Reflection: {0}", TimeIt.RelativeSpeed(elapsed));
             Assert.Less(elapsed.Item1, elapsed.Item2);
         }
-      
+
 
         [Test]
         public void TupleToListTimed()
@@ -751,7 +754,7 @@ namespace Dynamitey.Tests
             object tup = Tupler.Create(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20);
 
             Timer.Action1 = () => Tupler.ToList(tup);
-        
+
             Timer.Action2 = () => FSharpValue.GetTupleFields(tup).ToList();
 
             var elapsed = Timer.Go(50000);
@@ -766,7 +769,7 @@ namespace Dynamitey.Tests
         [Test]
         public void ListToTupleTimed()
         {
-            var list = new object[]{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20};
+            var list = new object[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
 
             Timer.Action1 = () => Tupler.ToTuple(list);
 

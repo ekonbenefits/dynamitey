@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Dynamic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -13,7 +14,7 @@ using NUnit.Framework;
 
 namespace Dynamitey.Tests
 {
-    public class Invoke:AssertionHelper
+    public class Invoke : AssertionHelper
     {
         [TestFixtureTearDown]
         public void DestroyCaches()
@@ -143,7 +144,7 @@ namespace Dynamitey.Tests
             Assert.AreEqual("two", tCast[1]);
         }
 
-        
+
 
         [Test]
         public void TestConstructOptional()
@@ -300,7 +301,7 @@ namespace Dynamitey.Tests
             var generic = InvokeMemberName.Create;
 
             var tOut = Dynamic.InvokeMember(@static(typeof(StaticType)),
-                                              generic("Create",new[]{typeof(bool)}), 1);
+                                              generic("Create", new[] { typeof(bool) }), 1);
             Assert.AreEqual(false, tOut);
         }
 
@@ -310,13 +311,13 @@ namespace Dynamitey.Tests
             var @static = InvokeContext.CreateStatic;
             var generic = InvokeMemberName.Create;
 
-            var tCached = new CacheableInvocation(InvocationKind.InvokeMember, generic("Create",new[]{typeof(bool)}) , argCount: 1,
+            var tCached = new CacheableInvocation(InvocationKind.InvokeMember, generic("Create", new[] { typeof(bool) }), argCount: 1,
                                     context: @static(typeof(StaticType)));
 
             var tOut = tCached.Invoke(typeof(StaticType), 1);
             Assert.AreEqual(false, tOut);
         }
-        
+
         private class TestClass
         {
             public static int StaticProperty { get; set; }
@@ -330,8 +331,8 @@ namespace Dynamitey.Tests
             var tOut = Dynamic.InvokeGet(staticContext(typeof(TestClass)), "StaticProperty");
             Assert.AreEqual(42, tOut);
         }
-        
-     
+
+
         [Test]
         public void TestImplicitConvert()
         {
@@ -347,9 +348,9 @@ namespace Dynamitey.Tests
         {
             var colorString = "PaleVioletRed";
 
-            var color =Dynamic.CoerceConvert(colorString, typeof (Color));
+            var color = Dynamic.CoerceConvert(colorString, typeof(Color));
 
-            Assert.That((object)color,Is.TypeOf<Color>());
+            Assert.That((object)color, Is.TypeOf<Color>());
             Assert.That((object)color, Is.EqualTo(Color.PaleVioletRed));
 
         }
@@ -1079,7 +1080,7 @@ namespace Dynamitey.Tests
         {
             var @static = InvokeContext.CreateStatic;
             object tDateDyn = "01/20/2009";
-            var tDate = Dynamic.InvokeMember(@static(typeof(DateTime)), "Parse", tDateDyn);
+            var tDate = Dynamic.InvokeMember(@static(typeof(DateTime)), "Parse", new object[] { tDateDyn, CultureInfo.GetCultureInfo("en-US") });
             Assert.AreEqual(new DateTime(2009, 1, 20), tDate);
         }
 
@@ -1088,9 +1089,9 @@ namespace Dynamitey.Tests
         {
             var @static = InvokeContext.CreateStatic;
             object tDateDyn = "01/20/2009";
-            var tCachedInvoke = new CacheableInvocation(InvocationKind.InvokeMember, "Parse", 1,
+            var tCachedInvoke = new CacheableInvocation(InvocationKind.InvokeMember, "Parse", argCount: 2,
                                                         context: @static(typeof(DateTime)));
-            var tDate = tCachedInvoke.Invoke(typeof(DateTime), tDateDyn);
+            var tDate = tCachedInvoke.Invoke(typeof(DateTime), new object[] { tDateDyn, CultureInfo.GetCultureInfo("en-US") });
             Assert.AreEqual(new DateTime(2009, 1, 20), tDate);
         }
 
@@ -1360,34 +1361,40 @@ namespace Dynamitey.Tests
             return tMock.Object;
         }
 
-        public class OperatorTestDynObject:DynamicObject{
+        public class OperatorTestDynObject : DynamicObject
+        {
             ExpressionType _type;
-            public OperatorTestDynObject(ExpressionType type){
+            public OperatorTestDynObject(ExpressionType type)
+            {
                 _type = type;
             }
 
-            public override bool TryBinaryOperation(BinaryOperationBinder binder, object arg, out object result){
+            public override bool TryBinaryOperation(BinaryOperationBinder binder, object arg, out object result)
+            {
                 Assert.AreEqual(_type, binder.Operation);
                 result = _type;
                 return true;
             }
 
-            public override bool TryUnaryOperation(UnaryOperationBinder binder, out object result){
+            public override bool TryUnaryOperation(UnaryOperationBinder binder, out object result)
+            {
                 Assert.AreEqual(_type, binder.Operation);
                 result = _type;
                 return true;
             }
 
         }
-         private void RunBinaryMockTests(ExpressionType type){
+        private void RunBinaryMockTests(ExpressionType type)
+        {
             var mock = new OperatorTestDynObject(type);
             var dummy = new Object();
             Dynamic.InvokeBinaryOperator(mock, type, dummy);
         }
 
-        private void RunUnaryMockTests(ExpressionType type){
+        private void RunUnaryMockTests(ExpressionType type)
+        {
             var mock = new OperatorTestDynObject(type);
-            Dynamic.InvokeUnaryOpartor(type,mock);
+            Dynamic.InvokeUnaryOpartor(type, mock);
         }
 
         [Test]
@@ -1403,7 +1410,7 @@ namespace Dynamitey.Tests
             RunUnaryMockTests(ExpressionType.Negate);
             RunUnaryMockTests(ExpressionType.Increment);
             RunUnaryMockTests(ExpressionType.Decrement);
-        
+
 
 
         }
