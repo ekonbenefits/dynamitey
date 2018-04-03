@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0;net462</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.0;net45</TargetFrameworks>
     <OutputType Condition="'$(TargetFramework)'!='netcoreapp2.0'">Exe</OutputType>
    <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -15,7 +15,7 @@
     <PackageReference Include="NUnit.Console" Version="3.7.0" />
     <PackageReference Include="Microsoft.CSharp" Version="4.4.0" />
   </ItemGroup>
-
+  
   <ItemGroup Condition="'$(TargetFramework)'!='netcoreapp2.0'">
     <PackageReference Include="IronPython" Version="2.7.7" />
   </ItemGroup>
@@ -24,7 +24,7 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.8.*" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.*" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\Dynamitey\Dynamitey.csproj" />
     <ProjectReference Include="..\SupportLibrary\SupportLibrary.csproj" />
