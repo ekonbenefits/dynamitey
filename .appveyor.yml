@@ -4,8 +4,11 @@ configuration: Debug
 
 build: off
 
+install:
+  - ps: nuget install FSharp.Compiler.Tools -ExcludeVersion -OutputDirectory extra
+
 build_script:
-  - cmd: set PATH=%PATH%;C:\Program Files (x86)\Microsoft SDKs\F#\4.1\Framework\v4.0\
+  - cmd: set PATH=%PATH%;%APPVEYOR_BUILD_FOLDER%\extra\FSharp.Compiler.Tools\tools\
   - cmd: fsi --exec ./build.fsx
 
 test: off
