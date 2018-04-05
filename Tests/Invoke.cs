@@ -10,6 +10,7 @@ using Dynamitey.SupportLibrary;
 using Microsoft.CSharp.RuntimeBinder;
 using Moq;
 using NUnit.Framework;
+using System.Globalization;
 
 namespace Dynamitey.Tests
 {
@@ -1079,7 +1080,7 @@ namespace Dynamitey.Tests
         {
             var @static = InvokeContext.CreateStatic;
             object tDateDyn = "01/20/2009";
-            var tDate = Dynamic.InvokeMember(@static(typeof(DateTime)), "Parse", tDateDyn);
+            var tDate = Dynamic.InvokeMember(@static(typeof(DateTime)), "Parse", tDateDyn, CultureInfo.GetCultureInfo("en-US"));
             Assert.AreEqual(new DateTime(2009, 1, 20), tDate);
         }
 
@@ -1088,9 +1089,9 @@ namespace Dynamitey.Tests
         {
             var @static = InvokeContext.CreateStatic;
             object tDateDyn = "01/20/2009";
-            var tCachedInvoke = new CacheableInvocation(InvocationKind.InvokeMember, "Parse", 1,
+            var tCachedInvoke = new CacheableInvocation(InvocationKind.InvokeMember, "Parse", 2,
                                                         context: @static(typeof(DateTime)));
-            var tDate = tCachedInvoke.Invoke(typeof(DateTime), tDateDyn);
+            var tDate = tCachedInvoke.Invoke(typeof(DateTime), tDateDyn,CultureInfo.GetCultureInfo("en-US"));
             Assert.AreEqual(new DateTime(2009, 1, 20), tDate);
         }
 
