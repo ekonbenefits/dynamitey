@@ -22,24 +22,42 @@
 
 #I "packages/FAKE/tools"
 #r "FakeLib.dll"
+#r "System.Xml.Linq.dll"
 
 open Fake
+open System.Xml.Linq
+open System.Xml.XPath
 
 let sln = "./Dynamitey.sln"
 
 let commonBuild target =
     let buildMode = getBuildParamOrDefault "configuration" "Release"
     let vsuffix = getBuildParamOrDefault "vsuffix" ""
+
+    let versionPrefix = "Version.props" 
+                        |> System.IO.File.ReadAllText 
+                        |> XDocument.Parse
+                        |> (fun x -> x.XPathEvaluate("//VersionPrefix/text()"))
+                        |> (fun x-> x :?> seq<obj>)
+                        |> Seq.exactlyOne
+                        |> sprintf "%A"
+
+    let vProp =
+        if System.Text.RegularExpressions.Regex.IsMatch(vsuffix, "^\d+$") then 
+            "Version", versionPrefix + "." + vsuffix
+        else
+            "VersionSuffix", vsuffix
+
     let setParams defaults =
-                { defaults with
-                    Verbosity = Some(Quiet)
-                    Targets = [target]
-                    Properties =
-                        [
-                            "Configuration", buildMode
-                            "VersionSuffix", vsuffix
-                        ]
-                }
+            { defaults with
+                Verbosity = Some(Quiet)
+                Targets = [target]
+                Properties =
+                    [
+                        "Configuration", buildMode
+                        vProp
+                    ]
+            }
     build setParams sln
           |> DoNothing
 
