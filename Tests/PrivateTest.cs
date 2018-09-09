@@ -72,6 +72,14 @@ namespace Dynamitey.Tests
         public void TestPrivateStaticField(Type type)
         {
             var staticContext = InvokeContext.CreateStatic;
+            try
+            {
+                Dynamic.InvokeSet(staticContext(type), "Hello", null);
+            }
+            catch (RuntimeBinderException)
+            {
+
+            }
             var hello = Dynamic.InvokeGet(staticContext(type), "Hello");
             Assert.That(hello, Is.EqualTo("World"));
         }

@@ -446,36 +446,17 @@ namespace Dynamitey.Internal.Optimization
                 if (staticContext) //CSharp Binder won't call Static properties, grrr.
                 {
                     var tStaticFlag = CSharpBinderFlags.None;
-                    if ((target is Type && ((Type)target).GetTypeInfo().IsPublic))
-                    {
-                        tBinder = () => Binder.InvokeMember(tStaticFlag, "get_" + name,
-                                                            null,
-                                                            context,
-                                                            new List<CSharpArgumentInfo>
-                                                                {
-                                                                    CSharpArgumentInfo.Create(
-                                                                        CSharpArgumentInfoFlags.IsStaticType |
-                                                                        CSharpArgumentInfoFlags.UseCompileTimeType,
-                                                                        null)
-                                                                });
 
-                        tBinderType = typeof (InvokeMemberBinder);
-                        tKnownType = KnownMember;
-                    }
-                    else
-                    {
+                    tBinder = () => Binder.GetMember(tStaticFlag, name,
+                        context,
+                        new List<CSharpArgumentInfo>
+                        {
+                            CSharpArgumentInfo.Create(
+                                CSharpArgumentInfoFlags.IsStaticType, null)
+                        });
 
-                        tBinder = () => Binder.GetMember(tStaticFlag, name,
-                                                            context,
-                                                            new List<CSharpArgumentInfo>
-                                                                {
-                                                                    CSharpArgumentInfo.Create(
-                                                                        CSharpArgumentInfoFlags.IsStaticType,                                                                        null)
-                                                                });
-
-                        tBinderType = typeof(InvokeMemberBinder);
-                        tKnownType = KnownMember;
-                    }
+                    tBinderType = typeof(InvokeMemberBinder);
+                    tKnownType = KnownMember;
                 }
                 else
                 {
