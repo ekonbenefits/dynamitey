@@ -65,6 +65,21 @@ namespace Dynamitey.Tests
             var tCachedInvoke = new CacheableInvocation(InvocationKind.InvokeMember, "Test", context: typeof(TestWithPrivateMethod));
             Assert.That( tCachedInvoke.Invoke(tTest), Is.EqualTo(3));
         }
+
+        [TestCase(typeof(TestNestedWithPrivateStaticField))]
+        [TestCase(typeof(TestNonPublicWithPrivateStaticField))]
+        [TestCase(typeof(TestWithPrivateStaticField))]
+        public void TestPrivateStaticField(Type type)
+        {
+            var staticContext = InvokeContext.CreateStatic;
+            var hello = Dynamic.InvokeGet(staticContext(type), "Hello");
+            Assert.That(hello, Is.EqualTo("World"));
+        }
+
+        public class TestNestedWithPrivateStaticField
+        {
+            private static string Hello => "World";
+        }
     }
 
     public class TestWithPrivateMethod
@@ -73,5 +88,15 @@ namespace Dynamitey.Tests
         {
             return 3;
         }
+    }
+
+    internal class TestNonPublicWithPrivateStaticField
+    {
+        private static string Hello => "World";
+    }
+
+    public class TestWithPrivateStaticField
+    {
+        private static string Hello => "World";
     }
 }
