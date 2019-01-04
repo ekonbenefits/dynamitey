@@ -132,8 +132,7 @@ namespace Dynamitey.Internal.Optimization
             if (result is BaseForwarder.AddRemoveMarker) //Don't massage AddRemove Proxies
                 return true;
 
-            Type tType;
-            var tTryType = target.TryTypeForName(binderName, out tType);
+            var tTryType = target.TryTypeForName(binderName, out var tType);
             if (tTryType && tType == typeof(void))
             {
                 return true;

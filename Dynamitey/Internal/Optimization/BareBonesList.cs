@@ -62,15 +62,9 @@ namespace Dynamitey.Internal.Optimization
             throw new NotSupportedException();
         }
 
-        public int Count
-        {
-            get { return _length; }
-        }
+        public int Count => _length;
 
-        public bool IsReadOnly
-        {
-            get { return false; }
-        }
+        public bool IsReadOnly => false;
 
         /// <summary>
         /// Gets the enumerator. with bare bones this is good only once
@@ -116,15 +110,9 @@ namespace Dynamitey.Internal.Optimization
                 _enumerateInex = 0;
             }
 
-            public T Current
-            {
-                get { return _list[_enumerateInex]; }
-            }
+            public T Current => _list[_enumerateInex];
 
-            object IEnumerator.Current
-            {
-                get { return Current; }
-            }
+            object IEnumerator.Current => Current;
         }
     
     }

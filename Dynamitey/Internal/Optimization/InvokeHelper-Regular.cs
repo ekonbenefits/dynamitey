@@ -332,8 +332,7 @@ namespace Dynamitey.Internal.Optimization
             var tHash = BinderHash<T>.Create(name, context, argNames, specificBinderType, staticContext, isEvent, knownType != Unknown);
             lock (_binderCacheLock)
             {
-                CallSite<T> tOut;
-                if (!TryDynamicCachedCallSite(tHash, knownType, out tOut))
+                if (!TryDynamicCachedCallSite(tHash, knownType, out var tOut))
                 {
                     tOut = CallSite<T>.Create(binder());
                     SetDynamicCachedCallSite(tHash, knownType, tOut);
@@ -357,8 +356,7 @@ namespace Dynamitey.Internal.Optimization
             var tHash = BinderHash<T>.Create(name, context, argNames, specificBinderType, staticContext, isEvent, knownType != Unknown);
             lock (_binderCacheLock)
             {
-                CallSite<T> tOut;
-                if (!TryDynamicCachedCallSite(tHash, knownType, out tOut))
+                if (!TryDynamicCachedCallSite(tHash, knownType, out var tOut))
                 {
                     tOut = CallSite<T>.Create(binder());
                     SetDynamicCachedCallSite(tHash, knownType, tOut);
@@ -391,8 +389,7 @@ namespace Dynamitey.Internal.Optimization
                                      string[] argNames,
                                      Type target, params object[] args)
         {
-            CallSite<DynamicInvokeMemberConstructorValueType> tSite;
-            if (!_dynamicInvokeMemberSite.TryGetValue(tReturn, out tSite))
+            if (!_dynamicInvokeMemberSite.TryGetValue(tReturn, out var tSite))
             {
                 tSite = CallSite<DynamicInvokeMemberConstructorValueType>.Create(
                         Binder.InvokeMember(
@@ -827,8 +824,7 @@ namespace Dynamitey.Internal.Optimization
 
         internal static Delegate WrapFunc(Type returnType, object invokable, int length)
         {
-            CallSite<DynamicInvokeWrapFunc> tSite;
-            if (!_dynamicInvokeWrapFunc.TryGetValue(returnType, out tSite))
+            if (!_dynamicInvokeWrapFunc.TryGetValue(returnType, out var tSite))
             {
 
                 var tMethod =  "WrapFuncHelper";

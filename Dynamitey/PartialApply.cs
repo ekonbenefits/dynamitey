@@ -102,46 +102,31 @@ namespace Dynamitey
         /// Gets the target.
         /// </summary>
         /// <value>The target.</value>
-        public object Target
-        {
-            get { return _target; }
-        }
+        public object Target => _target;
 
         /// <summary>
         /// Gets the name of the member.
         /// </summary>
         /// <value>The name of the member.</value>
-        public string MemberName
-        {
-            get { return _memberName; }
-        }
+        public string MemberName => _memberName;
 
         /// <summary>
         /// Gets the args.
         /// </summary>
         /// <value>The args.</value>
-        public object[] Args
-        {
-            get { return _args; }
-        }
+        public object[] Args => _args;
 
         /// <summary>
         /// Gets the total arg count.
         /// </summary>
         /// <value>The total arg count.</value>
-        public int? TotalArgCount
-        {
-            get { return _totalArgCount; }
-        }
+        public int? TotalArgCount => _totalArgCount;
 
         /// <summary>
         /// Gets the kind of the invocation.
         /// </summary>
         /// <value>The kind of the invocation.</value>
-        public InvocationKind InvocationKind
-        {
-            get { return _invocationKind; }
-        }
+        public InvocationKind InvocationKind => _invocationKind;
 
         private IDictionary<int, CacheableInvocation> _cacheableInvocation = new Dictionary<int, CacheableInvocation>();
 #pragma warning disable 1734
@@ -183,8 +168,7 @@ namespace Dynamitey
             Invocation tInvocation;
             if (binder.CallInfo.ArgumentNames.Count == 0) //If no argument names we can cache the callsite
             {
-                CacheableInvocation tCacheableInvocation;
-                if (!_cacheableInvocation.TryGetValue(tNewArgs.Length, out tCacheableInvocation))
+                if (!_cacheableInvocation.TryGetValue(tNewArgs.Length, out var tCacheableInvocation))
                 {
                     tCacheableInvocation = new CacheableInvocation(InvocationKind, _memberName, argCount: tNewArgs.Length, context: _target);
                     _cacheableInvocation[tNewArgs.Length] = tCacheableInvocation;

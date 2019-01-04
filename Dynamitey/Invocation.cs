@@ -117,7 +117,7 @@ namespace Dynamitey
 
 
         /// <summary>
-        /// Defacto Binder Name for Construvter
+        /// Defacto Binder Name for Constructor
         /// </summary>
         public static readonly string ConstructorBinderName = "new()";
 
@@ -219,10 +219,10 @@ namespace Dynamitey
                 case InvocationKind.Constructor:
                     return Dynamic.InvokeConstructor((Type)target, args);
                 case InvocationKind.Convert:
-                    bool tExplict = false;
+                    bool tExplicit = false;
                     if (Args.Length == 2)
-                        tExplict = (bool)args[1];
-                    return Dynamic.InvokeConvert(target, (Type)args[0], tExplict);
+                        tExplicit = (bool)args[1];
+                    return Dynamic.InvokeConvert(target, (Type)args[0], tExplicit);
                 case InvocationKind.Get:
                     return Dynamic.InvokeGet(target, Name.Name);
                 case InvocationKind.Set:

@@ -116,10 +116,7 @@ namespace Dynamitey
 
         private static void HelperToList(List<dynamic> list, object tuple, bool safe)
         {
-            Type type;
-            Type generic;
-            int size;
-            if(HelperIsTuple(tuple, out type, out generic, out size, safe))
+            if(HelperIsTuple(tuple, out var type, out var generic, out var size, safe))
             {
                 for (int i = 0; i < 7 && i < size; i++)
                 {
@@ -150,12 +147,12 @@ namespace Dynamitey
             var item = index + 1;
             if (!safe && item < 1)
             {
-                throw new ArgumentException("index must be greater than or equalto 0", "index");
+                throw new ArgumentException("index must be greater than or equalto 0", nameof(index));
             }
 
             if (!safe && item > Size(tuple))
             {
-                throw new ArgumentException("index must be less than size", "index");
+                throw new ArgumentException("index must be less than size", nameof(index));
             }
 
             if (!safe && !IsTuple(tuple))
@@ -180,10 +177,7 @@ namespace Dynamitey
         /// </returns>
         public static bool IsTuple(object target)
         {
-            Type genericType;
-            Type type;
-            int size;
-            return HelperIsTuple(target, out type, out genericType, out size, false);
+            return HelperIsTuple(target, out var type, out var genericType, out var size, false);
         }
 
         private static bool HelperIsTuple(object target, out Type type, out Type genericeType, out int size, bool safe)
@@ -217,10 +211,7 @@ namespace Dynamitey
 
         private static int HelperSize(object tuple, bool safe)
         {
-            int size;
-            Type genericType;
-            Type type;
-            if (HelperIsTuple(tuple, out type, out genericType, out size, safe))
+            if (HelperIsTuple(tuple, out var type, out var genericType, out var size, safe))
             {
                 if (size == 8)
                 {

@@ -212,13 +212,10 @@ namespace Dynamitey.Tests
             dynamic tNew = new DynamicObjects.Dictionary();
             tNew.Func = new DynamicTryString(TestOut);
 
-            String tOut;
-
-            Assert.AreEqual(true, tNew.Func(null, "Test", out tOut));
+            Assert.AreEqual(true, tNew.Func(null, "Test", out string tOut));
             Assert.AreEqual("Test", tOut);
 
-            String tOut2;
-            Assert.AreEqual(false, tNew.Func(null, 1, out tOut2));
+            Assert.AreEqual(false, tNew.Func(null, 1, out string tOut2));
             Assert.AreEqual(null, tOut2);
         }
 

@@ -100,10 +100,7 @@ namespace Dynamitey.DynamicObjects
         /// Returns a late bound constructor
         /// </summary>
         /// <value>The late bound constructor</value>
-        public dynamic @new
-        {
-            get { return new ConstructorForward((Type)Target); }
-        }
+        public dynamic @new => new ConstructorForward((Type)Target);
 
         /// <summary>
         /// Forward argument to constructor including named arguments
@@ -136,10 +133,7 @@ namespace Dynamitey.DynamicObjects
         /// <value>
         /// 	<c>true</c> if this instance is available; otherwise, <c>false</c>.
         /// </value>
-        public bool IsAvailable
-        {
-            get { return Target != null; }
-        }
+        public bool IsAvailable => Target != null;
 
 
         /// <summary>

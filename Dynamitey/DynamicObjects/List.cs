@@ -132,11 +132,7 @@ namespace Dynamitey.DynamicObjects
         /// Gets the count.
         /// </summary>
         /// <value>The count.</value>
-        public int Count
-        {
-            get { return _list.Count; }
-        }
-
+        public int Count => _list.Count;
 
 
         /// <summary>
@@ -229,7 +225,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns></returns>
         public dynamic this[int index]
         {
-            get { return _list[index]; }
+            get => _list[index];
             set
             {
                 object tOld;
@@ -303,11 +299,8 @@ namespace Dynamitey.DynamicObjects
         dynamic IDictionary<string, object>.this[string key]
         {
          
-            get { return _dictionary[key]; }
-            set
-            {
-                SetProperty(key, value);
-            }
+            get => _dictionary[key];
+            set => SetProperty(key, value);
         }
 
         /// <summary>
@@ -390,10 +383,7 @@ namespace Dynamitey.DynamicObjects
         /// <value>
         /// The sync root.
         /// </value>
-        public object SyncRoot
-        {
-            get { return _syncRoot; }
-        }
+        public object SyncRoot => _syncRoot;
 
 
         /// <summary>
@@ -402,10 +392,7 @@ namespace Dynamitey.DynamicObjects
         /// <value>
         /// <c>true</c> if this instance is synchronized; otherwise, <c>false</c>.
         /// </value>
-        public bool IsSynchronized
-        {
-            get { return false; }
-        }
+        public bool IsSynchronized => false;
 
         #endregion
 
@@ -429,10 +416,7 @@ namespace Dynamitey.DynamicObjects
         /// <value>
         /// <c>true</c> if this instance is fixed size; otherwise, <c>false</c>.
         /// </value>
-        public bool IsFixedSize
-        {
-            get { return false; }
-        }
+        public bool IsFixedSize => false;
 
         #endregion
     }
