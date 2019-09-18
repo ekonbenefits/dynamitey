@@ -398,7 +398,7 @@ namespace Dynamitey.DynamicObjects
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
             if(!_buildType.TryGetValue(binder.Name, out var tBuildType))
-				tBuildType = null;
+                tBuildType = null;
 
             if (tBuildType == null && !_buildType.TryGetValue("Object", out tBuildType))
                 tBuildType = null;
@@ -407,9 +407,9 @@ namespace Dynamitey.DynamicObjects
             if (TryTypeForName(binder.Name, out var tType))
             {
                 var typeInfo = tType.GetTypeInfo();
-                if (typeInfo.IsInterface && result != null && !typeInfo.IsAssignableFrom(result.GetType()))
+                if (Dynamic.Impromptu.IsAvailable && typeInfo.IsInterface && result != null && !typeInfo.IsAssignableFrom(result.GetType()))
                 {
-                   // result = Impromptu.DynamicActLike(result, tType);
+                   result = Dynamic.Impromptu.DynamicActLike(result, tType);
                 }
             }
             return true;

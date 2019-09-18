@@ -315,17 +315,17 @@ namespace Dynamitey.DynamicObjects
                 return false;
             }
 
-            if (Dynamic.InvokeIsEvent(CallTarget, binder.Name) && value is AddRemoveMarker)
+            if (Dynamic.InvokeIsEvent(CallTarget, binder.Name) && value is AddRemoveMarker arm)
             {
-                var tValue = value as AddRemoveMarker;
+      
 
-                if (tValue.IsAdding)
+                if (arm.IsAdding)
                 {
-                    Dynamic.InvokeAddAssignMember(CallTarget, binder.Name, tValue.Delegate);
+                    Dynamic.InvokeAddAssignMember(CallTarget, binder.Name, arm.Delegate);
                 }
                 else
                 {
-                    Dynamic.InvokeSubtractAssignMember(CallTarget, binder.Name, tValue.Delegate);
+                    Dynamic.InvokeSubtractAssignMember(CallTarget, binder.Name, arm.Delegate);
                 }
 
                 return true;

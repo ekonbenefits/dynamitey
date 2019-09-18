@@ -898,7 +898,8 @@ namespace Dynamitey
                             }
                             catch (RuntimeBinderException)
                             {
-                                
+                                //This runtime converter block is a hail mary
+                                //lgtm [cs/empty-catch-block]
                             }
                         }
 

@@ -154,10 +154,8 @@ namespace Dynamitey
                 return true;
             }
             var tInvokeDirect = String.IsNullOrWhiteSpace(_memberName);
-            var tDel = _target as Delegate;
 
-
-            if (tInvokeDirect && binder.CallInfo.ArgumentNames.Count == 0 && _target is Delegate)
+            if (tInvokeDirect && binder.CallInfo.ArgumentNames.Count == 0 && _target is Delegate tDel)
             //Optimization for direct delegate calls
             {
                 result = tDel.FastDynamicInvoke(tNewArgs);

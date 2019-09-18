@@ -146,9 +146,8 @@ namespace Dynamitey
 
             if (context != null)
             {
-#pragma warning disable 168
-                var tDummy = context.GetTargetContext(out _context, out _staticContext);
-#pragma warning restore 168
+                var _ = context.GetTargetContext(out _context, out _staticContext);
+
             }
             else
             {
