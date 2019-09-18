@@ -721,8 +721,8 @@ namespace Dynamitey.Internal.Optimization
             return tCallSite.Target(tCallSite, target);
         }
 
-        internal static void InvokeAddAssignCallSite(object target, string name, object[] args, string[] argNames, Type context, bool staticContext, 
-            ref CallSite callSiteIsEvent, ref CallSite callSiteAdd, ref CallSite callSiteGet, ref CallSite callSiteSet) //This is an optimization readability isn't the concern. - lgtm [cs/too-many-ref-parameters]
+        internal static void InvokeAddAssignCallSite(object target, string name, object[] args, string[] argNames, Type context, bool staticContext, //lgtm [cs/too-many-ref-parameters]
+            ref CallSite callSiteIsEvent, ref CallSite callSiteAdd, ref CallSite callSiteGet, ref CallSite callSiteSet) //This is an optimization readability isn't the concern. 
         {
 
             if (InvokeIsEventCallSite(target, name, context, ref callSiteIsEvent))
@@ -737,8 +737,8 @@ namespace Dynamitey.Internal.Optimization
             }
         }
 
-        internal static void InvokeSubtractAssignCallSite(object target, string name, object[] args, string[] argNames, Type context, bool staticContext,
-            ref CallSite callSiteIsEvent, ref CallSite callSiteRemove, ref CallSite callSiteGet, ref CallSite callSiteSet) //This is an optimization readability isn't the concern. - lgtm [cs/too-many-ref-parameters]
+        internal static void InvokeSubtractAssignCallSite(object target, string name, object[] args, string[] argNames, Type context, bool staticContext, // lgtm [cs/too-many-ref-parameters]
+            ref CallSite callSiteIsEvent, ref CallSite callSiteRemove, ref CallSite callSiteGet, ref CallSite callSiteSet) //This is an optimization readability isn't the concern. 
         {
             if (InvokeIsEventCallSite(target, name, context, ref callSiteIsEvent))
             {

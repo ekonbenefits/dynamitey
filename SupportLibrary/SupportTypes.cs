@@ -417,13 +417,13 @@ namespace Dynamitey.SupportLibrary
         public PropPoco ReturnProp
         {
             get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            set => throw new NotImplementedException();  //lgtm [cs/unused-property-value]
         }
 
         PropPoco IPropPocoProp.ReturnProp
         {
             get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
+            set => throw new NotImplementedException(); //lgtm [cs/unused-property-value]
         }
 
         IEnumerator IEnumerable.GetEnumerator()

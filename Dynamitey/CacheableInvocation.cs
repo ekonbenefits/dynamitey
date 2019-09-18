@@ -146,8 +146,7 @@ namespace Dynamitey
 
             if (context != null)
             {
-                var _ = context.GetTargetContext(out _context, out _staticContext);
-
+                var dummy = context.GetTargetContext(out _context, out _staticContext); //lgtm [cs/useless-assignment-to-local]
             }
             else
             {
