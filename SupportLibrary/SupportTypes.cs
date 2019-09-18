@@ -29,13 +29,7 @@ namespace Dynamitey.SupportLibrary
 
     public class PublicType
     {
-        public static object InternalInstance
-        {
-            get
-            {
-                return new InternalType();
-            }
-        }
+        public static object InternalInstance => new InternalType();
 
         public bool PrivateMethod(object param)
         {
@@ -92,10 +86,7 @@ namespace Dynamitey.SupportLibrary
             return default(TReturn);
         }
 
-        public static bool Test
-        {
-            get { return true; }
-        }
+        public static bool Test => true;
 
         public static int TestSet { get; set; }
     }
@@ -417,31 +408,22 @@ namespace Dynamitey.SupportLibrary
 
     public class PocoDoubleProp : IInheritProp, IPropPocoProp, IEnumerable
     {
-        public string Prop1
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public string Prop1 => throw new NotImplementedException();
 
-        public long Prop2
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public long Prop2 => throw new NotImplementedException();
 
-        public Guid Prop3
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public Guid Prop3 => throw new NotImplementedException();
 
         public PropPoco ReturnProp
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
         }
 
         PropPoco IPropPocoProp.ReturnProp
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -462,20 +444,11 @@ namespace Dynamitey.SupportLibrary
             throw new NotImplementedException();
         }
 
-        public int Count
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public int Count => throw new NotImplementedException();
 
-        public object SyncRoot
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public object SyncRoot => throw new NotImplementedException();
 
-        public bool IsSynchronized
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public bool IsSynchronized => throw new NotImplementedException();
 
         public int Add(object value)
         {
@@ -514,19 +487,13 @@ namespace Dynamitey.SupportLibrary
 
         public object this[int index]
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
         }
 
-        public bool IsReadOnly
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public bool IsReadOnly => throw new NotImplementedException();
 
-        public bool IsFixedSize
-        {
-            get { throw new NotImplementedException(); }
-        }
+        public bool IsFixedSize => throw new NotImplementedException();
     }
 
 }

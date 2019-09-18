@@ -64,25 +64,13 @@ namespace Dynamitey
         /// Gets the new object builder.
         /// </summary>
         /// <value>The new object.</value>
-        public static dynamic NewObject
-        {
-            get
-            {
-                return _objectBuilder;
-            }
-        }
+        public static dynamic NewObject => _objectBuilder;
 
         /// <summary>
         /// Gets the new list builder.
         /// </summary>
         /// <value>The new list.</value>
-        public static dynamic NewList
-        {
-            get
-            {
-                return _listBuilder;
-            }
-        }
+        public static dynamic NewList => _listBuilder;
     }
 
     /// <summary>
@@ -103,22 +91,13 @@ namespace Dynamitey
         /// Gets the new object builder.
         /// </summary>
         /// <value>The new.</value>
-        public static dynamic NewObject
-        {
-            get
-            {
-                return _typedBuilder;
-            }
-        }
+        public static dynamic NewObject => _typedBuilder;
 
         /// <summary>
         /// Gets the new list builder.
         /// </summary>
         /// <value>The new list.</value>
-        public static dynamic NewList
-        {
-            get { return _typedListBuilder; }
-        }
+        public static dynamic NewList => _typedListBuilder;
     }
 
     /// <summary>

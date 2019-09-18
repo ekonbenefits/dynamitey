@@ -145,8 +145,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns></returns>
         public dynamic List(params dynamic[] contents)
         {
-            Activate tBuildType;
-            if (!_buildType.TryGetValue("List", out tBuildType))
+            if (!_buildType.TryGetValue("List", out var tBuildType))
                 tBuildType = null;
 
             if (tBuildType != null)
@@ -314,8 +313,7 @@ namespace Dynamitey.DynamicObjects
             /// <returns></returns>
             public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
             {
-                Activate tBuildType;
-                if (!_buider._buildType.TryGetValue("Object", out tBuildType))
+                if (!_buider._buildType.TryGetValue("Object", out var tBuildType))
                     tBuildType = null;
 
                 result = InvokeHelper(binder.CallInfo, args, tBuildType);
@@ -399,17 +397,14 @@ namespace Dynamitey.DynamicObjects
         /// <returns></returns>
         public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
         {
-            Type tType;
-
-			Activate tBuildType;
-			if(!_buildType.TryGetValue(binder.Name, out tBuildType))
+            if(!_buildType.TryGetValue(binder.Name, out var tBuildType))
 				tBuildType = null;
 
             if (tBuildType == null && !_buildType.TryGetValue("Object", out tBuildType))
                 tBuildType = null;
 
             result = InvokeHelper(binder.CallInfo, args,tBuildType);
-            if (TryTypeForName(binder.Name, out tType))
+            if (TryTypeForName(binder.Name, out var tType))
             {
                 var typeInfo = tType.GetTypeInfo();
                 if (typeInfo.IsInterface && result != null && !typeInfo.IsAssignableFrom(result.GetType()))

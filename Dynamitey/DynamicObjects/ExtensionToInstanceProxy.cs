@@ -32,11 +32,7 @@ namespace Dynamitey.DynamicObjects
         /// <value>
         /// The instance hints.
         /// </value>
-        public IEnumerable<Type> InstanceHints
-        {
-            get { return _instanceHints/* ?? KnownInterfaces*/; }
-        }
-
+        public IEnumerable<Type> InstanceHints => _instanceHints;
 
 
         /// <summary>
@@ -61,7 +57,7 @@ namespace Dynamitey.DynamicObjects
                 return;
             }
 
-            throw new ArgumentException(String.Format("Non a valid {0} to be wrapped.",_extendedType));
+            throw new ArgumentException($"Non a valid {_extendedType} to be wrapped.");
             
         }
 
@@ -367,8 +363,7 @@ namespace Dynamitey.DynamicObjects
             }
 
 
-            Type tOutType;
-            if (TryTypeForName(name.Name, out tOutType))
+            if (TryTypeForName(name.Name, out var tOutType))
             {
                 var outTypeInfo = tOutType.GetTypeInfo();
                 if (outTypeInfo.IsInterface)

@@ -19,7 +19,7 @@ namespace Dynamitey
         /// Creates the cacheable convert call.
         /// </summary>
         /// <param name="convertType">Type of the convert.</param>
-        /// <param name="convertExplicit">if set to <c>true</c> [convert explict].</param>
+        /// <param name="convertExplicit">if set to <c>true</c> [convert explicit].</param>
         /// <returns></returns>
         public static CacheableInvocation CreateConvert(Type convertType, bool convertExplicit=false)
         {
@@ -36,8 +36,8 @@ namespace Dynamitey
         /// <returns></returns>
         public static CacheableInvocation CreateCall(InvocationKind kind, String_OR_InvokeMemberName name = null, CallInfo callInfo = null,object context = null)
         {
-            var tArgCount = callInfo != null ? callInfo.ArgumentCount : 0;
-            var tArgNames = callInfo != null ? callInfo.ArgumentNames.ToArray() : null;
+            var tArgCount = callInfo?.ArgumentCount ?? 0;
+            var tArgNames = callInfo?.ArgumentNames.ToArray();
 
             return new CacheableInvocation(kind, name, tArgCount, tArgNames, context);
         }
@@ -45,7 +45,7 @@ namespace Dynamitey
         private readonly int _argCount;
         private readonly string[] _argNames;
         private readonly bool _staticContext;
-        private Type _context;
+        private readonly Type _context;
 
         //[NonSerialized]
         private CallSite _callSite;
@@ -56,8 +56,8 @@ namespace Dynamitey
         //[NonSerialized]
         private CallSite _callSite4;
 
-        private bool _convertExplicit;
-        private Type _convertType;
+        private readonly bool _convertExplicit;
+        private readonly Type _convertType;
 
      
 
@@ -91,8 +91,7 @@ namespace Dynamitey
             if (storedArgs != null)
             {
                 _argCount = storedArgs.Length;
-                string[] tArgNames;
-                Args = Util.GetArgsAndNames(storedArgs, out tArgNames);
+                Args = Util.GetArgsAndNames(storedArgs, out var tArgNames);
                 if (_argNames.Length < tArgNames.Length)
                 {
                     _argNames = tArgNames;
@@ -104,21 +103,21 @@ namespace Dynamitey
                 case InvocationKind.GetIndex:
                     if (argCount < 1)
                     {
-                        throw new ArgumentException("Arg Count must be at least 1 for a GetIndex", "argCount");
+                        throw new ArgumentException("Arg Count must be at least 1 for a GetIndex", nameof(argCount));
                     }
                     _argCount = argCount;
                     break;
                 case InvocationKind.SetIndex:
                     if (argCount < 2)
                     {
-                        throw new ArgumentException("Arg Count Must be at least 2 for a SetIndex", "argCount");
+                        throw new ArgumentException("Arg Count Must be at least 2 for a SetIndex", nameof(argCount));
                     }
                     _argCount = argCount;
                     break;
                 case InvocationKind.Convert:
                     _argCount = 0;
                     if(convertType==null)
-                        throw new ArgumentNullException("convertType"," Convert Requires Convert Type ");
+                        throw new ArgumentNullException(nameof(convertType)," Convert Requires Convert Type ");
                     break;
                 case InvocationKind.SubtractAssign:
                 case InvocationKind.AddAssign:
@@ -134,7 +133,7 @@ namespace Dynamitey
                     break;
             }
 
-            if (_argCount > 0)//setup argname array
+            if (_argCount > 0)//setup argName array
             {
                 var tBlank = new string[_argCount];
                 if (_argNames.Length != 0)
@@ -223,8 +222,7 @@ namespace Dynamitey
         /// <exception cref="System.InvalidOperationException">Unknown Invocation Kind: </exception>
         public override object Invoke(object target, params object[] args)
         {
-            var tIContext = target as InvokeContext;
-            if (tIContext !=null)
+            if (target is InvokeContext tIContext)
             {
                 target = tIContext.Target;
             }
@@ -243,19 +241,20 @@ namespace Dynamitey
                         if (args.Length > 0)
                         {
                             if (!Equals(args[0], _convertType))
-                                throw new ArgumentException("CacheableInvocation can't change conversion type on invoke.", "args");
+                                throw new ArgumentException("CacheableInvocation can't change conversion type on invoke.", nameof(args));
                         }
                         if (args.Length > 1)
                         {
                             if(!Equals(args[1], _convertExplicit))
-                                throw new ArgumentException("CacheableInvocation can't change explict/implict conversion on invoke.", "args");
+                                throw new ArgumentException("CacheableInvocation can't change explicit/implicit conversion on invoke.", nameof(args));
                         }
 
                         if(args.Length > 2)
                             goto default;
                         break;
                     default:
-                        throw new ArgumentException("args", string.Format("Incorrect number of Arguments for CachedInvocation, Expected:{0}", _argCount));
+                        throw new ArgumentException("args",
+                            $"Incorrect number of Arguments for CachedInvocation, Expected:{_argCount}");
                 }
             }
 

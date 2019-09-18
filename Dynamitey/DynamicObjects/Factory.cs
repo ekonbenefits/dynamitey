@@ -77,8 +77,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns></returns>
         protected virtual object GetInstanceForDynamicMember(string memberName, params object[] args)
         {
-            Type type;
-            return TryTypeForName(memberName, out type) ? CreateType(type, args) : null;
+            return TryTypeForName(memberName, out var type) ? CreateType(type, args) : null;
         }
     }
 
@@ -116,8 +115,7 @@ namespace Dynamitey.DynamicObjects
             {
                 if (!_hashFactoryTypes.ContainsKey(memberName))
                 {
-                    Type type;
-                    if (TryTypeForName(memberName, out type))
+                    if (TryTypeForName(memberName, out var type))
                     {
                         _hashFactoryTypes.Add(memberName, CreateType(type, args));
                     }

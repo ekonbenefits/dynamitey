@@ -88,14 +88,6 @@ namespace Dynamitey.DynamicObjects
         /// <value>
         /// The call target.
         /// </value>
-        protected override object CallTarget
-        {
-            get
-            {
-                return ((System.Lazy<T>) Target).Value;
-            }
-        }
-
-       
+        protected override object CallTarget => ((System.Lazy<T>) Target).Value;
     }
 }

@@ -50,10 +50,7 @@ namespace Dynamitey.DynamicObjects
         /// Gets the count.
         /// </summary>
         /// <value>The count.</value>
-        public int Count
-        {
-            get { return _dictionary.Count; }
-        }
+        public int Count => _dictionary.Count;
 
 
         /// <summary>
@@ -92,11 +89,8 @@ namespace Dynamitey.DynamicObjects
         /// <value></value>
         public object this[string key]
         {
-            get { return _dictionary[key]; }
-            set
-            {
-                SetProperty(key, value);
-            }
+            get => _dictionary[key];
+            set => SetProperty(key, value);
         }
     }
 

@@ -44,7 +44,7 @@ namespace Dynamitey
     }
 
     /// <summary>
-    /// Name of Member with associated Generic parameterss
+    /// Name of Member with associated Generic parameters
     /// </summary>
     public sealed class InvokeMemberName:String_OR_InvokeMemberName
     {

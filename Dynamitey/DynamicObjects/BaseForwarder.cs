@@ -133,16 +133,13 @@ namespace Dynamitey.DynamicObjects
        
         protected object Target {  get;  set; }
 
-        object IForwarder.Target{get { return Target; }}
+        object IForwarder.Target => Target;
 
         /// <summary>
         /// Gets the call target.
         /// </summary>
         /// <value>The call target.</value>
-        protected virtual object CallTarget
-        {
-            get { return Target; }
-        }
+        protected virtual object CallTarget => Target;
 
         /// <summary>
         /// Provides the implementation for operations that get member values. Classes derived from the <see cref="T:System.Dynamic.DynamicObject"/> class can override this method to specify dynamic behavior for operations such as getting a value for a property.

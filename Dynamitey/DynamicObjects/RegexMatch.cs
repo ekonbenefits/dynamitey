@@ -68,8 +68,7 @@ namespace Dynamitey.DynamicObjects
        public override bool TryGetMember(GetMemberBinder binder, out object result)
         {
             var tGroup = _match.Groups[binder.Name];
-            Type outType;
-            if (!TryTypeForName(binder.Name, out outType))
+            if (!TryTypeForName(binder.Name, out var outType))
                 outType = typeof (string);
 
             if (!tGroup.Success)
@@ -128,10 +127,7 @@ namespace Dynamitey.DynamicObjects
             }
         }
 
-        string IRegexMatch.Value
-        {
-            get { return _match.Value; }
-        }
+        string IRegexMatch.Value => _match.Value;
 
         /// <summary>
         /// Returns a <see cref="System.String" /> that represents this instance.

@@ -22,7 +22,7 @@ namespace Dynamitey
         }
 
         /// <summary>
-        /// Matcheses the specified input string.
+        /// Matches the specified input string.
         /// </summary>
         /// <param name="inputString">The input string.</param>
         /// <param name="regex">The regex.</param>

@@ -13,9 +13,9 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Dynamic;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -52,15 +52,17 @@ namespace Dynamitey
         private static readonly dynamic ComBinder
             = new DynamicObjects.LateType("System.Dynamic.ComBinder, System.Dynamic, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a");
         
-        
+        // ReSharper disable once MemberCanBePrivate.Global
         internal static readonly dynamic Impromptu
             = new DynamicObjects.LateType("ImpromptuInterface.Impromptu, ImpromptuInterface, PublicKeyToken=0b1781c923b2975b");
-    
+        
+        // ReSharper disable once MemberCanBePrivate.Global
         internal static readonly dynamic TypeDescriptor
              = new DynamicObjects.LateType("System.ComponentModel.TypeDescriptor, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089");
     
-
+            
         private static readonly Type ComObjectType;
+        // ReSharper disable once MemberCanBePrivate.Global
         internal static readonly Type TypeConverterAttributeSL;
 
         static Dynamic()
@@ -83,6 +85,7 @@ namespace Dynamitey
                 TypeConverterAttributeSL = null;
             }
         }
+        
         /// <summary>
         /// Creates a cached call site at runtime.
         /// </summary>
@@ -100,13 +103,9 @@ namespace Dynamitey
         /// <seealso cref="CreateCallSite{T}"/>
         public static CallSite CreateCallSite(Type delegateType, CallSiteBinder binder, String_OR_InvokeMemberName name,
                                               Type context, string[] argNames = null, bool staticContext = false,
-                                              bool isEvent = false)
-        {
-
-            return InvokeHelper.CreateCallSite(delegateType, binder.GetType(), InvokeHelper.Unknown, () => binder, (InvokeMemberName)name, context, argNames,
-                                               staticContext,
-                                               isEvent);
-        }
+                                              bool isEvent = false) =>
+            InvokeHelper.CreateCallSite(delegateType, binder.GetType(), InvokeHelper.Unknown, 
+                () => binder, (InvokeMemberName)name, context, argNames, staticContext, isEvent);
 
         /// <summary>
         /// Creates the call site.
@@ -143,11 +142,9 @@ namespace Dynamitey
         /// <seealso cref="CreateCallSite"/>
         public static CallSite<T> CreateCallSite<T>(CallSiteBinder binder, String_OR_InvokeMemberName name, Type context,
                                                     string[] argNames = null, bool staticContext = false,
-                                                    bool isEvent = false) where T : class
-        {
-            return InvokeHelper.CreateCallSite<T>(binder.GetType(), InvokeHelper.Unknown, () => binder, (InvokeMemberName) name, context, argNames, staticContext,
-                                                  isEvent);
-        }
+                                                    bool isEvent = false) where T : class 
+            => InvokeHelper.CreateCallSite<T>(binder.GetType(), InvokeHelper.Unknown, 
+                () => binder, (InvokeMemberName) name, context, argNames, staticContext, isEvent);
 
 
         /// <summary>
@@ -157,14 +154,19 @@ namespace Dynamitey
         /// <returns></returns>
         public static dynamic Linq(object enumerable)
         {
-            if(enumerable.GetType().GetTypeInfo().GetInterfaces().Where(it=>it.GetTypeInfo().IsGenericType)
-                .All(it => it.GetGenericTypeDefinition() != typeof(IEnumerable<>)))
+            if (enumerable
+                .GetType()
+                .GetTypeInfo()
+                .GetInterfaces()
+                .Where(it => it.GetTypeInfo().IsGenericType)
+                .Any(it => it.GetGenericTypeDefinition() == typeof(IEnumerable<>)))
             {
-                var tEnum = enumerable as System.Collections.IEnumerable;
-                if (tEnum !=null)
-                {
-                    enumerable = tEnum.Cast<object>();
-                }
+                return new DynamicObjects.LinqInstanceProxy(enumerable);
+            }
+
+            if (enumerable is IEnumerable tempEnumerable)
+            {
+                enumerable = tempEnumerable.Cast<object>();
             }
 
             return new DynamicObjects.LinqInstanceProxy(enumerable);
@@ -195,15 +197,12 @@ namespace Dynamitey
         /// </example>
         public static dynamic InvokeMember(object target, String_OR_InvokeMemberName name, params object[] args)
         {
-            string[] tArgNames;
-            Type tContext;
-            bool tStaticContext;
-            target = target.GetTargetContext(out tContext, out tStaticContext);
-            args = Util.GetArgsAndNames(args, out tArgNames);
-            CallSite tCallSite = null;
+            target = target.GetTargetContext(out var context, out var staticContext);
+            args = Util.GetArgsAndNames(args, out var argNames);
+            CallSite callSite = null;
 
-            return InvokeHelper.InvokeMemberCallSite(target, (InvokeMemberName)name, args, tArgNames, tContext, tStaticContext,
-                                                     ref tCallSite);
+            return InvokeHelper.InvokeMemberCallSite(target, (InvokeMemberName)name, args, argNames, context, staticContext,
+                                                     ref callSite);
         }
 
 
@@ -285,17 +284,23 @@ namespace Dynamitey
                 case ExpressionType.AndAlso:
                     return leftArg && rightArg;
                 default:
-                    throw new ArgumentException("Unsupported Operator", "op");
+                    throw new ArgumentException("Unsupported Operator", nameof(op));
             }
         }
 
+
+        [Obsolete("Use `InvokeUnaryOperator` instead.")]
+        // ReSharper disable once IdentifierTypo
+        public static dynamic InvokeUnaryOpartor(ExpressionType op, dynamic arg)
+            => InvokeUnaryOperator(op, (object)arg);
+        
         /// <summary>
-        /// Invokes the unary opartor.
+        /// Invokes the unary operator.
         /// </summary>
         /// <param name="arg">The arg.</param>
         /// <param name="op">The op.</param>
         /// <returns></returns>
-        public static dynamic InvokeUnaryOpartor(ExpressionType op, dynamic arg)
+        public static dynamic InvokeUnaryOperator(ExpressionType op, dynamic arg)
         {
             switch (op)
             {
@@ -308,7 +313,7 @@ namespace Dynamitey
                 case ExpressionType.Increment:
                     return ++arg;
                 default:
-                    throw new ArgumentException("Unsupported Operator", "op");
+                    throw new ArgumentException("Unsupported Operator", nameof(op));
             }
         }
 
@@ -320,14 +325,11 @@ namespace Dynamitey
         /// <returns></returns>
         public static dynamic Invoke(object target, params object[] args)
         {
-            string[] tArgNames;
-            Type tContext;
-            bool tStaticContext;
-            target = target.GetTargetContext(out tContext, out tStaticContext);
-            args = Util.GetArgsAndNames(args, out tArgNames);
-            CallSite tCallSite = null;
+            target = target.GetTargetContext(out var context, out var staticContext);
+            args = Util.GetArgsAndNames(args, out var argNames);
+            CallSite callSite = null;
 
-            return InvokeHelper.InvokeDirectCallSite(target, args, tArgNames, tContext, tStaticContext, ref tCallSite);
+            return InvokeHelper.InvokeDirectCallSite(target, args, argNames, context, staticContext, ref callSite);
         }
 
 
@@ -339,11 +341,8 @@ namespace Dynamitey
         /// <returns></returns>
         public static dynamic InvokeGetIndex(object target, params object[] indexes)
         {
-            string[] tArgNames;
-            Type tContext;
-            bool tStaticContext;
-            target = target.GetTargetContext(out tContext, out tStaticContext);
-            indexes = Util.GetArgsAndNames(indexes, out tArgNames);
+            target = target.GetTargetContext(out var tContext, out var tStaticContext);
+            indexes = Util.GetArgsAndNames(indexes, out var tArgNames);
             CallSite tCallSite = null;
 
             return InvokeHelper.InvokeGetIndexCallSite(target, indexes, tArgNames, tContext, tStaticContext,
@@ -373,14 +372,11 @@ namespace Dynamitey
         {
             if (indexesThenValue.Length < 2)
             {
-                throw new ArgumentException("Requires atleast one index and one value", "indexesThenValue");
+                throw new ArgumentException("Requires at least one index and one value", nameof(indexesThenValue));
             }
 
-            string[] tArgNames;
-            Type tContext;
-            bool tStaticContext;
-            target = target.GetTargetContext(out tContext, out tStaticContext);
-            indexesThenValue = Util.GetArgsAndNames(indexesThenValue, out tArgNames);
+            target = target.GetTargetContext(out var tContext, out var tStaticContext);
+            indexesThenValue = Util.GetArgsAndNames(indexesThenValue, out var tArgNames);
 
             CallSite tCallSite = null;
             return InvokeHelper.InvokeSetIndexCallSite(target, indexesThenValue, tArgNames, tContext, tStaticContext,
@@ -411,12 +407,8 @@ namespace Dynamitey
         /// </example>
         public static void InvokeMemberAction(object target, String_OR_InvokeMemberName name, params object[] args)
         {
-            string[] tArgNames;
-            Type tContext;
-            bool tStaticContext;
-
-            target = target.GetTargetContext(out tContext, out tStaticContext);
-            args = Util.GetArgsAndNames(args, out tArgNames);
+            target = target.GetTargetContext(out var tContext, out var tStaticContext);
+            args = Util.GetArgsAndNames(args, out var tArgNames);
 
             CallSite tCallSite = null;
             InvokeHelper.InvokeMemberActionCallSite(target, (InvokeMemberName)name, args, tArgNames, tContext, tStaticContext,
@@ -430,12 +422,8 @@ namespace Dynamitey
         /// <param name="args">The args.</param>
         public static void InvokeAction(object target, params object[] args)
         {
-            string[] tArgNames;
-            Type tContext;
-            bool tStaticContext;
-
-            target = target.GetTargetContext(out tContext, out tStaticContext);
-            args = Util.GetArgsAndNames(args, out tArgNames);
+            target = target.GetTargetContext(out var tContext, out var tStaticContext);
+            args = Util.GetArgsAndNames(args, out var tArgNames);
 
             CallSite tCallSite = null;
             InvokeHelper.InvokeDirectActionCallSite(target, args, tArgNames, tContext, tStaticContext, ref tCallSite);
@@ -467,9 +455,7 @@ namespace Dynamitey
         /// </remarks>
         public static object InvokeSet(object target, string name, object value)
         {
-            Type tContext;
-            bool tStaticContext;
-            target = target.GetTargetContext(out tContext, out tStaticContext);
+            target = target.GetTargetContext(out var tContext, out var tStaticContext);
             tContext = tContext.FixContext();
 
 
@@ -504,7 +490,7 @@ namespace Dynamitey
                     tTarget = InvokeGetIndex(tTarget, tStringIndexer);
                 else
                 {
-                    throw new Exception(string.Format("Could Not Parse :'{0}'", propertyChain));
+                    throw new Exception($"Could Not Parse :'{propertyChain}'");
                 }
             }
 
@@ -521,7 +507,7 @@ namespace Dynamitey
             if (tSetStringIndexer != null)
                 return InvokeSetIndex(tTarget, tSetStringIndexer, value);
             
-            throw new Exception(string.Format("Could Not Parse :'{0}'", propertyChain));
+            throw new Exception($"Could Not Parse :'{propertyChain}'");
         }
 
            
@@ -535,10 +521,7 @@ namespace Dynamitey
         /// Call Like method invokes set on target and a list of property/value. Invoke with dictionary, anonymous type or named arguments.
         /// </summary>
         /// <value>The invoke set all.</value>
-        public static dynamic InvokeSetAll
-        {
-            get { return _invokeSetAll; }
-        }
+        public static dynamic InvokeSetAll => _invokeSetAll;
 
         /// <summary>
         /// Wraps a target to partial apply a method (or target if you can invoke target directly eg delegate).
@@ -586,9 +569,7 @@ namespace Dynamitey
         /// </example>
         public static dynamic InvokeGet(object target, string name)
         {
-            Type tContext;
-            bool tStaticContext;
-            target = target.GetTargetContext(out tContext, out tStaticContext);            CallSite tSite = null;
+            target = target.GetTargetContext(out var tContext, out var tStaticContext);            CallSite tSite = null;
             return InvokeHelper.InvokeGetCallSite(target, name, tContext, tStaticContext, ref tSite);
         }
 
@@ -620,7 +601,7 @@ namespace Dynamitey
                     tTarget = InvokeGetIndex(tTarget, tStringIndexer);
                 else
                 {
-                    throw new Exception(string.Format("Could Not Parse :'{0}'", propertyChain));
+                    throw new Exception($"Could Not Parse :'{propertyChain}'");
                 }
             }
             return tTarget;
@@ -628,8 +609,8 @@ namespace Dynamitey
 
         /// <summary>
         /// Determines whether the specified name on target is event. This allows you to know whether to InvokeMemberAction
-        ///  add_{name} or a combo of {invokeget, +=, invokeset} and the corresponding remove_{name} 
-        /// or a combon of {invokeget, -=, invokeset}
+        ///  add_{name} or a combo of {invokeGet, +=, invokeSet} and the corresponding remove_{name} 
+        /// or a combo of {invokeGet, -=, invokeSet}
         /// </summary>
         /// <param name="target">The target.</param>
         /// <param name="name">The name.</param>
@@ -638,9 +619,7 @@ namespace Dynamitey
         /// </returns>
         public static bool InvokeIsEvent(object target, string name)
         {
-            Type tContext;
-            bool tStaticContext;
-            target = target.GetTargetContext(out tContext, out tStaticContext);
+            target = target.GetTargetContext(out var tContext, out var tStaticContext);
             tContext = tContext.FixContext();
             CallSite tCallSite = null;
             return InvokeHelper.InvokeIsEventCallSite(target, name, tContext, ref tCallSite);
@@ -658,13 +637,10 @@ namespace Dynamitey
             CallSite callSiteGet =null;
             CallSite callSiteSet =null;
             CallSite callSiteIsEvent = null;
-            Type context;
-            bool staticContext;
-            target = target.GetTargetContext(out context, out staticContext);
+            target = target.GetTargetContext(out var context, out var staticContext);
 
             var args = new[] { value };
-            string[] argNames;
-            args = Util.GetArgsAndNames(args, out argNames);
+            args = Util.GetArgsAndNames(args, out var argNames);
 
             InvokeHelper.InvokeAddAssignCallSite(target, name, args, argNames, context, staticContext, ref callSiteIsEvent, ref callSiteAdd, ref callSiteGet, ref callSiteSet);
         }
@@ -677,14 +653,11 @@ namespace Dynamitey
         /// <param name="value">The value.</param>
         public static void InvokeSubtractAssignMember(object target, string name, object value)
         {
-            Type context;
-            bool staticContext;
-            target = target.GetTargetContext(out context, out staticContext);
+            target = target.GetTargetContext(out var context, out var staticContext);
 
             var args = new[] { value };
-            string[] argNames;
 
-            args = Util.GetArgsAndNames(args, out argNames);
+            args = Util.GetArgsAndNames(args, out var argNames);
 
 
             CallSite callSiteIsEvent = null;
@@ -705,9 +678,7 @@ namespace Dynamitey
         /// <returns></returns>
         public static dynamic InvokeConvert(object target, Type type, bool @explicit =false)
         {
-            Type tContext;
-            bool tDummy;
-            target = target.GetTargetContext(out tContext, out tDummy);
+            target = target.GetTargetContext(out var tContext, out var tDummy);
 
             CallSite tCallSite =null;
             return InvokeHelper.InvokeConvertCallSite(target, @explicit, type, tContext, ref tCallSite);
@@ -717,7 +688,7 @@ namespace Dynamitey
         internal static readonly IDictionary<Type, Delegate> CompiledExpressions = new Dictionary<Type, Delegate>();
 
         /// <summary>
-        /// Coerces any invokable to specificied delegate type.
+        /// Coerces any invokable to specified delegate type.
         /// </summary>
         /// <param name="invokeableObject">The invokeable object.</param>
         /// <param name="delegateType">Type of the delegate.</param>
@@ -730,6 +701,10 @@ namespace Dynamitey
                     return null;
                 }
                 var tDelMethodInfo = delegateTypeInfo.GetMethod("Invoke");
+                if (tDelMethodInfo is null)
+                {
+                    throw new Exception("This Delegate Didn't have and Invoke method! Impossible!");
+                }
                 var tReturnType = tDelMethodInfo.ReturnType;
                 var tAction = tReturnType == typeof(void);
                 var tParams = tDelMethodInfo.GetParameters();
@@ -739,30 +714,31 @@ namespace Dynamitey
                                              : InvokeHelper.WrapFunc(tReturnType, invokeableObject, tLength);
 
 
-                if (!InvokeHelper.IsActionOrFunc(delegateType) || tParams.Any(it => it.ParameterType.GetTypeInfo().IsValueType))
-                //Conditions that aren't contravariant;
+                if (InvokeHelper.IsActionOrFunc(delegateType) &&
+                    !tParams.Any(it => it.ParameterType.GetTypeInfo().IsValueType))
                 {
-                    Delegate tGetResult;
+                    return tBaseDelegate;
+                }
 
-                    if (!CompiledExpressions.TryGetValue(delegateType, out tGetResult))
-                    {
-                        var tParamTypes = tParams.Select(it => it.ParameterType).ToArray();
-                        var tDelParam = Expression.Parameter(tBaseDelegate.GetType());
-                        var tInnerParams = tParamTypes.Select(Expression.Parameter).ToArray();
-
-                        var tI = Expression.Invoke(tDelParam,
-                                                   tInnerParams.Select(it => (Expression)Expression.Convert(it, typeof(object))));
-                        var tL = Expression.Lambda(delegateType, tI, tInnerParams);
-
-                        tGetResult =
-                            Expression.Lambda(Expression.GetFuncType(tBaseDelegate.GetType(), delegateType), tL,
-                                              tDelParam).Compile();
-                        CompiledExpressions[delegateType] = tGetResult;
-                    }
-
+                if (CompiledExpressions.TryGetValue(delegateType, out var tGetResult))
+                {
                     return tGetResult.DynamicInvoke(tBaseDelegate);
                 }
-                return tBaseDelegate;
+
+                var tParamTypes = tParams.Select(it => it.ParameterType).ToArray();
+                var tDelParam = Expression.Parameter(tBaseDelegate.GetType());
+                var tInnerParams = tParamTypes.Select(Expression.Parameter).ToArray();
+
+                var tI = Expression.Invoke(tDelParam,
+                    tInnerParams.Select(it => (Expression)Expression.Convert(it, typeof(object))));
+                var tL = Expression.Lambda(delegateType, tI, tInnerParams);
+
+                tGetResult =
+                    Expression.Lambda(Expression.GetFuncType(tBaseDelegate.GetType(), delegateType), tL,
+                        tDelParam).Compile();
+                CompiledExpressions[delegateType] = tGetResult;
+
+                return tGetResult.DynamicInvoke(tBaseDelegate);
 
             }
 
@@ -781,6 +757,7 @@ namespace Dynamitey
 
             try
             {
+                
                 return LateConvert.IsDBNull(value);
             }
             catch
@@ -799,20 +776,33 @@ namespace Dynamitey
             if(types.Length == 1)
                 target.EquivalentType = types.First();
             else
-                target.EquivalentType = new DynamicObjects.AggreType(types.ConvertAll<DynamicObjects.FauxType>().ToArray());
+                target.EquivalentType = new DynamicObjects.AggreType(types.ConvertEach<DynamicObjects.FauxType>().ToArray());
           
         }
+
+
 
         /// <summary>
         /// Implicit or Explicit Converts the items of the specified enumerable.
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="enumerable">The enumerable.</param>
-        /// <param name="explict">if set to <c>true</c> [explict].</param>
+        /// <param name="explicit">if set to <c>true</c> [explicit].</param>
         /// <returns></returns>
-        public static IEnumerable<T> ConvertAll<T>(this System.Collections.IEnumerable enumerable, bool explict =false)
+        [Obsolete("Use ConvertEach.")]
+        public static IEnumerable<T> ConvertAll<T>(this System.Collections.IEnumerable enumerable, bool explict = false)
+            => ConvertEach<T>(enumerable, explict);
+        
+        /// <summary>
+        /// Implicit or Explicit Converts the items of the specified enumerable.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="enumerable">The enumerable.</param>
+        /// <param name="explicit">if set to <c>true</c> [explicit].</param>
+        /// <returns></returns>
+        public static IEnumerable<T> ConvertEach<T>(this System.Collections.IEnumerable enumerable, bool @explicit =false)
         {
-            return enumerable.Cast<Object>().Select(it => InvokeConvert(it, typeof (T), explict)).Cast<T>();
+            return enumerable.Cast<object>().Select(it => InvokeConvert(it, typeof (T), @explicit)).Cast<T>();
         } 
 
         /// <summary>
@@ -838,9 +828,9 @@ namespace Dynamitey
 
 
                 
-                    if (target is IDictionary<string, object> && !(target is DynamicObjects.BaseObject))
+                    if (target is IDictionary<string, object> tDict && !(tDict is DynamicObjects.BaseObject))
                     {
-                        target = new DynamicObjects.Dictionary((IDictionary<string, object>)target);
+                        target = new DynamicObjects.Dictionary(tDict);
                     }
                     else if(!(target is DynamicObjects.BaseObject))
                     {
@@ -856,9 +846,7 @@ namespace Dynamitey
 
                     try
                     {
-                        object tResult;
-
-                        tResult = Dynamic.InvokeConvert(target, type, @explicit: true);
+                        object tResult = Dynamic.InvokeConvert(target, type, @explicit: true);
 
                         target = tResult;
                     }
@@ -870,9 +858,9 @@ namespace Dynamitey
                             tReducedType = typeInfo.GetGenericArguments().First();
                         }
 
-                        if (typeof (Enum).GetTypeInfo().IsAssignableFrom(tReducedType) && target is string)
+                        if (typeof (Enum).GetTypeInfo().IsAssignableFrom(tReducedType) && target is string sVal)
                         {
-                            target = Enum.Parse(tReducedType, target as String, true);
+                            target = Enum.Parse(tReducedType, sVal, true);
 
                         }
                         else if (target is IConvertible && typeof (IConvertible).GetTypeInfo().IsAssignableFrom(tReducedType))
@@ -929,21 +917,20 @@ namespace Dynamitey
         }
 
         /// <summary>
-        /// Invokes the constuctor.
+        /// Invokes the constructor.
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="args">The args.</param>
         /// <returns></returns>
         public static dynamic InvokeConstructor(Type type, params object[] args)
         {
-            string[] tArgNames;
-            bool tValue = type.GetTypeInfo().IsValueType;
+            var tValue = type.GetTypeInfo().IsValueType;
             if (tValue && args.Length == 0)  //dynamic invocation doesn't see constructors of value types
             {
                 return Activator.CreateInstance(type);
             }
 
-           args = Util.GetArgsAndNames( args, out tArgNames);
+           args = Util.GetArgsAndNames( args, out var tArgNames);
            CallSite tCallSite = null;
 
 
@@ -959,13 +946,13 @@ namespace Dynamitey
         /// <returns></returns>
 		public static object FastDynamicInvoke(this Delegate del, params object[] args)
 		{
-		    if(del.GetMethodInfo().ReturnType == typeof(void)){
-				
-				InvokeHelper.FastDynamicInvokeAction(del, args);
-				return null;
-			}
-		    return InvokeHelper.FastDynamicInvokeReturn(del, args);
-		}
+            if (del.GetMethodInfo().ReturnType != typeof(void))
+            {
+                return InvokeHelper.FastDynamicInvokeReturn(del, args);
+            }
+            InvokeHelper.FastDynamicInvokeAction(del, args);
+            return null;
+        }
 
         /// <summary>
         /// Given a generic parameter count and whether it returns void or not gives type of Action or Func
@@ -977,9 +964,11 @@ namespace Dynamitey
         {
             var tParamCount = returnVoid ? paramCount : paramCount - 1;
             if (tParamCount > 16)
-                throw new ArgumentException(String.Format("{0} only handle at  most {1} parameters", returnVoid ? "Action" : "Func", returnVoid ? 16 : 17), "paramCount");
+                throw new ArgumentException(
+                    $"{(returnVoid ? "Action" : "Func")} only handle at  most {(returnVoid ? 16 : 17)} parameters", nameof(paramCount));
             if(tParamCount < 0)
-                throw new ArgumentException(String.Format("{0} must have at least {1} parameter(s)", returnVoid ? "Action" : "Func", returnVoid ? 0 : 1), "paramCount");
+                throw new ArgumentException(
+                    $"{(returnVoid ? "Action" : "Func")} must have at least {(returnVoid ? 0 : 1)} parameter(s)", nameof(paramCount));
 
 
             return returnVoid
@@ -1001,8 +990,7 @@ namespace Dynamitey
                tList.AddRange(target.GetType().GetTypeInfo().GetProperties().Select(it => it.Name));
             }
 
-            var tTarget = target as IDynamicMetaObjectProvider;
-            if (tTarget !=null)
+            if (target is IDynamicMetaObjectProvider tTarget)
             {
                 tList.AddRange(tTarget.GetMetaObject(Expression.Constant(tTarget)).GetDynamicMemberNames());
             }else

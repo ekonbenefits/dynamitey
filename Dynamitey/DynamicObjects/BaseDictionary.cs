@@ -62,28 +62,19 @@ namespace Dynamitey.DynamicObjects
         /// <value>
         /// 	<c>true</c> if this instance is read only; otherwise, <c>false</c>.
         /// </value>
-        public virtual bool IsReadOnly
-        {
-            get { return false; }
-        }
+        public virtual bool IsReadOnly => false;
 
         /// <summary>
         /// Gets the keys.
         /// </summary>
         /// <value>The keys.</value>
-        public ICollection<string> Keys
-        {
-            get { return _dictionary.Keys; }
-        }
+        public ICollection<string> Keys => _dictionary.Keys;
 
         /// <summary>
         /// Gets the values.
         /// </summary>
         /// <value>The values.</value>
-        public ICollection<object> Values
-        {
-            get { return _dictionary.Values; }
-        }
+        public ICollection<object> Values => _dictionary.Values;
 
         /// <summary>
         /// Returns the enumeration of all dynamic member names.
@@ -219,8 +210,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns></returns>
         public bool Remove(KeyValuePair<string, object> item)
         {
-            object tValue;
-            if (TryGetValue(item.Key, out tValue))
+            if (TryGetValue(item.Key, out var tValue))
             {
                 if (item.Value == tValue)
                 {
@@ -284,8 +274,7 @@ namespace Dynamitey.DynamicObjects
         /// <param name="value">The value.</param>
         protected void SetProperty(string key, object value)
         {
-            object tOldValue;
-            if (!_dictionary.TryGetValue(key, out tOldValue) || value != tOldValue)
+            if (!_dictionary.TryGetValue(key, out var tOldValue) || value != tOldValue)
             {
                 _dictionary[key] = value;
                 OnPropertyChanged(key);

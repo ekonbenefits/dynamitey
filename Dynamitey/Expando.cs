@@ -36,12 +36,6 @@ namespace Dynamitey
         /// Gets the new expandoObject builder. This method is short hand for Build&gt;ExpandoObject>.NewObject()
         /// </summary>
         /// <value>The new expandoObject.</value>
-        public static dynamic New
-        {
-            get
-            {
-                return _expandoBuilder;
-            }
-        }        
+        public static dynamic New => _expandoBuilder;
     }
 }
