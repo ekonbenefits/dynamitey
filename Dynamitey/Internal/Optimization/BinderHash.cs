@@ -81,7 +81,7 @@ namespace Dynamitey.Internal.Optimization
             var tOtherGenArgs = other.GenericArgs;
 
             return
-                !(tOtherArgNames == null ^ tArgNames == null)
+                !(tOtherArgNames != null && tArgNames == null)
                 && other.IsEvent == IsEvent
                 && other.StaticContext == StaticContext
                 && Equals(other.Context, Context)
@@ -89,18 +89,9 @@ namespace Dynamitey.Internal.Optimization
                 && Equals(other.DelegateType, DelegateType)
                 && Equals(other.Name, Name)
                 && !(other.IsSpecialName ^ IsSpecialName)
-                && !(tOtherGenArgs == null ^ tGenArgs == null)
-                && (tGenArgs == null || 
-                //Exclusive Or makes sure this doesn't happen
-// ReSharper disable AssignNullToNotNullAttribute
-                tGenArgs.SequenceEqual(tOtherGenArgs))
-// ReSharper restore AssignNullToNotNullAttribute
-                && (tArgNames == null
-                // ReSharper disable AssignNullToNotNullAttribute
-                //Exclusive Or Makes Sure this doesn't happen
-                                 
-                                 || tOtherArgNames.SequenceEqual(tArgNames));
-            // ReSharper restore AssignNullToNotNullAttribute
+                && !(tOtherGenArgs != null && tGenArgs == null)
+                && (tGenArgs == null || tOtherGenArgs.SequenceEqual(tGenArgs))
+                && (tArgNames == null || tOtherArgNames.SequenceEqual(tArgNames));
         }
 
 
