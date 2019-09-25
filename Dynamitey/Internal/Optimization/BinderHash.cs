@@ -81,17 +81,19 @@ namespace Dynamitey.Internal.Optimization
             var tOtherGenArgs = other.GenericArgs;
 
             return
-                !(tOtherArgNames != null && tArgNames == null)
+                !(tOtherArgNames == null && tArgNames != null)
+                && !(tArgNames == null && tOtherArgNames != null)
                 && other.IsEvent == IsEvent
                 && other.StaticContext == StaticContext
-                && Equals(other.Context, Context)
-                && (KnownBinder || Equals(other.BinderType, BinderType))
-                && Equals(other.DelegateType, DelegateType)
+                && other.Context == Context
+                && (KnownBinder || other.BinderType == BinderType)
+                && other.DelegateType == DelegateType
                 && Equals(other.Name, Name)
                 && !(other.IsSpecialName ^ IsSpecialName)
-                && !(tOtherGenArgs != null && tGenArgs == null)
-                && (tGenArgs == null || tOtherGenArgs.SequenceEqual(tGenArgs))
-                && (tArgNames == null || tOtherArgNames.SequenceEqual(tArgNames));
+                && !(tOtherGenArgs == null && tGenArgs != null)
+                && !(tGenArgs == null && tOtherGenArgs != null)
+                && (tOtherGenArgs == null || tOtherGenArgs.SequenceEqual(tGenArgs))
+                && (tOtherArgNames == null || tOtherArgNames.SequenceEqual(tArgNames));
         }
 
 
