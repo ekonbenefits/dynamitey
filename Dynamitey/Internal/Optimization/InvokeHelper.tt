@@ -20,18 +20,22 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Reflection;
+using System.Runtime.ExceptionServices;
+using Dynamitey.Internal.Compat;
 
 namespace Dynamitey.Internal.Optimization {
 
 <# var cacheTypes = new []{"", "Get", "Set", "Constructor", "Member", "Direct"}; #>
 
 <# foreach(var name in cacheTypes){ #>
+    [SuppressMessage("ReSharper", "StaticMemberInGenericType")]
     internal static class Binder<#=name#>Cache<T> where T : class
     {
-        private static IDictionary<BinderHash<T>, CallSite<T>> _cache;
+        private static IDictionary<BinderHash<T>, CallSite<T>>? _cache;
 
         private static readonly object _cacheLock = new object();
 
@@ -41,7 +45,7 @@ namespace Dynamitey.Internal.Optimization {
             {
                 lock (_cacheLock)
                 {
-                    return _cache ?? (_cache = new Dictionary<BinderHash<T>, CallSite<T>>());
+                    return _cache ??= new Dictionary<BinderHash<T>, CallSite<T>>();
                 }
             }
         }
@@ -118,16 +122,16 @@ namespace Dynamitey.Internal.Optimization {
 		}
 
 
-        internal static void InvokeMemberAction(ref CallSite callsite,
-		                                            Type binderType,
+        internal static void InvokeMemberAction(ref CallSite? callsite,
+		                                            Type? binderType,
 													int knownType,
-													LazyBinder binder,
+													LazyBinder? binder,
                                                     InvokeMemberName name,
 													bool staticContext,
                                                     Type context, 
-                                                    string[] argNames,
-                                                    object target,
-                                                    params object [] args)
+                                                    string[]? argNames,
+                                                    [DisallowNull] object target,
+                                                    params object?[] args)
         {
 
             var tSwitch = args.Length;
@@ -135,14 +139,13 @@ namespace Dynamitey.Internal.Optimization {
             {
 #region Optimizations
 <# for(int i=0; i <= 14; i++){ 
-		var tobjectArgs = String.Join(",",Enumerable.Repeat(" object",i+1));
+		var tobjectArgs = String.Join(",",Enumerable.Repeat(" object?",i+1));
 		var tArrayArgs = String.Concat(Enumerable.Range(0,i).Select(it=>String.Format(", args[{0}]",it)));
 #>
                 case <#=i#>:
                     {
-						var tCallSite = (CallSite<Action<CallSite, <#=tobjectArgs#>>>)callsite;
-						if(tCallSite == null){
-							tCallSite = CreateCallSite<Action<CallSite, <#=tobjectArgs#>>>(binderType,knownType, binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Action<CallSite, <#=tobjectArgs#>>> tCallSite)){
+							tCallSite = CreateCallSite<Action<CallSite, <#=tobjectArgs#>>>(binderType!,knownType, binder!, name, context, argNames, staticContext);
 						    callsite=tCallSite;
 						}
                         tCallSite.Target(tCallSite, target<#=tArrayArgs#>);
@@ -151,9 +154,9 @@ namespace Dynamitey.Internal.Optimization {
 <# } #>
 #endregion
                 default:
-                    var tArgTypes = Enumerable.Repeat(typeof(object), tSwitch);
-                    var tDelagateType = EmitCallSiteFuncType(tArgTypes, typeof(void));
-                    Dynamic.InvokeCallSite(CreateCallSite(tDelagateType, binderType,knownType, binder, name, context, argNames), target, args);
+                    var argTypes = Enumerable.Repeat(typeof(object), tSwitch);
+                    var delegateType = EmitCallSiteFuncType(argTypes, typeof(void));
+                    Dynamic.InvokeCallSite(CreateCallSite(delegateType, binderType!,knownType, binder!, name, context, argNames), target, args);
                     break;
 
             }
@@ -167,17 +170,17 @@ namespace Dynamitey.Internal.Optimization {
 
 
 
-
+	    [return:MaybeNull]
         internal static TReturn InvokeMemberTargetType<TTarget,TReturn>(
-										ref CallSite callsite,
-										Type binderType,
+										ref CallSite? callsite,
+										Type? binderType,
 										int knownType,
-										LazyBinder binder,
+										LazyBinder? binder,
                                        InvokeMemberName name,
 									 bool staticContext,
                                      Type context,
-                                     string[] argNames,
-                                     TTarget target, params object [] args)
+                                     string[]? argNames,
+                                     [DisallowNull] TTarget target, params object?[] args)
         {
 
         
@@ -188,14 +191,13 @@ namespace Dynamitey.Internal.Optimization {
             {
 #region Optimizations
 <# for(int i=0; i <= 14; i++){ 
-		var tobjectArgs = String.Join(",",Enumerable.Repeat(" object",i).Concat(new[]{"TReturn"}));
+		var tobjectArgs = String.Join(",",Enumerable.Repeat(" object?",i).Concat(new[]{"TReturn"}));
 		var tArrayArgs = String.Concat(Enumerable.Range(0,i).Select(it=>String.Format(", args[{0}]",it)));
 #>
                 case <#=i#>:
                     {
-					    var tCallSite = (CallSite<Func<CallSite, TTarget, <#=tobjectArgs#>>>)callsite;
-					    if(tCallSite==null){
-							 tCallSite = CreateCallSite<Func<CallSite, TTarget, <#=tobjectArgs#>>>(binderType,knownType,binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Func<CallSite, TTarget, <#=tobjectArgs#>>> tCallSite)){
+							 tCallSite = CreateCallSite<Func<CallSite, TTarget, <#=tobjectArgs#>>>(binderType!,knownType,binder!, name, context, argNames, staticContext);
 							 callsite =tCallSite;
 						}
                         return tCallSite.Target(tCallSite, target<#=tArrayArgs#>);
@@ -203,9 +205,9 @@ namespace Dynamitey.Internal.Optimization {
 <# } #>
 #endregion
                 default:
-                    var tArgTypes = Enumerable.Repeat(typeof(object), tSwitch);
-                    var tDelagateType = EmitCallSiteFuncType(tArgTypes, typeof(TTarget));
-                    return Dynamic.InvokeCallSite(CreateCallSite(tDelagateType, binderType,knownType, binder, name, context, argNames), target, args);
+                    var argTypes = Enumerable.Repeat(typeof(object), tSwitch);
+                    var delegateType = EmitCallSiteFuncType(argTypes, typeof(TTarget));
+                    return Dynamic.InvokeCallSite(CreateCallSite(delegateType, binderType!,knownType, binder!, name, context, argNames), target, args)!;
 
             }
         }
@@ -217,40 +219,35 @@ namespace Dynamitey.Internal.Optimization {
 
 		internal static Delegate WrapFuncHelper<TReturn>(dynamic invokable, int length)
         {
-			 switch(length){
+			  return length switch {
 #region Optimizations
-			 <# for(int i=0; i <= 16; i++){ 
+<# for(int i=0; i <= 16; i++){ 
 				var tobjectArgs = String.Join(",",Enumerable.Repeat(" object",i).Concat(new[]{" TReturn"}));
   				var tArgList = String.Join(",",Enumerable.Range(0,i).Select(it=>"a"+(it+1)));
-#>  					case <#=i#>:
-						return new Func<<#=tobjectArgs#>>((<#=tArgList#>)=> invokable(<#=tArgList#>));
+#>  					<#=i#> => new Func<<#=tobjectArgs#>>((<#=tArgList#>)=> invokable(<#=tArgList#>)),
 <# } #>
 #endregion	
-				default:
-					return new DynamicFunc<TReturn>(args=>(TReturn)Dynamic.Invoke((object)invokable,args));
-			}
+				_ => (Delegate) new DynamicFunc<TReturn>(args=>(TReturn)Dynamic.Invoke((object)invokable,args))
+			};
         }
 
         internal static Delegate WrapAction(dynamic invokable, int length)
         {
-           	 switch(length){
+           	 return length switch {
 #region Optimizations
-				    case 0:
-					    return new Action(()=>invokable());
+				0 => (Delegate) new Action(()=>invokable()),
 <# for(int i=1; i <= 16; i++){ 
 				var tobjectArgs = String.Join(",",Enumerable.Repeat(" object",i));
 				var tArgList = String.Join(",",Enumerable.Range(0,i).Select(it=>"a"+(it+1)));
-#>  					case <#=i#>:
-						return new Action<<#=tobjectArgs#>>((<#=tArgList#>)=> invokable(<#=tArgList#>));
+#>  				<#=i#> => new Action<<#=tobjectArgs#>>((<#=tArgList#>)=> invokable(<#=tArgList#>)),
 <# } #>
 #endregion		
-				default:
-					return new DynamicAction(args=>Dynamic.InvokeAction((object)invokable,args));
-			}
+				_ => new DynamicAction(args=>Dynamic.InvokeAction((object)invokable,args))
+			};
         }
 
 
-        internal static object FastDynamicInvokeReturn(Delegate del, dynamic [] args)
+        internal static object? FastDynamicInvokeReturn(Delegate del, dynamic?[] args)
         {
             dynamic tDel =del;
             switch(args.Length){
@@ -261,7 +258,11 @@ namespace Dynamitey.Internal.Optimization {
                     }
                     catch (TargetInvocationException ex)
                     {
-                        throw ex.InnerException;
+                        if (ex.InnerException is { } iex)
+                        {
+                            ExceptionDispatchInfo.Capture(iex).Throw();
+                        }
+                        throw;
                     }
 #region Optimization
 <# for(int i=1; i <= 16; i++){ 
@@ -273,7 +274,7 @@ namespace Dynamitey.Internal.Optimization {
             }
         }
 
-        internal static void FastDynamicInvokeAction(Delegate del, params dynamic [] args)
+        internal static void FastDynamicInvokeAction(Delegate del, params dynamic?[] args)
         {
             dynamic tDel =del;
             switch(args.Length){
@@ -284,7 +285,11 @@ namespace Dynamitey.Internal.Optimization {
 					}
 					catch (TargetInvocationException ex)
                     {
-                        throw ex.InnerException;
+                        if (ex.InnerException is { } iex)
+                        {
+                            ExceptionDispatchInfo.Capture(iex).Throw();
+                        }
+                        throw;
                     }
                     return;
 #region Optimization

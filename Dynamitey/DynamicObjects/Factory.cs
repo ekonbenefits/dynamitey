@@ -36,7 +36,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns>
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a run-time exception is thrown.)
         /// </returns>
-        public override bool TryGetMember(System.Dynamic.GetMemberBinder binder, out object result)
+        public override bool TryGetMember(System.Dynamic.GetMemberBinder binder, out object? result)
         {
             result = GetInstanceForDynamicMember(binder.Name);
             return result != null;
@@ -51,7 +51,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns>
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)
         /// </returns>
-        public override bool TryInvokeMember(System.Dynamic.InvokeMemberBinder binder, object[] args, out object result)
+        public override bool TryInvokeMember(System.Dynamic.InvokeMemberBinder binder, object[] args, out object? result)
         {
             result = GetInstanceForDynamicMember(binder.Name, args);
             return result != null;
@@ -64,18 +64,18 @@ namespace Dynamitey.DynamicObjects
         /// <param name="type">The type.</param>
         /// <param name="args">The args.</param>
         /// <returns></returns>
-        protected virtual object CreateType(Type type, params object[] args)
+        protected virtual object? CreateType(Type type, params object?[] args)
         {
             return Dynamic.InvokeConstructor(type, args);
         }
 
         /// <summary>
-        /// Gets the instance for a dynamic member. Override for type constrcution behavoir changes based on property name.
+        /// Gets the instance for a dynamic member. Override for type construction behavior changes based on property name.
         /// </summary>
         /// <param name="memberName">Name of the member.</param>
         /// <param name="args">The args.</param>
         /// <returns></returns>
-        protected virtual object GetInstanceForDynamicMember(string memberName, params object[] args)
+        protected virtual object? GetInstanceForDynamicMember(string memberName, params object?[] args)
         {
             return TryTypeForName(memberName, out var type) ? CreateType(type, args) : null;
         }
@@ -109,7 +109,7 @@ namespace Dynamitey.DynamicObjects
         /// <param name="memberName">Name of the member.</param>
         /// <param name="args"></param>
         /// <returns></returns>
-        protected override object GetInstanceForDynamicMember(string memberName, params object[] args)
+        protected override object? GetInstanceForDynamicMember(string memberName, params object?[] args)
         {
             lock (_lockTable)
             {

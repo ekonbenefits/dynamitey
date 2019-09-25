@@ -33,7 +33,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns>
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a run-time exception is thrown.)
         /// </returns>
-        public override bool TryGetMember(System.Dynamic.GetMemberBinder binder, out object result)
+        public override bool TryGetMember(System.Dynamic.GetMemberBinder binder, out object? result)
         {
             result = null;
             return this.MassageResultBasedOnInterface(binder.Name, true, ref result);
@@ -63,7 +63,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns>
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)
         /// </returns>
-        public override bool TryInvokeMember(System.Dynamic.InvokeMemberBinder binder, object[] args, out object result)
+        public override bool TryInvokeMember(System.Dynamic.InvokeMemberBinder binder, object[] args, out object? result)
         {
 
             result = null;
@@ -79,7 +79,7 @@ namespace Dynamitey.DynamicObjects
         /// <param name="indexes">The indexes.</param>
         /// <param name="result">The result.</param>
         /// <returns></returns>
-        public override bool TryGetIndex(System.Dynamic.GetIndexBinder binder, object[] indexes, out object result)
+        public override bool TryGetIndex(System.Dynamic.GetIndexBinder binder, object[] indexes, out object? result)
         {
             result = null;
             return this.MassageResultBasedOnInterface(Invocation.IndexBinderName, true, ref result);

@@ -27,7 +27,7 @@ namespace Dynamitey.DynamicObjects
     /// <summary>
     /// Similar to Expando Objects but handles null values when the property is defined with an impromptu interface
     /// </summary>
-    public class Dictionary:BaseDictionary,IDictionary<string,object>
+    public class Dictionary:BaseDictionary,IDictionary<string,object?>
     {
 
         /// <summary>
@@ -41,7 +41,7 @@ namespace Dynamitey.DynamicObjects
         /// Initializes a new instance of the <see cref="Dictionary"/> class.
         /// </summary>
         /// <param name="dict">The dict.</param>
-        public Dictionary(IEnumerable<KeyValuePair<string, object>> dict) : base(dict)
+        public Dictionary(IEnumerable<KeyValuePair<string, object?>> dict) : base(dict)
         {
         }
 
@@ -57,7 +57,7 @@ namespace Dynamitey.DynamicObjects
         /// Gets the enumerator.
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+        public IEnumerator<KeyValuePair<string, object?>> GetEnumerator()
         {
            return _dictionary.GetEnumerator();
         }
@@ -87,7 +87,7 @@ namespace Dynamitey.DynamicObjects
         /// Gets or sets the <see cref="System.Object"/> with the specified key.
         /// </summary>
         /// <value></value>
-        public object this[string key]
+        public object? this[string key]
         {
             get => _dictionary[key];
             set => SetProperty(key, value);
@@ -96,7 +96,7 @@ namespace Dynamitey.DynamicObjects
 
 
     /// <summary>
-    /// Adds extra synatx to intialize properties to match up with clay
+    /// Adds extra syntax to initialize properties to match up with clay
     /// </summary>
 	public class ChainableDictionary:Dictionary{
 
@@ -112,7 +112,7 @@ namespace Dynamitey.DynamicObjects
         /// Initializes a new instance of the <see cref="Dictionary"/> class.
         /// </summary>
         /// <param name="dict">The dict.</param>
-        public ChainableDictionary(IEnumerable<KeyValuePair<string, object>> dict) : base(dict)
+        public ChainableDictionary(IEnumerable<KeyValuePair<string, object?>> dict) : base(dict)
         {
         }
 
@@ -126,7 +126,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns>
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)
         /// </returns>
-		public override bool TryInvokeMember (InvokeMemberBinder binder, object[] args, out object result)
+		public override bool TryInvokeMember (InvokeMemberBinder binder, object?[] args, out object? result)
 		{
 			if(base.TryInvokeMember (binder, args, out result)){
 				return true;

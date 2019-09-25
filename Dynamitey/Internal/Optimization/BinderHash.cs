@@ -14,9 +14,7 @@
 //    limitations under the License.
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Dynamitey.Internal.Optimization
 {
@@ -24,7 +22,7 @@ namespace Dynamitey.Internal.Optimization
     {
    
 
-        protected BinderHash(Type delegateType, String name, Type context, string[] argNames, Type binderType, bool staticContext, bool isEvent, bool knownBinder)
+        protected BinderHash(Type delegateType, String name, Type context, string[]? argNames, Type? binderType, bool staticContext, bool isEvent, bool knownBinder)
         {
             KnownBinder = knownBinder;
             BinderType = binderType;
@@ -40,7 +38,7 @@ namespace Dynamitey.Internal.Optimization
 
         }
 
-        protected BinderHash(Type delegateType, InvokeMemberName name, Type context, string[] argNames, Type binderType, bool staticContext, bool isEvent, bool knownBinder)
+        protected BinderHash(Type delegateType, InvokeMemberName name, Type context, string[]? argNames, Type? binderType, bool staticContext, bool isEvent, bool knownBinder)
         {
             KnownBinder = knownBinder;
             BinderType = binderType;
@@ -60,15 +58,15 @@ namespace Dynamitey.Internal.Optimization
  
 
         public bool KnownBinder { get; }
-        public Type BinderType { get;  }
+        public Type? BinderType { get;  }
         public bool StaticContext { get; }
         public bool IsEvent { get;  }
         public Type DelegateType { get; }
         public string Name { get;  }
         public bool IsSpecialName { get; }
-        public Type[] GenericArgs { get;  }
+        public Type[]? GenericArgs { get;  }
         public Type Context { get; }
-        public string[] ArgNames { get; }
+        public string[]? ArgNames { get; }
 
         public virtual bool Equals(BinderHash other)
         {
@@ -125,22 +123,22 @@ namespace Dynamitey.Internal.Optimization
 
     internal class BinderHash<T> : BinderHash where T : class
     {
-        public static BinderHash<T> Create(string name, Type context, string[] argNames, Type binderType, bool staticContext, bool isEvent, bool knownBinder)
+        public static BinderHash<T> Create(string name, Type context, string[]? argNames, Type? binderType, bool staticContext, bool isEvent, bool knownBinder)
         {
             return new BinderHash<T>(name, context, argNames, binderType, staticContext, isEvent, knownBinder);
         }
 
-        public static BinderHash<T> Create(InvokeMemberName name, Type context, string[] argNames, Type binderType, bool staticContext, bool isEvent, bool knownBinder)
+        public static BinderHash<T> Create(InvokeMemberName name, Type context, string[]? argNames, Type? binderType, bool staticContext, bool isEvent, bool knownBinder)
         {
             return new BinderHash<T>(name, context, argNames, binderType, staticContext, isEvent, knownBinder);
         }
 
-        protected BinderHash(InvokeMemberName name, Type context, string[] argNames, Type binderType, bool staticContext, bool isEvent,bool knownBinder)
+        protected BinderHash(InvokeMemberName name, Type context, string[]? argNames, Type? binderType, bool staticContext, bool isEvent,bool knownBinder)
             : base(typeof(T), name, context, argNames, binderType, staticContext, isEvent,knownBinder)
         {
         }
 
-        protected BinderHash(string name, Type context, string[] argNames, Type binderType, bool staticContext, bool isEvent, bool knownBinder)
+        protected BinderHash(string name, Type context, string[]? argNames, Type? binderType, bool staticContext, bool isEvent, bool knownBinder)
             : base(typeof(T), name, context, argNames, binderType, staticContext, isEvent, knownBinder)
         {
         }

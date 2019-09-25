@@ -29,10 +29,10 @@ namespace Dynamitey.Internal
         /// <returns>
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.
         /// </returns>
-        public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
+        public override bool TryInvoke(InvokeBinder binder, object[] args, out object? result)
         {
-            IEnumerable<KeyValuePair<string, object>> tDict = null;
-            object target = null;
+            IEnumerable<KeyValuePair<string, object>>? tDict = null;
+            object? target = null;
             result = null;
 
             //Setup Properties as dictionary

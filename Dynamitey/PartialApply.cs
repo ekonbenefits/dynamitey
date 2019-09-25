@@ -41,7 +41,7 @@ namespace Dynamitey
         /// <returns>
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)
         /// </returns>
-        public override bool TryBinaryOperation(BinaryOperationBinder binder, object arg, out object result)
+        public override bool TryBinaryOperation(BinaryOperationBinder binder, object arg, out object? result)
         {
             result = null;
             if (binder.Operation == ExpressionType.LeftShift)
@@ -60,7 +60,7 @@ namespace Dynamitey
         /// <returns>
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)
         /// </returns>
-        public override bool TryConvert(ConvertBinder binder, out object result)
+        public override bool TryConvert(ConvertBinder binder, out object? result)
         {
             result = Dynamic.CoerceToDelegate(this, binder.Type);
 
@@ -76,7 +76,7 @@ namespace Dynamitey
         /// <param name="memberName">Name of the member.</param>
         /// <param name="totalCount">The total count.</param>
         /// <param name="invocationKind">Kind of the invocation.</param>
-        public PartialApply(object target, object[] args, string memberName = null, int? totalCount = null, InvocationKind? invocationKind = null)
+        public PartialApply(object target, object[] args, string? memberName = null, int? totalCount = null, InvocationKind? invocationKind = null)
         {
             _target = target;
             _memberName = memberName;
@@ -140,7 +140,7 @@ namespace Dynamitey
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.
         /// </returns>
 #pragma warning restore 1734
-        public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
+        public override bool TryInvoke(InvokeBinder binder, object[] args, out object? result)
         {
             var tNamedArgs = Util.NameArgsIfNecessary(binder.CallInfo, args);
             var tNewArgs = _args.Concat(tNamedArgs).ToArray();

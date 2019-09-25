@@ -35,23 +35,23 @@ namespace Dynamitey.DynamicObjects
         /// <summary>
         /// Wrapped Dictionary
         /// </summary>
-        protected IDictionary<string,object> _dictionary;
+        protected readonly IDictionary<string,object?> _dictionary;
 
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Dictionary"/> class.
         /// </summary>
         /// <param name="dict">The dict.</param>
-        protected BaseDictionary(IEnumerable<KeyValuePair<string, object>> dict =null)
+        protected BaseDictionary(IEnumerable<KeyValuePair<string, object?>>? dict =null)
         {
             if (dict == null)
             {
-                _dictionary = new Dictionary<string, object>();
+                _dictionary = new Dictionary<string, object?>();
                 return;
             }
 
-            if(dict is IDictionary<string,object>) //Don't need to enumerate if it's the right type.
-                _dictionary = (IDictionary<string,object>)dict;
+            if(dict is IDictionary<string, object?> objects) //Don't need to enumerate if it's the right type.
+                _dictionary = objects;
             else
                 _dictionary = dict.ToDictionary(k => k.Key, v => v.Value);
         }
@@ -74,7 +74,7 @@ namespace Dynamitey.DynamicObjects
         /// Gets the values.
         /// </summary>
         /// <value>The values.</value>
-        public ICollection<object> Values => _dictionary.Values;
+        public ICollection<object?> Values => _dictionary.Values;
 
         /// <summary>
         /// Returns the enumeration of all dynamic member names.
@@ -96,7 +96,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns>
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a run-time exception is thrown.)
         /// </returns>
-        public override bool TryGetMember(GetMemberBinder binder, out object result)
+        public override bool TryGetMember(GetMemberBinder binder, out object? result)
         {
 
             if (_dictionary.TryGetValue(binder.Name, out result))
@@ -117,7 +117,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns>
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)
         /// </returns>
-        public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
+        public override bool TryInvokeMember(InvokeMemberBinder binder, object?[] args, out object? result)
         {
             if (_dictionary.TryGetValue(binder.Name, out result))
             {
@@ -130,7 +130,7 @@ namespace Dynamitey.DynamicObjects
                     {
                         result = this.InvokeMethodDelegate(tFunc, args);
                     }
-                    catch (RuntimeBinderException)//If it has out parmaters etc it can't be invoked dynamically like this.
+                    catch (RuntimeBinderException)//If it has out parameters etc it can't be invoked dynamically like this.
                     //if we return false it will be handle by the GetProperty and then handled by the original dynamic invocation 
                     {
                         return false;
@@ -144,8 +144,8 @@ namespace Dynamitey.DynamicObjects
                         result = Dynamic.Invoke(result, Util.NameArgsIfNecessary(binder.CallInfo, args));
                     }
                     catch (RuntimeBinderException)
-                        //If it has out parmaters etc it can't be invoked dynamically like this.
-                        //if we return false it will be handle by the GetProperty and then handled by the original dynamic invocation 
+                    //If it has out parameters etc it can't be invoked dynamically like this.
+                    //if we return false it will be handle by the GetProperty and then handled by the original dynamic invocation 
                     {
                         return false;
                     }
@@ -165,7 +165,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns>
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)
         /// </returns>
-        public override bool TrySetMember(SetMemberBinder binder, object value)
+        public override bool TrySetMember(SetMemberBinder binder, object? value)
         {
        
             SetProperty(binder.Name,value);
@@ -176,7 +176,7 @@ namespace Dynamitey.DynamicObjects
         /// Adds the specified item.
         /// </summary>
         /// <param name="item">The item.</param>
-        public void Add(KeyValuePair<string, object> item)
+        public void Add(KeyValuePair<string, object?> item)
         {
             SetProperty(item.Key, item.Value);
         }
@@ -188,7 +188,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns>
         /// 	<c>true</c> if [contains] [the specified item]; otherwise, <c>false</c>.
         /// </returns>
-        public bool Contains(KeyValuePair<string, object> item)
+        public bool Contains(KeyValuePair<string, object?> item)
         {
             return _dictionary.Contains(item);
         }
@@ -198,7 +198,7 @@ namespace Dynamitey.DynamicObjects
         /// </summary>
         /// <param name="array">The array.</param>
         /// <param name="arrayIndex">Index of the array.</param>
-        public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
+        public void CopyTo(KeyValuePair<string, object?>[] array, int arrayIndex)
         {
             _dictionary.CopyTo(array,arrayIndex);
         }
@@ -208,7 +208,7 @@ namespace Dynamitey.DynamicObjects
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns></returns>
-        public bool Remove(KeyValuePair<string, object> item)
+        public bool Remove(KeyValuePair<string, object?> item)
         {
             if (TryGetValue(item.Key, out var tValue))
             {
@@ -237,7 +237,7 @@ namespace Dynamitey.DynamicObjects
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
-        public void Add(string key, object value)
+        public void Add(string key, object? value)
         {
             SetProperty(key,value);
         }
@@ -260,7 +260,7 @@ namespace Dynamitey.DynamicObjects
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public bool TryGetValue(string key, out object value)
+        public bool TryGetValue(string key, out object? value)
         {
             return _dictionary.TryGetValue(key, out value);
         }
@@ -272,7 +272,7 @@ namespace Dynamitey.DynamicObjects
         /// </summary>
         /// <param name="key">The key.</param>
         /// <param name="value">The value.</param>
-        protected void SetProperty(string key, object value)
+        protected void SetProperty(string key, object? value)
         {
             if (!_dictionary.TryGetValue(key, out var tOldValue) || value != tOldValue)
             {
@@ -302,7 +302,7 @@ namespace Dynamitey.DynamicObjects
         /// <summary>
         /// Occurs when a property value changes.
         /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler? PropertyChanged;
 
         /// <summary>
         /// Equalses the specified other.

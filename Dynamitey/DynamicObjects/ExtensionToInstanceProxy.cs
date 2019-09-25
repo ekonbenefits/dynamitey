@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Dynamic;
 using System.Linq;
 using System.Reflection;
@@ -43,7 +44,7 @@ namespace Dynamitey.DynamicObjects
         /// <param name="staticTypes">The static types.</param>
         /// <param name="instanceHints">The instance hints.</param>
         /// <exception cref="System.ArgumentException">Don't Nest ExtensionToInstance Objects</exception>
-        public ExtensionToInstanceProxy(dynamic target,  Type extendedType, Type[] staticTypes, Type[] instanceHints = null):base((object)target)
+        public ExtensionToInstanceProxy(dynamic target,  Type extendedType, Type[] staticTypes, Type[]? instanceHints = null):base((object)target)
         {
             _staticTypes = staticTypes;
             _extendedType = extendedType;
@@ -73,7 +74,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns>
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a run-time exception is thrown.)
         /// </returns>
-        public override bool TryGetMember(GetMemberBinder binder, out object result)
+        public override bool TryGetMember(GetMemberBinder binder, out object? result)
         {
 
             if (!base.TryGetMember(binder, out result))
@@ -113,7 +114,7 @@ namespace Dynamitey.DynamicObjects
             /// </summary>
             protected Type[] GenericMethodParameters;
 
-            internal Invoker(string name, Type[] genericParameters, Type[] genericMethodParameters, ExtensionToInstanceProxy parent, Type[] overloadTypes = null)
+            internal Invoker(string name, Type[] genericParameters, Type[] genericMethodParameters, ExtensionToInstanceProxy parent, Type[]? overloadTypes = null)
             {
                 Name = name;
                 Parent = parent;
@@ -192,7 +193,7 @@ namespace Dynamitey.DynamicObjects
             /// <param name="binder">The binder.</param>
             /// <param name="result">The result.</param>
             /// <returns></returns>
-            public override bool TryGetMember(GetMemberBinder binder, out object result)
+            public override bool TryGetMember(GetMemberBinder binder, out object? result)
             {
                 if (binder.Name == "Overloads")
                 {
@@ -211,7 +212,7 @@ namespace Dynamitey.DynamicObjects
             /// <param name="args">The args.</param>
             /// <param name="result">The result.</param>
             /// <returns></returns>
-            public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
+            public override bool TryInvoke(InvokeBinder binder, object[] args, out object? result)
             {
                 object[] tArgs = args;
                 if (OverloadTypes.ContainsKey(args.Length))
@@ -234,7 +235,7 @@ namespace Dynamitey.DynamicObjects
             /// <param name="indexes">The indexes.</param>
             /// <param name="result">The result.</param>
             /// <returns></returns>
-            public override bool TryGetIndex(GetIndexBinder binder, object[] indexes, out object result)
+            public override bool TryGetIndex(GetIndexBinder binder, object[] indexes, out object? result)
             {
                 result = new Invoker(Name, GenericParams, indexes.Select(it => Dynamic.InvokeConvert(it, typeof(Type), @explicit: true)).Cast<Type>().ToArray(), Parent);
                 return true;
@@ -259,7 +260,7 @@ namespace Dynamitey.DynamicObjects
             /// <param name="indexes">The indexes.</param>
             /// <param name="result">The result.</param>
             /// <returns></returns>
-            public override bool TryGetIndex(GetIndexBinder binder, object[] indexes, out object result)
+            public override bool TryGetIndex(GetIndexBinder binder, object[] indexes, out object? result)
             {
                 result = new Invoker(Name, GenericParams, GenericMethodParameters, Parent, indexes.Select(it => Dynamic.InvokeConvert(it, typeof(Type), @explicit: true)).Cast<Type>().ToArray());
                 return true;
@@ -274,12 +275,12 @@ namespace Dynamitey.DynamicObjects
         /// <param name="args">The args.</param>
         /// <param name="result">The result.</param>
         /// <returns></returns>
-        public override bool TryInvokeMember(System.Dynamic.InvokeMemberBinder binder, object[] args, out object result)
+        public override bool TryInvokeMember(System.Dynamic.InvokeMemberBinder binder, object?[] args, out object? result)
         {
             if (!base.TryInvokeMember(binder, args, out result))
             {
 
-                Type[] types = null;
+                Type[]? types = null;
                 try
                 {
                     IList<Type> typeList =Dynamic.InvokeGet(binder,
@@ -308,19 +309,19 @@ namespace Dynamitey.DynamicObjects
         /// <param name="name">The name.</param>
         /// <param name="args">The args.</param>
         /// <returns></returns>
-        protected object InvokeStaticMethod(String_OR_InvokeMemberName name, object[] args)
+        protected object? InvokeStaticMethod(String_OR_InvokeMemberName name, object?[] args)
         {
             var staticType = InvokeContext.CreateStatic;
             var nameArgs = InvokeMemberName.Create;
 
-            var tList = new List<object> { UnwrappedTarget() };
+            var tList = new List<object?> { UnwrappedTarget() };
             tList.AddRange(args);
 
-            object result =null;
-            var sucess = false;
+            object? result =null;
+            var success = false;
             var exceptionList = new List<Exception>();
 
-            var tGenericPossibles = new List<Type[]>();
+            var tGenericPossibles = new List<Type[]?>();
             if (name.GenericArgs != null && name.GenericArgs.Length > 0)
             {
                 var tInterface = UnwrappedTarget().GetType().GetTypeInfo().GetInterfaces().Single(it => it.Name == _extendedType.Name);
@@ -344,7 +345,7 @@ namespace Dynamitey.DynamicObjects
                     try
                     {
                         result = Dynamic.InvokeMember(staticType(sType), nameArgs(name.Name, tGenericPossible), tList.ToArray());
-                        sucess = true;
+                        success = true;
                         break;
                     }
                     catch (RuntimeBinderException ex)
@@ -352,12 +353,12 @@ namespace Dynamitey.DynamicObjects
                         exceptionList.Add(ex);
                     }
                 }
-                if(sucess){
+                if(success){
                     break;
                 }
             }
 
-            if (!sucess)
+            if (!success)
             {
                 throw exceptionList.First();
             }
@@ -377,6 +378,7 @@ namespace Dynamitey.DynamicObjects
                     if (InstanceHints.Select(it => tIsGeneric && it.GetTypeInfo().IsGenericType ? it.GetGenericTypeDefinition() : it)
                             .Any(it=> it.Name == tOutType.Name))
                     { 
+
                         result = CreateSelf(result, _extendedType, _staticTypes, _instanceHints);
                     }
                 }
@@ -405,10 +407,10 @@ namespace Dynamitey.DynamicObjects
             return  new ExtensionToInstanceProxy(target,extendedType,staticTypes, instanceHints);
         }
 
-        private bool IsExtendedType(object target)
+        private bool IsExtendedType([NotNullWhen(returnValue: true)] object? target)
         {
 
-            if (target is ExtensionToInstanceProxy)
+            if (target is ExtensionToInstanceProxy || target is null)
             {
                 return false;
             }

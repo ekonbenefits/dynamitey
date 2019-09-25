@@ -77,7 +77,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns>
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a run-time exception is thrown.)
         /// </returns>
-        public override bool TryGetMember(System.Dynamic.GetMemberBinder binder, out object result)
+        public override bool TryGetMember(System.Dynamic.GetMemberBinder binder, out object? result)
         {
             if (base.TryGetMember(binder, out result))
             {
@@ -110,7 +110,7 @@ namespace Dynamitey.DynamicObjects
         /// <param name="args">The args.</param>
         /// <param name="result">The result.</param>
         /// <returns></returns>
-        public override bool TryInvokeMember(System.Dynamic.InvokeMemberBinder binder, object[] args, out object result)
+        public override bool TryInvokeMember(System.Dynamic.InvokeMemberBinder binder, object[] args, out object? result)
         {
             if (base.TryInvokeMember(binder, args, out result))
             {
@@ -127,7 +127,7 @@ namespace Dynamitey.DynamicObjects
         /// <param name="indexes">The indexes.</param>
         /// <param name="result">The result.</param>
         /// <returns></returns>
-        public override bool TryGetIndex(System.Dynamic.GetIndexBinder binder, object[] indexes, out object result)
+        public override bool TryGetIndex(System.Dynamic.GetIndexBinder binder, object[] indexes, out object? result)
         {
             if (base.TryGetIndex(binder, indexes, out result))
             {

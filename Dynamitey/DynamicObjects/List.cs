@@ -29,7 +29,7 @@ namespace Dynamitey.DynamicObjects
     /// Expando-Type List for dynamic objects
     /// </summary>
    
-    public class List : BaseDictionary, IList<object>, IDictionary<string, object>, INotifyCollectionChanged, IList
+    public class List : BaseDictionary, IList<object?>, IDictionary<string, object?>, INotifyCollectionChanged, IList
 
     {
 
@@ -37,7 +37,7 @@ namespace Dynamitey.DynamicObjects
         /// Wrapped list
         /// </summary>
        
-        protected IList<object> _list;
+        protected readonly IList<object?> _list;
 
 
         private static readonly object ListLock = new object();
@@ -48,17 +48,17 @@ namespace Dynamitey.DynamicObjects
         /// <param name="contents">The contents.</param>
         /// <param name="members">The members.</param>
         public List(
-            IEnumerable<object> contents =null,
-            IEnumerable<KeyValuePair<string, object>> members =null):base(members)
+            IEnumerable<object?>? contents =null,
+            IEnumerable<KeyValuePair<string, object?>>? members =null):base(members)
         {
             if (contents == null)
             {
-                _list = new List<object>();
+                _list = new List<object?>();
                 return;
             }
-            if (contents is IList<object>)
+            if (contents is IList<object?> list)
             {
-                _list = contents as IList<object>;
+                _list = list;
             }
             else
             {
@@ -75,7 +75,7 @@ namespace Dynamitey.DynamicObjects
         /// Gets the enumerator.
         /// </summary>
         /// <returns></returns>
-        public IEnumerator<dynamic> GetEnumerator()
+        public IEnumerator<dynamic?> GetEnumerator()
         {
             return _list.GetEnumerator();
         }
@@ -140,7 +140,7 @@ namespace Dynamitey.DynamicObjects
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns></returns>
-        public int IndexOf(dynamic item)
+        public int IndexOf(dynamic? item)
         {
             lock (ListLock)
             {
@@ -153,12 +153,12 @@ namespace Dynamitey.DynamicObjects
         /// </summary>
         /// <param name="index">The index.</param>
         /// <param name="item">The item.</param>
-        public void Insert(int index, dynamic item)
+        public void Insert(int index, dynamic? item)
         {
             InsertHelper(item,index);
         }
 
-        private void InsertHelper(object item, int? index = null)
+        private void InsertHelper(object? item, int? index = null)
         {
             lock (ListLock)
             {
@@ -190,12 +190,12 @@ namespace Dynamitey.DynamicObjects
         /// </summary>
         /// <param name="item">The item.</param>
         /// <returns></returns>
-        public bool Remove(dynamic item)
+        public bool Remove(dynamic? item)
         {
             return RemoveHelper(item);
         }
 
-        private bool RemoveHelper(object item = null, int? index = null)
+        private bool RemoveHelper(object? item = null, int? index = null)
         {
       
             lock (ListLock)
@@ -207,7 +207,7 @@ namespace Dynamitey.DynamicObjects
                         return false;
                 }
 
-                item  = item ?? _list[index.GetValueOrDefault()];
+                item ??= _list[index.GetValueOrDefault()];
                 _list.RemoveAt(index.GetValueOrDefault());
             } 
             OnCollectionChanged(NotifyCollectionChangedAction.Remove, oldItem: item, oldIndex: index);
@@ -223,12 +223,12 @@ namespace Dynamitey.DynamicObjects
         /// </value>
         /// <param name="index">The index.</param>
         /// <returns></returns>
-        public dynamic this[int index]
+        public dynamic? this[int index]
         {
             get => _list[index];
             set
             {
-                object tOld;
+                object? tOld;
                 lock (ListLock)
                 {
                     tOld = _list[index];
@@ -253,7 +253,7 @@ namespace Dynamitey.DynamicObjects
         /// <param name="newItem">The new item.</param>
         /// <param name="oldIndex">The old index.</param>
         /// <param name="newIndex">The new index.</param>
-        protected virtual void OnCollectionChanged(NotifyCollectionChangedAction action, object oldItem = null, object newItem = null, int? oldIndex = null, int? newIndex = null)
+        protected virtual void OnCollectionChanged(NotifyCollectionChangedAction action, object? oldItem = null, object? newItem = null, int? oldIndex = null, int? newIndex = null)
 
         {
             if (CollectionChanged != null)
@@ -296,7 +296,7 @@ namespace Dynamitey.DynamicObjects
         /// </summary>
         public event NotifyCollectionChangedEventHandler CollectionChanged;
 
-        dynamic IDictionary<string, object>.this[string key]
+        dynamic? IDictionary<string, object?>.this[string key]
         {
          
             get => _dictionary[key];
@@ -308,7 +308,7 @@ namespace Dynamitey.DynamicObjects
         /// </summary>
         /// <param name="other">The other.</param>
         /// <returns></returns>
-        public bool Equals(List other)
+        public bool Equals(List? other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -348,7 +348,7 @@ namespace Dynamitey.DynamicObjects
         /// Gets or sets the override getting item method names. USED for GetItemProperties
         /// </summary>
         /// <value>The override getting item method names.</value>
-        public Func<IEnumerable<object>, IEnumerable<string>> OverrideGettingItemMethodNames { get; set; }
+        public Func<IEnumerable<object?>, IEnumerable<string>> OverrideGettingItemMethodNames { get; set; }
 
 
 
@@ -356,9 +356,9 @@ namespace Dynamitey.DynamicObjects
         /// Gets the represented item. USED fOR GetItemProperties
         /// </summary>
         /// <returns></returns>
-        protected virtual dynamic GetRepresentedItem()
+        protected virtual dynamic? GetRepresentedItem()
         {
-            var tItem = ((IEnumerable<object>)this).FirstOrDefault();
+            var tItem = ((IEnumerable<object?>)this).FirstOrDefault();
             return tItem;
         }
 

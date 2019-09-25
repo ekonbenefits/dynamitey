@@ -1,8 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.0;net462</TargetFrameworks>
-    <OutputType Condition="'$(TargetFramework)'!='netcoreapp2.0'">Exe</OutputType>
+    <TargetFrameworks>netcoreapp3.0;netcoreapp2.0;net462</TargetFrameworks>
+    <OutputType Condition="'$(TargetFramework)'=='netcoreapp2.0' OR '$(TargetFramework)'=='netcoreapp3.0'">Exe</OutputType>
    <IsPackable>false</IsPackable>
+    <LangVersion>8.0</LangVersion>
+    <GenerateProgramFile>false</GenerateProgramFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -13,14 +15,14 @@
     <PackageReference Include="FSharp.Core" Version="4.2.*" />
     <PackageReference Include="Moq" Version="4.7.*" />
     <PackageReference Include="NUnit.Console" Version="3.7.0" />
+    <PackageReference Include="IronPython" Version="2.7.9" />
     <PackageReference Include="Microsoft.CSharp" Version="4.4.0" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'!='netcoreapp2.0'">
-    <PackageReference Include="IronPython" Version="2.7.7" />
-  </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp2.0'">
+
+
+  <ItemGroup Condition="'$(TargetFramework)'=='netcoreapp2.0' OR '$(TargetFramework)'=='netcoreapp3.0'">
     <PackageReference Include="NUnit3TestAdapter" Version="3.8.*" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.*" />
   </ItemGroup>

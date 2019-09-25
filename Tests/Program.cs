@@ -1,11 +1,15 @@
-﻿namespace Dynamitey.Tests
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Tests
 {
-#if !NETCOREAPP2_0
+#if !NET462
     public class Program
     {
         public static void Main()
         {
-            
+
         }
     }
 #endif

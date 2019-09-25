@@ -16,6 +16,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -180,11 +181,11 @@ namespace Dynamitey
             return HelperIsTuple(target, out var type, out var genericType, out var size, false);
         }
 
-        private static bool HelperIsTuple(object target, out Type type, out Type genericeType, out int size, bool safe)
+        private static bool HelperIsTuple(object target, [MaybeNullWhen(false)] out Type type, out Type genericType, out int size, bool safe)
         {
-            genericeType = typeof(object);
+            genericType = typeof(object);
             size = 1;
-            type = null;
+            type = null!;
             if (target == null)
                 return false;
             type = target as Type ?? target.GetType();
@@ -192,10 +193,10 @@ namespace Dynamitey
 
             if (safe || type.GetTypeInfo().IsGenericType)
             {
-                genericeType = type.GetGenericTypeDefinition();
+                genericType = type.GetGenericTypeDefinition();
             }
 
-            return InvokeHelper.TupleArgs.TryGetValue(genericeType, out size);
+            return InvokeHelper.TupleArgs.TryGetValue(genericType, out size);
 
         }
 

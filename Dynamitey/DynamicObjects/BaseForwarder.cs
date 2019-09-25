@@ -19,6 +19,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using Dynamitey.Internal.Compat;
 using Dynamitey.Internal.Optimization;
 using Microsoft.CSharp;
 using Microsoft.CSharp.RuntimeBinder;
@@ -87,7 +88,7 @@ namespace Dynamitey.DynamicObjects
             /// </summary>
             /// <value>The delegate.</value>
            
-            public object Delegate { get; protected set; }
+            public object? Delegate { get; protected set; }
 
             /// <summary>
             /// Gets or sets a value indicating whether this instance is adding.
@@ -115,8 +116,8 @@ namespace Dynamitey.DynamicObjects
         public override IEnumerable<string> GetDynamicMemberNames()
         {
            
-                var tDyanmic = Dynamic.GetMemberNames(CallTarget, dynamicOnly: true);
-                if (!tDyanmic.Any())
+                var names = Dynamic.GetMemberNames(CallTarget, dynamicOnly: true);
+                if (!names.Any())
                 {
                     return Dynamic.GetMemberNames(CallTarget);
                 }
@@ -149,7 +150,7 @@ namespace Dynamitey.DynamicObjects
         /// <returns>
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a run-time exception is thrown.)
         /// </returns>
-        public override bool TryGetMember(GetMemberBinder binder, out object result)
+        public override bool TryGetMember(GetMemberBinder binder, out object? result)
         {
             if (CallTarget == null)
             {
@@ -187,7 +188,7 @@ namespace Dynamitey.DynamicObjects
         /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.
         /// </returns>
 #pragma warning restore 1734
-        public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
+        public override bool TryInvoke(InvokeBinder binder, object[] args, out object? result)
         {
             if (CallTarget == null)
             {
@@ -225,7 +226,7 @@ namespace Dynamitey.DynamicObjects
         /// <param name="args">The args.</param>
         /// <param name="result">The result.</param>
         /// <returns></returns>
-        public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
+        public override bool TryInvokeMember(InvokeMemberBinder binder, object?[] args, out object? result)
         {
             if (CallTarget == null)
             {
@@ -236,7 +237,7 @@ namespace Dynamitey.DynamicObjects
             object[] tArgs = Util.NameArgsIfNecessary(binder.CallInfo, args);
 
 
-            Type[] types = null;
+            Type[]? types = null;
 
             try
             { 
@@ -308,7 +309,7 @@ namespace Dynamitey.DynamicObjects
         /// <param name="binder">The binder.</param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public override bool TrySetMember(SetMemberBinder binder, object value)
+        public override bool TrySetMember(SetMemberBinder binder, object? value)
         {
             if (CallTarget == null)
             {
@@ -350,7 +351,7 @@ namespace Dynamitey.DynamicObjects
         /// <param name="indexes">The indexes.</param>
         /// <param name="result">The result.</param>
         /// <returns></returns>
-        public override bool TryGetIndex(GetIndexBinder binder, object[] indexes, out object result)
+        public override bool TryGetIndex(GetIndexBinder binder, object[] indexes, out object? result)
         {
             if (CallTarget == null)
             {
@@ -379,7 +380,7 @@ namespace Dynamitey.DynamicObjects
         /// <param name="indexes">The indexes.</param>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public override bool TrySetIndex(SetIndexBinder binder, object[] indexes, object value)
+        public override bool TrySetIndex(SetIndexBinder binder, object[] indexes, object? value)
         {
             if (CallTarget == null)
             {
@@ -407,7 +408,7 @@ namespace Dynamitey.DynamicObjects
         /// </summary>
         /// <param name="other">The other.</param>
         /// <returns></returns>
-        public bool Equals(BaseForwarder other)
+        public bool Equals(BaseForwarder? other)
         {
             if (ReferenceEquals(null, other)) return ReferenceEquals(null, CallTarget);
             if (ReferenceEquals(this, other)) return true;
