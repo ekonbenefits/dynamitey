@@ -59,16 +59,16 @@ namespace Dynamitey.Internal.Optimization
 
  
 
-        public bool KnownBinder { get; protected set; }
-        public Type BinderType { get; protected set; }
-        public bool StaticContext { get; protected set; }
-        public bool IsEvent { get; protected set; }
-        public Type DelegateType { get; protected set; }
-        public string Name { get; protected set; }
-        public bool IsSpecialName { get; protected set; }
-        public Type[] GenericArgs { get; protected set; }
-        public Type Context { get; protected set; }
-        public string[] ArgNames { get; protected set; }
+        public bool KnownBinder { get; }
+        public Type BinderType { get;  }
+        public bool StaticContext { get; }
+        public bool IsEvent { get;  }
+        public Type DelegateType { get; }
+        public string Name { get;  }
+        public bool IsSpecialName { get; }
+        public Type[] GenericArgs { get;  }
+        public Type Context { get; }
+        public string[] ArgNames { get; }
 
         public virtual bool Equals(BinderHash other)
         {
