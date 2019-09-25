@@ -153,25 +153,21 @@ namespace Dynamitey.Internal.Optimization
                     var tGenArgs = GenericArgs;
                     var tOtherGenArgs = other.GenericArgs;
 
-                    return 
-                           !(other.ArgNames == null ^ ArgNames == null)
+                    var tArgNames = ArgNames;
+                    var tOtherArgNames = other.ArgNames;
+                return
+                           !(tOtherArgNames == null && tArgNames != null)
+                           && !(tArgNames == null && tOtherArgNames != null)
                            && other.IsEvent == IsEvent
                            && other.StaticContext == StaticContext
-                           && (KnownBinder || Equals(other.BinderType, BinderType))
-                           && Equals(other.Context, Context)
+                           && (KnownBinder || other.BinderType == BinderType)
+                           && other.Context == Context
                            && Equals(other.Name, Name)
-                            && !(other.IsSpecialName ^ IsSpecialName)
-                            && !(tOtherGenArgs == null ^ tGenArgs == null)
-                            && (tGenArgs == null ||
-                                    //Exclusive Or makes sure this doesn't happen
-                                    // ReSharper disable AssignNullToNotNullAttribute
-                            tGenArgs.SequenceEqual(tOtherGenArgs))
-                        // ReSharper restore AssignNullToNotNullAttribute
-                           && (ArgNames == null
-                            // ReSharper disable AssignNullToNotNullAttribute
-                                 //Exclusive Or Makes Sure this doesn't happen
-                                 || other.ArgNames.SequenceEqual(ArgNames));
-                            // ReSharper restore AssignNullToNotNullAttribute
+                           && !(other.IsSpecialName ^ IsSpecialName)
+                           && !(tOtherGenArgs == null && tGenArgs != null)
+                           && !(tGenArgs == null && tOtherGenArgs != null)
+                           && (tGenArgs == null || tGenArgs.SequenceEqual(tOtherGenArgs))
+                           && (ArgNames == null || other.ArgNames.SequenceEqual(ArgNames));
                 }
                 return false;
             
