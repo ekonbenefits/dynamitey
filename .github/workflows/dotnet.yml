@@ -1,0 +1,26 @@
+name: Build .net core
+
+on: [push]
+
+jobs:
+  build:
+    name: Test on dotnet ${{ matrix.dotnet }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        dotnet: [3.0.100]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Generate build number
+      id: buildnumber
+      uses: einaregilsson/build-number@v1 
+      with:
+        token: ${{secrets.github_token}}   
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ matrix.dotnet }}
+    - name: Build (${{ steps.buildnumber.outputs.build_number }}) with dotnet
+      run: dotnet build --configuration Release --version-suffix alpha${{ steps.buildnumber.outputs.build_number }}
