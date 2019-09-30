@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.0;net462</TargetFrameworks>
+    <TargetFrameworks Condition="'$(GITHUB_ACTION)' != ''">netcoreapp2.0</TargetFrameworks>
     <OutputType Condition="'$(TargetFramework)'!='netcoreapp2.0'">Exe</OutputType>
    <IsPackable>false</IsPackable>
   </PropertyGroup>
