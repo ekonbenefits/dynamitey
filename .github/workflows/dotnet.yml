@@ -1,0 +1,25 @@
+name: Build .net
+
+on: [push]
+
+jobs:
+  build:
+    name: Test on dotnet ${{ matrix.dotnet }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        dotnet: [2.2.108, 3.0.100]
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ matrix.dotnet }}
+    - name: Build with dotnet (windows)
+      if: runner.os == 'Windows'
+        run: fsi --exec .\build.fsx    
+    - name: Build with dotnet (${{ runner.os }})
+      if: runner.os != 'Windows'
+        run: ./build.fsx
