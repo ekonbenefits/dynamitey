@@ -4,11 +4,11 @@ on: [push]
 
 jobs:
   build:
-    name: Test on dotnet ${{ matrix.dotnet }} and ${{ matrix.os }}
+    name: Test ${{ matrix.os }} for dotnet ${{ matrix.dotnet }}
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        dotnet: [3.0.100]
+        dotnet: [2.1.802]
         os: [ubuntu-latest, windows-latest, macOS-latest]
     
     steps:
