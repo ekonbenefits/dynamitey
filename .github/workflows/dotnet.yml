@@ -19,7 +19,7 @@ jobs:
         dotnet-version: ${{ matrix.dotnet }}
     - name: Build with dotnet (windows)
       if: runner.os == 'Windows'
-        run: fsi --exec .\build.fsx    
+      run: fsi --exec .\build.fsx    
     - name: Build with dotnet (${{ runner.os }})
       if: runner.os != 'Windows'
-        run: ./build.fsx
+      run: ./build.fsx
