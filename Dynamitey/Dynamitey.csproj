@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;netstandard1.5;net40;portable-net45+sl5+win8+wp8</TargetFrameworks>
+    <TargetFrameworks Condition="'$(GITHUB_ACTIONS)' != ''">netstandard2.0</TargetFrameworks>
     <Description>(pronounced dyna-mighty) flexes DLR muscle to do meta-mazing things in .net</Description>
     <Company>Ekon Benefits</Company>
     <Authors />
