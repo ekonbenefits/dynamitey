@@ -24,3 +24,5 @@ jobs:
         dotnet-version: ${{ matrix.dotnet }}
     - name: Build (${{ steps.buildnumber.outputs.build_number }}) with dotnet
       run: dotnet build --configuration Release --version-suffix alpha${{ steps.buildnumber.outputs.build_number }}
+    - name: Tests
+      run: dotnet test Tests/Tests.csproj --configuration Release --version-suffix alpha${{ steps.buildnumber.outputs.build_number }} --no-build --no-restore --filter=TestCategory!=Performance
