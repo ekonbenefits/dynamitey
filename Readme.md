@@ -6,11 +6,10 @@ Dynamitey is available Nuget [![NuGet](https://img.shields.io/nuget/dt/Dynamitey
 
 You can find the latest bleed edge on MyGet [![MyGet Pre Release](https://img.shields.io/myget/dynamitey-ci/vpre/Dynamitey.svg)](https://www.myget.org/feed/dynamitey-ci/package/nuget/Dynamitey)
 
-Platform | Status
--------- | ------
-Windows | [![Build status](https://ci.appveyor.com/api/projects/status/kctdnnmctakj1j9w/branch/master?svg=true)](https://ci.appveyor.com/project/jbtule/dynamitey/branch/master)
-Mac     | [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/ekonbenefits/dynamitey/branches/master/2)](https://travis-ci.org/ekonbenefits/dynamitey)
-Linux   | [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/ekonbenefits/dynamitey/branches/master/1)](https://travis-ci.org/ekonbenefits/dynamitey)
+Framework | Platform | Status
+--------- | -------- | ------
+All | Windows | [![Build status](https://ci.appveyor.com/api/projects/status/kctdnnmctakj1j9w/branch/master?svg=true)](https://ci.appveyor.com/project/jbtule/dynamitey/branch/master)
+.NET Core | Linux/Mac/Windows | ![Actions Status](https://github.com/ekonbenefits/dynamitey/workflows/Build%20.net%20core/badge.svg)
 
 Compiled For|
 --------|
