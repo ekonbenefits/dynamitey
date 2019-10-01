@@ -5,11 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using NUnit.Framework;
-#if !NETCOREAPP2_0
 using IronPython.Hosting;
 using Microsoft.Scripting;
-#endif
+using NUnit.Framework;
 namespace Dynamitey.Tests
 {
     [TestFixture]
@@ -37,12 +35,13 @@ namespace Dynamitey.Tests
             Assert.AreEqual(expected, actual);
 
         }
-#if !NETCOREAPP2_0
+
         private dynamic RunPythonHelper(object linq, string code)
         {
             
 
-            var tEngine = Python.CreateEngine();
+            var scriptEnv = Python.CreateRuntime();
+            var tEngine = scriptEnv.GetEngine("python");
             var tScope = tEngine.CreateScope();
 
             tScope.SetVariable("linq", linq);
@@ -53,16 +52,6 @@ namespace Dynamitey.Tests
             tCompiled.Execute(tScope);
             return tScope.GetVariable("result");
         }
-#else
-     private dynamic RunPythonHelper(object linq, string code)
-        {
-            
-
-            Assert.Ignore("Iron Python Doesn't work on .net core");
-            return new object();
-        }
-#endif
-
   
 
         [Test]

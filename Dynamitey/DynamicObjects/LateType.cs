@@ -47,16 +47,15 @@ namespace Dynamitey.DynamicObjects
         /// Initializes a new instance of the <see cref="LateType"/> class.
         /// </summary>
         /// <param name="type">The type.</param>
-        public LateType(Type type)
-            : base(type)
+        public LateType(Type? type)
+            : base(type!)
         {
-
         }
 
-        private readonly string TypeName;
+        private readonly string? TypeName;
 
 
-        public static Type FindType(string typeName, Assembly assembly = null)
+        public static Type? FindType(string typeName, Assembly? assembly = null)
         {
             try
             {
@@ -78,7 +77,7 @@ namespace Dynamitey.DynamicObjects
         /// </summary>
         /// <param name="typeName">Qualified Name of the type.</param>
         public LateType(string typeName)
-            : base(FindType(typeName))
+            : base(FindType(typeName)!)
         {
             TypeName = typeName;
           
@@ -90,7 +89,7 @@ namespace Dynamitey.DynamicObjects
         /// <param name="assembly">The assembly.</param>
         /// <param name="typeName">Name of the type.</param>
         public LateType(Assembly assembly, string typeName)
-            : base(FindType(typeName, assembly))
+            : base(FindType(typeName, assembly)!)
         {
             TypeName = typeName;
 
@@ -119,7 +118,7 @@ namespace Dynamitey.DynamicObjects
             /// <param name="args">The args.</param>
             /// <param name="result">The result.</param>
             /// <returns></returns>
-            public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
+            public override bool TryInvoke(InvokeBinder binder, object[] args, out object? result)
             {
                 result = Dynamic.InvokeConstructor(_type, Util.NameArgsIfNecessary(binder.CallInfo, args));
                 return true;

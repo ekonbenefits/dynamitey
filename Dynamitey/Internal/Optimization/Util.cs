@@ -74,9 +74,9 @@ namespace Dynamitey.Internal.Optimization
         /// <param name="callInfo">The call info.</param>
         /// <param name="args">The args.</param>
         /// <returns></returns>
-        public static object[] NameArgsIfNecessary(CallInfo callInfo, object[] args)
+        public static object[] NameArgsIfNecessary(CallInfo callInfo, object?[] args)
         {
-            object[] tArgs;
+            object?[] tArgs;
             if (callInfo.ArgumentNames.Count == 0)
                 tArgs = args;
             else
@@ -127,7 +127,7 @@ namespace Dynamitey.Internal.Optimization
         }
 
    
-        internal static bool MassageResultBasedOnInterface(this BaseObject target, string binderName, bool resultFound, ref object result)
+        internal static bool MassageResultBasedOnInterface(this BaseObject target, string binderName, bool resultFound, ref object? result)
         {
             if (result is BaseForwarder.AddRemoveMarker) //Don't massage AddRemove Proxies
                 return true;
@@ -142,7 +142,7 @@ namespace Dynamitey.Internal.Optimization
               if (result is IDictionary<string, object> && !(result is BaseDictionary)
                     && (!tTryType || tType == typeof(object)))
                 {
-                    result = new Dictionary((IDictionary<string, object>)result);
+                    result = new Dictionary((IDictionary<string, object?>)result);
                 }
               else if (tTryType)
               {
@@ -173,7 +173,7 @@ namespace Dynamitey.Internal.Optimization
 
 
 
-        internal static object[] GetArgsAndNames(object[]args,out string[]argNames)
+        internal static object[] GetArgsAndNames(object?[]args,out string[]argNames)
         {
             if (args == null)
                 args = new object[] { null };
@@ -188,7 +188,7 @@ namespace Dynamitey.Internal.Optimization
             for (int i = 0; i < args.Length; i++)
             {
                 var tArg = args[i];
-                string tName = null;
+                string? tName = null;
 
                 if (tArg is InvokeArg)
                 {

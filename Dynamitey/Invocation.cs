@@ -15,6 +15,7 @@
 
 
 using System;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.CSharp.RuntimeBinder;
 
@@ -125,17 +126,17 @@ namespace Dynamitey
         /// Gets or sets the kind.
         /// </summary>
         /// <value>The kind.</value>
-        public InvocationKind Kind { get; protected set; }
+        public InvocationKind Kind { get;  }
         /// <summary>
         /// Gets or sets the name.
         /// </summary>
         /// <value>The name.</value>
-        public String_OR_InvokeMemberName Name { get; protected set; }
+        public String_OR_InvokeMemberName? Name { get;  }
         /// <summary>
         /// Gets or sets the args.
         /// </summary>
         /// <value>The args.</value>
-        public object[] Args { get; protected set; }
+        public object?[] Args { get; protected set; }
 
         /// <summary>
         /// Creates the invocation.
@@ -144,7 +145,7 @@ namespace Dynamitey
         /// <param name="name">The name.</param>
         /// <param name="storedArgs">The args.</param>
         /// <returns></returns>
-        public static Invocation Create(InvocationKind kind, String_OR_InvokeMemberName name, params object[] storedArgs)
+        public static Invocation Create(InvocationKind kind, String_OR_InvokeMemberName name, params object?[] storedArgs)
         {
             return new Invocation(kind,name,storedArgs);
         }
@@ -155,7 +156,7 @@ namespace Dynamitey
         /// <param name="kind">The kind.</param>
         /// <param name="name">The name.</param>
         /// <param name="storedArgs">The args.</param>
-        public Invocation(InvocationKind kind, String_OR_InvokeMemberName name, params object[] storedArgs)
+        public Invocation(InvocationKind kind, String_OR_InvokeMemberName? name, params object?[] storedArgs)
         {
             Kind = kind;
             Name = name;
@@ -212,7 +213,7 @@ namespace Dynamitey
         /// <param name="target">The target.</param>
         /// <param name="args">The args.</param>
         /// <returns></returns>
-        public virtual object Invoke(object target, params object[] args)
+        public virtual object? Invoke(object target, params object?[] args)
         {
             switch (Kind)
             {
@@ -221,22 +222,25 @@ namespace Dynamitey
                 case InvocationKind.Convert:
                     bool tExplicit = false;
                     if (Args.Length == 2)
-                        tExplicit = (bool)args[1];
-                    return Dynamic.InvokeConvert(target, (Type)args[0], tExplicit);
+                    {
+                        tExplicit = (bool)args[1]!;
+                    }
+
+                    return Dynamic.InvokeConvert(target, (Type)args[0]!, tExplicit);
                 case InvocationKind.Get:
-                    return Dynamic.InvokeGet(target, Name.Name);
+                    return Dynamic.InvokeGet(target, Name!.Name);
                 case InvocationKind.Set:
-                    Dynamic.InvokeSet(target, Name.Name, args.FirstOrDefault());
+                    Dynamic.InvokeSet(target, Name!.Name, args.FirstOrDefault());
                     return null;
                 case InvocationKind.GetIndex:
-                    return Dynamic.InvokeGetIndex(target, args);
+                    return Dynamic.InvokeGetIndex(target, args!);
                 case InvocationKind.SetIndex:
                     Dynamic.InvokeSetIndex(target, args);
                     return null;
                 case InvocationKind.InvokeMember:
-                    return Dynamic.InvokeMember(target, Name, args);
+                    return Dynamic.InvokeMember(target, Name!, args);
                 case InvocationKind.InvokeMemberAction:
-                    Dynamic.InvokeMemberAction(target, Name, args);
+                    Dynamic.InvokeMemberAction(target, Name!, args);
                     return null;
                 case InvocationKind.InvokeMemberUnknown:
                     {
@@ -270,13 +274,13 @@ namespace Dynamitey
                         }
                     }
                 case InvocationKind.AddAssign:
-                    Dynamic.InvokeAddAssignMember(target, Name.Name, args.FirstOrDefault());
+                    Dynamic.InvokeAddAssignMember(target, Name!.Name, args.FirstOrDefault());
                     return null;
                 case InvocationKind.SubtractAssign:
-                    Dynamic.InvokeSubtractAssignMember(target, Name.Name, args.FirstOrDefault());
+                    Dynamic.InvokeSubtractAssignMember(target, Name!.Name, args.FirstOrDefault());
                     return null;
                 case InvocationKind.IsEvent:
-                    return Dynamic.InvokeIsEvent(target, Name.Name);
+                    return Dynamic.InvokeIsEvent(target, Name!.Name);
                 default:
                     throw new InvalidOperationException("Unknown Invocation Kind: " + Kind);
             }
@@ -288,7 +292,7 @@ namespace Dynamitey
         /// </summary>
         /// <param name="target">The target.</param>
         /// <returns></returns>
-        public virtual object InvokeWithStoredArgs(object target)
+        public virtual object? InvokeWithStoredArgs(object target)
         {
             return Invoke(target, Args);
         }

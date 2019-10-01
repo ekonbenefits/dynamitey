@@ -62,7 +62,7 @@ namespace Dynamitey.Internal
             /// <returns>
             /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)
             /// </returns>
-            public override bool TryBinaryOperation(BinaryOperationBinder binder, object arg, out object result)
+            public override bool TryBinaryOperation(BinaryOperationBinder binder, object arg, out object? result)
             {
                 result = null;
                 if (binder.Operation == ExpressionType.LeftShift)
@@ -81,7 +81,7 @@ namespace Dynamitey.Internal
             /// <returns>
             /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)
             /// </returns>
-            public override bool TryConvert(ConvertBinder binder, out object result)
+            public override bool TryConvert(ConvertBinder binder, out object? result)
             {
                 result = Dynamic.CoerceToDelegate(this, binder.Type);
 
@@ -110,7 +110,7 @@ namespace Dynamitey.Internal
             /// <returns>
             /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.)
             /// </returns>
-           public override bool  TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
+           public override bool  TryInvokeMember(InvokeMemberBinder binder, object[] args, out object? result)
            {
                result = new PartialApply(_target, Util.NameArgsIfNecessary(binder.CallInfo, args), binder.Name, _totalArgCount);
                return true;
@@ -124,7 +124,7 @@ namespace Dynamitey.Internal
            /// <returns>
            /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.
            /// </returns>
-            public override bool  TryInvoke(InvokeBinder binder, object[] args, out object result)
+            public override bool  TryInvoke(InvokeBinder binder, object[] args, out object? result)
             {
                 var tCurrying = _target as PartialApply;
 

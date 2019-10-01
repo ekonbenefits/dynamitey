@@ -127,7 +127,7 @@ namespace Dynamitey.DynamicObjects
         /// Build factory storage
         /// </summary>
        
-		protected IDictionary<string,Activate> _buildType;
+		protected readonly IDictionary<string,Activate> _buildType;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Builder{TObjectProtoType}"/> class.
@@ -143,14 +143,12 @@ namespace Dynamitey.DynamicObjects
         /// </summary>
         /// <param name="contents">The contents.</param>
         /// <returns></returns>
-        public dynamic List(params dynamic[] contents)
+        public dynamic List(params dynamic?[] contents)
         {
-            if (!_buildType.TryGetValue("List", out var tBuildType))
-                tBuildType = null;
-
-            if (tBuildType != null)
+  
+            if (_buildType.TryGetValue("List", out var tBuildType))
             {
-                dynamic tList = tBuildType.Create();
+                var tList = tBuildType.Create();
 
                 if (contents != null)
                 {
@@ -180,14 +178,15 @@ namespace Dynamitey.DynamicObjects
             if (tActivate == null)
             {
 
-                if (!_buildType.TryGetValue("Object", out tActivate))
-                    tActivate = null;
-                if (tActivate != null)
+                if (_buildType.TryGetValue("Object", out tActivate))
                 {
-                    tActivate = new Activate(tActivate.Type,constructorArgs);
+                    tActivate = new Activate(tActivate.Type, constructorArgs);
                 }
-                if(tActivate == null)
+
+                if (tActivate == null)
+                {
                     tActivate = new Activate<List>(constructorArgs);
+                }
             }
 
             _buildType["List"] = tActivate;
@@ -311,12 +310,12 @@ namespace Dynamitey.DynamicObjects
             /// <param name="args">The args.</param>
             /// <param name="result">The result.</param>
             /// <returns></returns>
-            public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
+            public override bool TryInvoke(InvokeBinder binder, object[] args, out object? result)
             {
-                if (!_buider._buildType.TryGetValue("Object", out var tBuildType))
-                    tBuildType = null;
+                result = _buider._buildType.TryGetValue("Object", out var tBuildType)
+                    ? InvokeHelper(binder.CallInfo, args, tBuildType)
+                    : InvokeHelper(binder.CallInfo, args);
 
-                result = InvokeHelper(binder.CallInfo, args, tBuildType);
                 return true;
             }
         }
@@ -344,7 +343,7 @@ namespace Dynamitey.DynamicObjects
             /// <param name="result">The result.</param>
             /// <returns></returns>
             /// <exception cref="System.ArgumentException">Requires argument names for every argument</exception>
-            public override bool TryInvoke(InvokeBinder binder, dynamic[] args, out object result)
+            public override bool TryInvoke(InvokeBinder binder, dynamic[] args, out object? result)
             {
 				if (binder.CallInfo.ArgumentNames.Count != binder.CallInfo.ArgumentCount)
                		 throw new ArgumentException("Requires argument names for every argument");
@@ -395,33 +394,38 @@ namespace Dynamitey.DynamicObjects
         /// <param name="args">The args.</param>
         /// <param name="result">The result.</param>
         /// <returns></returns>
-        public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object result)
+        public override bool TryInvokeMember(InvokeMemberBinder binder, object[] args, out object? result)
         {
-            if(!_buildType.TryGetValue(binder.Name, out var tBuildType))
-                tBuildType = null;
-
-            if (tBuildType == null && !_buildType.TryGetValue("Object", out tBuildType))
-                tBuildType = null;
-
-            result = InvokeHelper(binder.CallInfo, args,tBuildType);
-            if (TryTypeForName(binder.Name, out var tType))
+            Activate? optionalActivate = null;
+            if(_buildType.TryGetValue(binder.Name, out var tBuildType))
             {
-                var typeInfo = tType.GetTypeInfo();
-                if (Dynamic.Impromptu.IsAvailable && typeInfo.IsInterface && result != null && !typeInfo.IsAssignableFrom(result.GetType()))
-                {
-                   result = Dynamic.Impromptu.DynamicActLike(result, tType);
-                }
+                optionalActivate = tBuildType;
+            }
+
+            if (optionalActivate == null && _buildType.TryGetValue("Object", out tBuildType))
+            {
+                optionalActivate = tBuildType;
+            }
+
+            result = InvokeHelper(binder.CallInfo, args, optionalActivate);
+            if (!TryTypeForName(binder.Name, out var tType)) return true;
+            var typeInfo = tType.GetTypeInfo();
+            if ((!(bool) Dynamic.Impromptu.IsAvailable) || !typeInfo.IsInterface || (result is null))
+                return true;
+            if (typeInfo.IsInstanceOfType(result))
+            {
+                result = Dynamic.Impromptu.DynamicActLike(result, tType);
             }
             return true;
 
         }
 
-        private static object InvokeHelper(CallInfo callinfo, IList<object> args, Activate buildType =null)
+        private static object InvokeHelper(CallInfo callInfo, IList<object> args, Activate? buildType =null)
         {
            
             bool tSetWithName = true;
-            object tArg = null;
-            if (callinfo.ArgumentNames.Count == 0 && callinfo.ArgumentCount == 1)
+            object? tArg = null;
+            if (callInfo.ArgumentNames.Count == 0 && callInfo.ArgumentCount == 1)
             {
                 tArg =args[0];
                 
@@ -431,9 +435,9 @@ namespace Dynamitey.DynamicObjects
                 }
             }
 
-            if (tSetWithName && callinfo.ArgumentNames.Count != callinfo.ArgumentCount)
+            if (tSetWithName && callInfo.ArgumentNames.Count != callInfo.ArgumentCount)
                 throw new ArgumentException("Requires argument names for every argument");
-            object result;
+            object? result;
             if (buildType != null)
             {
                 result = buildType.Create();
@@ -451,7 +455,7 @@ namespace Dynamitey.DynamicObjects
             }
             if(tSetWithName)
             {
-                tArg = callinfo.ArgumentNames.Zip(args, (n, a) => new KeyValuePair<string, object>(n, a));
+                tArg = callInfo.ArgumentNames.Zip(args, (n, a) => new KeyValuePair<string, object>(n, a));
             }
 
             return Dynamic.InvokeSetAll(result, tArg);

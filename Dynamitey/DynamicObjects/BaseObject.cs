@@ -20,6 +20,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Reflection;
 using Dynamitey.Internal.Compat;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Dynamitey.DynamicObjects
 {
@@ -35,14 +36,14 @@ namespace Dynamitey.DynamicObjects
         /// <value>
         /// The type of the equivalent.
         /// </value>
-        FauxType EquivalentType { get; set; }
+        FauxType? EquivalentType { get; set; }
     }
     
     
 
 
     /// <summary>
-    /// Dynamic Object that knows about the Impromtu Interface return types;
+    /// Dynamic Object that knows about the Impromptu Interface return types;
     /// Override Typical Dynamic Object methods, and use TypeForName to get the return type of an interface member.
     /// </summary>
     public abstract class BaseObject : DynamicObject, IEquivalentType
@@ -64,45 +65,33 @@ namespace Dynamitey.DynamicObjects
         /// <param name="binderName">Name of the binder.</param>
         /// <param name="type">The type.</param>
         /// <returns></returns>
-        public bool TryTypeForName(string binderName, out Type type)
+        public bool TryTypeForName(string binderName, [MaybeNullWhen(returnValue: false)]  out Type type)
         {
            var eqType = (IEquivalentType) this;
-           type = null;
+           type = null!;
            if (eqType.EquivalentType == null)
                 return false;
 
            var types = eqType.EquivalentType.GetMember(binderName)
                .Select(it =>
-                           {
-
-                               switch (it)
-                               {
-                                  case PropertyInfo p:
-                                      return p.PropertyType;
-                                  case MethodInfo m:
-                                      return m.ReturnType;
-                                  case EventInfo e:
-                                      return e.EventHandlerType;
-#if NET40 || PROFILE158
-                                  case Type t:
-                                      return t;
-#else
-                                  case TypeInfo t:
-                                       return t.UnderlyingSystemType;
-#endif
-                                  default:
-                                      return typeof (object);
-                               }
-                               
-                           }).ToList();
+               {
+                   return it switch
+                   {
+                       PropertyInfo p => p.PropertyType,
+                       MethodInfo m => m.ReturnType,
+                       EventInfo e => e.EventHandlerType,
+                       TypeInfo t => t.UnderlyingSystemType,
+                       _ => typeof(object)
+                   };
+               }).ToList();
 
 ;
             if (!types.Any())
                 return false;
-            foreach (var currenttype in types)
+            foreach (var currentType in types)
             {
-                if (type == null || type.Name == currenttype.Name)
-                    type = currenttype;
+                if (type == null || type.Name == currentType.Name)
+                    type = currentType;
                 else
                     type = typeof (object);
             }
@@ -110,6 +99,6 @@ namespace Dynamitey.DynamicObjects
         }
 
 
-        FauxType IEquivalentType.EquivalentType { get; set; }
+        FauxType? IEquivalentType.EquivalentType { get; set; }
     }
 }

@@ -110,7 +110,7 @@ namespace Dynamitey
         /// </summary>
         /// <param name="type">The type.</param>
         /// <param name="args">The args.</param>
-        public Activate(Type type, params object[] args)
+        public Activate(Type type, params object?[] args)
         {
             Type = type;
 
@@ -143,7 +143,7 @@ namespace Dynamitey
         /// Gets or sets the constructor arguments.
         /// </summary>
         /// <value>The arguments.</value>
-        public virtual Func<object[]> Arguments
+        public virtual Func<object?[]> Arguments
         {
             get; private set;
         }
@@ -154,7 +154,7 @@ namespace Dynamitey
         /// <returns></returns>
         public virtual dynamic Create()
         {
-            object[] tArgs = Arguments();
+            var tArgs = Arguments();
             return Dynamic.InvokeConstructor(Type, tArgs);
         }
     }
@@ -203,7 +203,7 @@ namespace Dynamitey
             {
                 tObjectPrototype = Dynamic.InvokeConstructor(typeof(TObjectPrototype));
             }
-            return tObjectPrototype;
+            return tObjectPrototype!;
         }
     }
 

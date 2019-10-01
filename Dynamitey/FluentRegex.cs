@@ -40,7 +40,7 @@ namespace Dynamitey
         /// <param name="inputString">The input string.</param>
         /// <param name="regex">The regex.</param>
         /// <returns></returns>
-        public static dynamic Match(string inputString, Regex regex)
+        public static dynamic? Match(string inputString, Regex regex)
         {
             var tMatch = regex.Match(inputString);
             return tMatch.Success ? new DynamicObjects.RegexMatch(tMatch, regex) : null;
@@ -52,7 +52,7 @@ namespace Dynamitey
         /// <param name="regex">The regex.</param>
         /// <param name="inputString">The input string.</param>
         /// <returns></returns>
-        public static dynamic FluentMatch(this Regex regex, string inputString)
+        public static dynamic? FluentMatch(this Regex regex, string inputString)
         {
             var tMatch = regex.Match(inputString);
             return tMatch.Success ? new DynamicObjects.RegexMatch(tMatch, regex) : null;
