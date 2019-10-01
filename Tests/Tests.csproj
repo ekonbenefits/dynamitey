@@ -2,7 +2,7 @@
   <PropertyGroup>
     <TargetFrameworks>netcoreapp3.0;netcoreapp2.0;net462</TargetFrameworks>
     <TargetFrameworks Condition="'$(WithoutCrossCompile)' != ''">netcoreapp3.0</TargetFrameworks>
-    <OutputType Condition="'$(TargetFramework)'=='netcoreapp2.0' OR '$(TargetFramework)'=='netcoreapp3.0'">Exe</OutputType>
+    <OutputType>Exe</OutputType>
     <IsPackable>false</IsPackable>
     <LangVersion>8.0</LangVersion>
     <GenerateProgramFile>false</GenerateProgramFile>

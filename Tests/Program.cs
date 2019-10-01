@@ -4,7 +4,6 @@ using System.Text;
 
 namespace Tests
 {
-#if !NET462
     public class Program
     {
         public static void Main()
@@ -12,5 +11,4 @@ namespace Tests
 
         }
     }
-#endif
 }
