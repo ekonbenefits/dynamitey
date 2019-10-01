@@ -9,7 +9,7 @@ You can find the latest bleed edge on MyGet [![MyGet Pre Release](https://img.sh
 Framework | Platform | Status
 --------- | -------- | ------
 All | Windows | [![Build status](https://ci.appveyor.com/api/projects/status/kctdnnmctakj1j9w/branch/master?svg=true)](https://ci.appveyor.com/project/jbtule/dynamitey/branch/master)
-.NET Core | Linux/Mac/Windows | ![Actions Status](https://github.com/ekonbenefits/dynamitey/workflows/Build%20.net%20core/badge.svg)
+.NET Core | Linux/Mac/Windows | [![Actions Status](https://github.com/ekonbenefits/dynamitey/workflows/Build%20.net%20core/badge.svg)](https://github.com/ekonbenefits/dynamitey/actions?workflow=Build+.net+core)
 
 Compiled For|
 --------|
