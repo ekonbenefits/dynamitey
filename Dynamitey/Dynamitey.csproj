@@ -5,7 +5,7 @@
     <Description>(pronounced dyna-mighty) flexes DLR muscle to do meta-mazing things in .net</Description>
     <Company>Ekon Benefits</Company>
     <Authors />
-    <Copyright>Copyright 2017 Ekon Benefits</Copyright>
+    <Copyright>Copyright 2019 Ekon Benefits</Copyright>
     <PackageProjectUrl>https://github.com/ekonbenefits/dynamitey</PackageProjectUrl>
     <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
     <PackageTags>dynamic metaprogramming dlr reflection currying tuples expando latetypes</PackageTags>
