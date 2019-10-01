@@ -13,6 +13,7 @@ All | Windows | [![Build status](https://ci.appveyor.com/api/projects/status/kct
 
 Compiled For|
 --------|
+.Net Std 2.0 | 
 .Net Std 1.5 |
 .Net 4.0  |
 Portable .NET 4.5, Silverlight 4 & 5, WinRT, Win Phone 8 |
