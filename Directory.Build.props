@@ -1,5 +1,5 @@
 <Project>
     <PropertyGroup>
-        <WithoutCrossCompile Condition="'$(GITHUB_ACTION)' != '' OR '$(LGTM_SRC)' != ''">True</WithoutCrossCompile>
+        <WithoutCrossCompile>True</WithoutCrossCompile>
     </PropertyGroup>
 </Project>
