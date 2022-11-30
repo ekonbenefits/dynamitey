@@ -666,6 +666,23 @@ namespace Dynamitey.Tests
             Assert.AreEqual("object named", (object)tOut);
         }
 
+        [Test]
+        public void TestCacheableMethodPocoOverloadingPassAndGetValueArgPostiionalOptional()
+        {
+            var tPoco = new OverloadingMethPoco();
+
+            var tValue1 = 1;
+            var tValue2 = 2;
+
+            var tCachedIvnocation = new CacheableInvocation(InvocationKind.InvokeMember, "Func", argCount: 2,
+                                                            argNames: new[] { "two" });
+
+            var tOut = tCachedIvnocation.Invoke(tPoco, tValue1, tValue2);
+
+            Assert.AreEqual("object named", tOut);
+
+            Assert.AreEqual("object named", (object)tOut);
+        }
 
         [Test]
         public void TestMethodPocoOverloadingPass2AndGetValueArgOptional()
