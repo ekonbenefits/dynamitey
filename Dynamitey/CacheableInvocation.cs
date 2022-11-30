@@ -6,6 +6,8 @@ using Dynamitey.Internal.Optimization;
 using Microsoft.CSharp.RuntimeBinder;
 using System.Reflection;
 using Dynamitey.Internal.Compat;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace Dynamitey
 {
@@ -167,7 +169,7 @@ namespace Dynamitey
             if (ReferenceEquals(this, other)) return true;
             return base.Equals(other) 
                 && other._argCount == _argCount 
-                && Equals(other._argNames, _argNames) 
+                && (_argNames ?? new string[] { }).SequenceEqual(other._argNames ?? new string[] { })
                 && other._staticContext.Equals(_staticContext)
                 && Equals(other._context, _context) 
                 && other._convertExplicit.Equals(_convertExplicit)
@@ -200,7 +202,7 @@ namespace Dynamitey
             {
                 int result = base.GetHashCode();
                 result = (result*397) ^ _argCount;
-                result = (result*397) ^ (_argNames != null ? _argNames.GetHashCode() : 0);
+                result = (result*397) ^ (_argNames != null ? ((IStructuralEquatable)_argNames).GetHashCode(EqualityComparer<string>.Default) : 0);
                 result = (result*397) ^ _staticContext.GetHashCode();
                 result = (result*397) ^ (_context != null ? _context.GetHashCode() : 0);
                 result = (result*397) ^ _convertExplicit.GetHashCode();

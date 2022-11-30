@@ -1365,7 +1365,18 @@ namespace Dynamitey.Tests
             Assert.AreEqual("Two", Dynamic.GetMemberNames(tDict, dynamicOnly: true).Single());
         }
 
+        [Test]
+        public void TestCachedInvocationEquality()
+        {
+            var tCachedIvnocation1 = new CacheableInvocation(InvocationKind.InvokeMember, "Func", argCount: 2,
+                                                            argNames: new[] { "two" });
 
+            var tCachedIvnocation2 = new CacheableInvocation(InvocationKind.InvokeMember, "Func", argCount: 2,
+                                                            argNames: new[] { "two" });
+
+            Assert.AreEqual(tCachedIvnocation1.GetHashCode(), tCachedIvnocation2.GetHashCode());
+            Assert.AreEqual(tCachedIvnocation1, tCachedIvnocation2);
+        }
 
 
         private DynamicObject CreateMock(ExpressionType op)
