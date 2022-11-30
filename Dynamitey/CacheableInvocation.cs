@@ -137,7 +137,7 @@ namespace Dynamitey
             {
                 var tBlank = new string[_argCount];
                 if (_argNames.Length != 0)
-                    Array.Copy(_argNames, 0, tBlank, tBlank.Length - _argNames.Length, tBlank.Length);
+                    Array.Copy(_argNames, 0, tBlank, tBlank.Length - _argNames.Length, _argNames.Length);
                 else
                     tBlank = null;
                 _argNames = tBlank;
