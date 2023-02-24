@@ -41,7 +41,7 @@ namespace Dynamitey.DynamicObjects
         /// </summary>
         /// <param name="match">The match.</param>
         /// <param name="regex">The regex.</param>
-        public RegexMatch(Match match, Regex regex = null)
+        public RegexMatch(Match match, Regex? regex = null)
         {
             _match = match;
             _regex = regex;
@@ -65,7 +65,7 @@ namespace Dynamitey.DynamicObjects
         /// <param name="binder">The binder.</param>
         /// <param name="result">The result.</param>
         /// <returns></returns>
-       public override bool TryGetMember(GetMemberBinder binder, out object result)
+       public override bool TryGetMember(GetMemberBinder binder, out object? result)
         {
             var tGroup = _match.Groups[binder.Name];
             if (!TryTypeForName(binder.Name, out var outType))
@@ -91,7 +91,7 @@ namespace Dynamitey.DynamicObjects
        /// </value>
        /// <param name="value">The value.</param>
        /// <returns></returns>
-        public string this[int value]
+        public string? this[int value]
         {
             get
             {
@@ -113,7 +113,7 @@ namespace Dynamitey.DynamicObjects
         /// </value>
         /// <param name="value">The value.</param>
         /// <returns></returns>
-        public string this[string value]
+        public string? this[string value]
         {
             get
             {

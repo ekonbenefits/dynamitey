@@ -51,11 +51,12 @@ namespace Dynamitey
         /// <summary>
         /// Create Function can set to variable to make cleaner syntax;
         /// </summary>
-        public static readonly Func<string, Type[], InvokeMemberName> Create =
-            Return<InvokeMemberName>.Arguments<string, Type[]>((n, a) => new InvokeMemberName(n, a));
+        public static readonly Func<string, Type[]?, InvokeMemberName> Create =
+            Return<InvokeMemberName>.Arguments<string, Type[]?>((n, a) => new InvokeMemberName(n, a));
 
         /// <summary>
         /// Create Function can set to variable to make cleaner syntax;
+        /// </summary>
         /// </summary>
         public static readonly Func<string, InvokeMemberName> CreateSpecialName =
           Return<InvokeMemberName>.Arguments<string>(n => new InvokeMemberName(n, true));
@@ -76,7 +77,7 @@ namespace Dynamitey
         /// </summary>
         /// <param name="name">The name.</param>
         /// <param name="genericArgs">The generic args.</param>
-        public InvokeMemberName(string name, params Type[] genericArgs)
+        public InvokeMemberName(string name, params Type[]? genericArgs)
         {
             Name = name;
             GenericArgs = genericArgs;

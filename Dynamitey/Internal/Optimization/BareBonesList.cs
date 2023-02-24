@@ -16,6 +16,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using Dynamitey.Internal.Compat;
 
 namespace Dynamitey.Internal.Optimization
 {
@@ -84,9 +86,9 @@ namespace Dynamitey.Internal.Optimization
         internal class BareBonesEnumerator : IEnumerator<T>
 
         {
-            private T[] _list;
-            private int _enumerateInex = -1;
-            private int _length;
+            private readonly T[] _list;
+            private int _enumerateIndex = -1;
+            private readonly int _length;
 
             public BareBonesEnumerator(T[] list, int length)
             {
@@ -101,18 +103,18 @@ namespace Dynamitey.Internal.Optimization
 
             public bool MoveNext()
             {
-                _enumerateInex++;
-                return _enumerateInex < _length;
+                _enumerateIndex++;
+                return _enumerateIndex < _length;
             }
 
             public void Reset()
             {
-                _enumerateInex = 0;
+                _enumerateIndex = 0;
             }
 
-            public T Current => _list[_enumerateInex];
+            public T Current => _list[_enumerateIndex];
 
-            object IEnumerator.Current => Current;
+            object? IEnumerator.Current => Current;
         }
     
     }

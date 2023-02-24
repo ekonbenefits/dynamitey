@@ -16,16 +16,20 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Reflection;
+using System.Runtime.ExceptionServices;
+using Dynamitey.Internal.Compat;
 
 namespace Dynamitey.Internal.Optimization {
 
 
+    [SuppressMessage("ReSharper", "StaticMemberInGenericType")]
     internal static class BinderCache<T> where T : class
     {
-        private static IDictionary<BinderHash<T>, CallSite<T>> _cache;
+        private static IDictionary<BinderHash<T>, CallSite<T>>? _cache;
 
         private static readonly object _cacheLock = new object();
 
@@ -35,7 +39,7 @@ namespace Dynamitey.Internal.Optimization {
             {
                 lock (_cacheLock)
                 {
-                    return _cache ?? (_cache = new Dictionary<BinderHash<T>, CallSite<T>>());
+                    return _cache ??= new Dictionary<BinderHash<T>, CallSite<T>>();
                 }
             }
         }
@@ -48,9 +52,10 @@ namespace Dynamitey.Internal.Optimization {
             }
         };
     }
+    [SuppressMessage("ReSharper", "StaticMemberInGenericType")]
     internal static class BinderGetCache<T> where T : class
     {
-        private static IDictionary<BinderHash<T>, CallSite<T>> _cache;
+        private static IDictionary<BinderHash<T>, CallSite<T>>? _cache;
 
         private static readonly object _cacheLock = new object();
 
@@ -60,7 +65,7 @@ namespace Dynamitey.Internal.Optimization {
             {
                 lock (_cacheLock)
                 {
-                    return _cache ?? (_cache = new Dictionary<BinderHash<T>, CallSite<T>>());
+                    return _cache ??= new Dictionary<BinderHash<T>, CallSite<T>>();
                 }
             }
         }
@@ -73,9 +78,10 @@ namespace Dynamitey.Internal.Optimization {
             }
         };
     }
+    [SuppressMessage("ReSharper", "StaticMemberInGenericType")]
     internal static class BinderSetCache<T> where T : class
     {
-        private static IDictionary<BinderHash<T>, CallSite<T>> _cache;
+        private static IDictionary<BinderHash<T>, CallSite<T>>? _cache;
 
         private static readonly object _cacheLock = new object();
 
@@ -85,7 +91,7 @@ namespace Dynamitey.Internal.Optimization {
             {
                 lock (_cacheLock)
                 {
-                    return _cache ?? (_cache = new Dictionary<BinderHash<T>, CallSite<T>>());
+                    return _cache ??= new Dictionary<BinderHash<T>, CallSite<T>>();
                 }
             }
         }
@@ -98,9 +104,10 @@ namespace Dynamitey.Internal.Optimization {
             }
         };
     }
+    [SuppressMessage("ReSharper", "StaticMemberInGenericType")]
     internal static class BinderConstructorCache<T> where T : class
     {
-        private static IDictionary<BinderHash<T>, CallSite<T>> _cache;
+        private static IDictionary<BinderHash<T>, CallSite<T>>? _cache;
 
         private static readonly object _cacheLock = new object();
 
@@ -110,7 +117,7 @@ namespace Dynamitey.Internal.Optimization {
             {
                 lock (_cacheLock)
                 {
-                    return _cache ?? (_cache = new Dictionary<BinderHash<T>, CallSite<T>>());
+                    return _cache ??= new Dictionary<BinderHash<T>, CallSite<T>>();
                 }
             }
         }
@@ -123,9 +130,10 @@ namespace Dynamitey.Internal.Optimization {
             }
         };
     }
+    [SuppressMessage("ReSharper", "StaticMemberInGenericType")]
     internal static class BinderMemberCache<T> where T : class
     {
-        private static IDictionary<BinderHash<T>, CallSite<T>> _cache;
+        private static IDictionary<BinderHash<T>, CallSite<T>>? _cache;
 
         private static readonly object _cacheLock = new object();
 
@@ -135,7 +143,7 @@ namespace Dynamitey.Internal.Optimization {
             {
                 lock (_cacheLock)
                 {
-                    return _cache ?? (_cache = new Dictionary<BinderHash<T>, CallSite<T>>());
+                    return _cache ??= new Dictionary<BinderHash<T>, CallSite<T>>();
                 }
             }
         }
@@ -148,9 +156,10 @@ namespace Dynamitey.Internal.Optimization {
             }
         };
     }
+    [SuppressMessage("ReSharper", "StaticMemberInGenericType")]
     internal static class BinderDirectCache<T> where T : class
     {
-        private static IDictionary<BinderHash<T>, CallSite<T>> _cache;
+        private static IDictionary<BinderHash<T>, CallSite<T>>? _cache;
 
         private static readonly object _cacheLock = new object();
 
@@ -160,7 +169,7 @@ namespace Dynamitey.Internal.Optimization {
             {
                 lock (_cacheLock)
                 {
-                    return _cache ?? (_cache = new Dictionary<BinderHash<T>, CallSite<T>>());
+                    return _cache ??= new Dictionary<BinderHash<T>, CallSite<T>>();
                 }
             }
         }
@@ -272,16 +281,16 @@ namespace Dynamitey.Internal.Optimization {
 		}
 
 
-        internal static void InvokeMemberAction(ref CallSite callsite,
-		                                            Type binderType,
+        internal static void InvokeMemberAction(ref CallSite? callsite,
+		                                            Type? binderType,
 													int knownType,
-													LazyBinder binder,
+													LazyBinder? binder,
                                                     InvokeMemberName name,
 													bool staticContext,
                                                     Type context, 
-                                                    string[] argNames,
-                                                    object target,
-                                                    params object [] args)
+                                                    string[]? argNames,
+                                                    [DisallowNull] object target,
+                                                    params object?[] args)
         {
 
             var tSwitch = args.Length;
@@ -290,9 +299,8 @@ namespace Dynamitey.Internal.Optimization {
 #region Optimizations
                 case 0:
                     {
-						var tCallSite = (CallSite<Action<CallSite,  object>>)callsite;
-						if(tCallSite == null){
-							tCallSite = CreateCallSite<Action<CallSite,  object>>(binderType,knownType, binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Action<CallSite,  object?>> tCallSite)){
+							tCallSite = CreateCallSite<Action<CallSite,  object?>>(binderType!,knownType, binder!, name, context, argNames, staticContext);
 						    callsite=tCallSite;
 						}
                         tCallSite.Target(tCallSite, target);
@@ -300,9 +308,8 @@ namespace Dynamitey.Internal.Optimization {
                     }
                 case 1:
                     {
-						var tCallSite = (CallSite<Action<CallSite,  object, object>>)callsite;
-						if(tCallSite == null){
-							tCallSite = CreateCallSite<Action<CallSite,  object, object>>(binderType,knownType, binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Action<CallSite,  object?, object?>> tCallSite)){
+							tCallSite = CreateCallSite<Action<CallSite,  object?, object?>>(binderType!,knownType, binder!, name, context, argNames, staticContext);
 						    callsite=tCallSite;
 						}
                         tCallSite.Target(tCallSite, target, args[0]);
@@ -310,9 +317,8 @@ namespace Dynamitey.Internal.Optimization {
                     }
                 case 2:
                     {
-						var tCallSite = (CallSite<Action<CallSite,  object, object, object>>)callsite;
-						if(tCallSite == null){
-							tCallSite = CreateCallSite<Action<CallSite,  object, object, object>>(binderType,knownType, binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Action<CallSite,  object?, object?, object?>> tCallSite)){
+							tCallSite = CreateCallSite<Action<CallSite,  object?, object?, object?>>(binderType!,knownType, binder!, name, context, argNames, staticContext);
 						    callsite=tCallSite;
 						}
                         tCallSite.Target(tCallSite, target, args[0], args[1]);
@@ -320,9 +326,8 @@ namespace Dynamitey.Internal.Optimization {
                     }
                 case 3:
                     {
-						var tCallSite = (CallSite<Action<CallSite,  object, object, object, object>>)callsite;
-						if(tCallSite == null){
-							tCallSite = CreateCallSite<Action<CallSite,  object, object, object, object>>(binderType,knownType, binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Action<CallSite,  object?, object?, object?, object?>> tCallSite)){
+							tCallSite = CreateCallSite<Action<CallSite,  object?, object?, object?, object?>>(binderType!,knownType, binder!, name, context, argNames, staticContext);
 						    callsite=tCallSite;
 						}
                         tCallSite.Target(tCallSite, target, args[0], args[1], args[2]);
@@ -330,9 +335,8 @@ namespace Dynamitey.Internal.Optimization {
                     }
                 case 4:
                     {
-						var tCallSite = (CallSite<Action<CallSite,  object, object, object, object, object>>)callsite;
-						if(tCallSite == null){
-							tCallSite = CreateCallSite<Action<CallSite,  object, object, object, object, object>>(binderType,knownType, binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Action<CallSite,  object?, object?, object?, object?, object?>> tCallSite)){
+							tCallSite = CreateCallSite<Action<CallSite,  object?, object?, object?, object?, object?>>(binderType!,knownType, binder!, name, context, argNames, staticContext);
 						    callsite=tCallSite;
 						}
                         tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3]);
@@ -340,9 +344,8 @@ namespace Dynamitey.Internal.Optimization {
                     }
                 case 5:
                     {
-						var tCallSite = (CallSite<Action<CallSite,  object, object, object, object, object, object>>)callsite;
-						if(tCallSite == null){
-							tCallSite = CreateCallSite<Action<CallSite,  object, object, object, object, object, object>>(binderType,knownType, binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?>> tCallSite)){
+							tCallSite = CreateCallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?>>(binderType!,knownType, binder!, name, context, argNames, staticContext);
 						    callsite=tCallSite;
 						}
                         tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4]);
@@ -350,9 +353,8 @@ namespace Dynamitey.Internal.Optimization {
                     }
                 case 6:
                     {
-						var tCallSite = (CallSite<Action<CallSite,  object, object, object, object, object, object, object>>)callsite;
-						if(tCallSite == null){
-							tCallSite = CreateCallSite<Action<CallSite,  object, object, object, object, object, object, object>>(binderType,knownType, binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?, object?>> tCallSite)){
+							tCallSite = CreateCallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?, object?>>(binderType!,knownType, binder!, name, context, argNames, staticContext);
 						    callsite=tCallSite;
 						}
                         tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4], args[5]);
@@ -360,9 +362,8 @@ namespace Dynamitey.Internal.Optimization {
                     }
                 case 7:
                     {
-						var tCallSite = (CallSite<Action<CallSite,  object, object, object, object, object, object, object, object>>)callsite;
-						if(tCallSite == null){
-							tCallSite = CreateCallSite<Action<CallSite,  object, object, object, object, object, object, object, object>>(binderType,knownType, binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?, object?, object?>> tCallSite)){
+							tCallSite = CreateCallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?, object?, object?>>(binderType!,knownType, binder!, name, context, argNames, staticContext);
 						    callsite=tCallSite;
 						}
                         tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
@@ -370,9 +371,8 @@ namespace Dynamitey.Internal.Optimization {
                     }
                 case 8:
                     {
-						var tCallSite = (CallSite<Action<CallSite,  object, object, object, object, object, object, object, object, object>>)callsite;
-						if(tCallSite == null){
-							tCallSite = CreateCallSite<Action<CallSite,  object, object, object, object, object, object, object, object, object>>(binderType,knownType, binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?, object?, object?, object?>> tCallSite)){
+							tCallSite = CreateCallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?, object?, object?, object?>>(binderType!,knownType, binder!, name, context, argNames, staticContext);
 						    callsite=tCallSite;
 						}
                         tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]);
@@ -380,9 +380,8 @@ namespace Dynamitey.Internal.Optimization {
                     }
                 case 9:
                     {
-						var tCallSite = (CallSite<Action<CallSite,  object, object, object, object, object, object, object, object, object, object>>)callsite;
-						if(tCallSite == null){
-							tCallSite = CreateCallSite<Action<CallSite,  object, object, object, object, object, object, object, object, object, object>>(binderType,knownType, binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?>> tCallSite)){
+							tCallSite = CreateCallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?>>(binderType!,knownType, binder!, name, context, argNames, staticContext);
 						    callsite=tCallSite;
 						}
                         tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
@@ -390,9 +389,8 @@ namespace Dynamitey.Internal.Optimization {
                     }
                 case 10:
                     {
-						var tCallSite = (CallSite<Action<CallSite,  object, object, object, object, object, object, object, object, object, object, object>>)callsite;
-						if(tCallSite == null){
-							tCallSite = CreateCallSite<Action<CallSite,  object, object, object, object, object, object, object, object, object, object, object>>(binderType,knownType, binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?>> tCallSite)){
+							tCallSite = CreateCallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?>>(binderType!,knownType, binder!, name, context, argNames, staticContext);
 						    callsite=tCallSite;
 						}
                         tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
@@ -400,9 +398,8 @@ namespace Dynamitey.Internal.Optimization {
                     }
                 case 11:
                     {
-						var tCallSite = (CallSite<Action<CallSite,  object, object, object, object, object, object, object, object, object, object, object, object>>)callsite;
-						if(tCallSite == null){
-							tCallSite = CreateCallSite<Action<CallSite,  object, object, object, object, object, object, object, object, object, object, object, object>>(binderType,knownType, binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?>> tCallSite)){
+							tCallSite = CreateCallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?>>(binderType!,knownType, binder!, name, context, argNames, staticContext);
 						    callsite=tCallSite;
 						}
                         tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10]);
@@ -410,9 +407,8 @@ namespace Dynamitey.Internal.Optimization {
                     }
                 case 12:
                     {
-						var tCallSite = (CallSite<Action<CallSite,  object, object, object, object, object, object, object, object, object, object, object, object, object>>)callsite;
-						if(tCallSite == null){
-							tCallSite = CreateCallSite<Action<CallSite,  object, object, object, object, object, object, object, object, object, object, object, object, object>>(binderType,knownType, binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?>> tCallSite)){
+							tCallSite = CreateCallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?>>(binderType!,knownType, binder!, name, context, argNames, staticContext);
 						    callsite=tCallSite;
 						}
                         tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11]);
@@ -420,9 +416,8 @@ namespace Dynamitey.Internal.Optimization {
                     }
                 case 13:
                     {
-						var tCallSite = (CallSite<Action<CallSite,  object, object, object, object, object, object, object, object, object, object, object, object, object, object>>)callsite;
-						if(tCallSite == null){
-							tCallSite = CreateCallSite<Action<CallSite,  object, object, object, object, object, object, object, object, object, object, object, object, object, object>>(binderType,knownType, binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?>> tCallSite)){
+							tCallSite = CreateCallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?>>(binderType!,knownType, binder!, name, context, argNames, staticContext);
 						    callsite=tCallSite;
 						}
                         tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11], args[12]);
@@ -430,9 +425,8 @@ namespace Dynamitey.Internal.Optimization {
                     }
                 case 14:
                     {
-						var tCallSite = (CallSite<Action<CallSite,  object, object, object, object, object, object, object, object, object, object, object, object, object, object, object>>)callsite;
-						if(tCallSite == null){
-							tCallSite = CreateCallSite<Action<CallSite,  object, object, object, object, object, object, object, object, object, object, object, object, object, object, object>>(binderType,knownType, binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?>> tCallSite)){
+							tCallSite = CreateCallSite<Action<CallSite,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?>>(binderType!,knownType, binder!, name, context, argNames, staticContext);
 						    callsite=tCallSite;
 						}
                         tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11], args[12], args[13]);
@@ -440,9 +434,9 @@ namespace Dynamitey.Internal.Optimization {
                     }
 #endregion
                 default:
-                    var tArgTypes = Enumerable.Repeat(typeof(object), tSwitch);
-                    var tDelagateType = EmitCallSiteFuncType(tArgTypes, typeof(void));
-                    Dynamic.InvokeCallSite(CreateCallSite(tDelagateType, binderType,knownType, binder, name, context, argNames), target, args);
+                    var argTypes = Enumerable.Repeat(typeof(object), tSwitch);
+                    var delegateType = EmitCallSiteFuncType(argTypes, typeof(void));
+                    Dynamic.InvokeCallSite(CreateCallSite(delegateType, binderType!,knownType, binder!, name, context, argNames), target, args);
                     break;
 
             }
@@ -456,17 +450,17 @@ namespace Dynamitey.Internal.Optimization {
 
 
 
-
+	    [return:MaybeNull]
         internal static TReturn InvokeMemberTargetType<TTarget,TReturn>(
-										ref CallSite callsite,
-										Type binderType,
+										ref CallSite? callsite,
+										Type? binderType,
 										int knownType,
-										LazyBinder binder,
+										LazyBinder? binder,
                                        InvokeMemberName name,
 									 bool staticContext,
                                      Type context,
-                                     string[] argNames,
-                                     TTarget target, params object [] args)
+                                     string[]? argNames,
+                                     [DisallowNull] TTarget target, params object?[] args)
         {
 
         
@@ -478,144 +472,129 @@ namespace Dynamitey.Internal.Optimization {
 #region Optimizations
                 case 0:
                     {
-					    var tCallSite = (CallSite<Func<CallSite, TTarget, TReturn>>)callsite;
-					    if(tCallSite==null){
-							 tCallSite = CreateCallSite<Func<CallSite, TTarget, TReturn>>(binderType,knownType,binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Func<CallSite, TTarget, TReturn>> tCallSite)){
+							 tCallSite = CreateCallSite<Func<CallSite, TTarget, TReturn>>(binderType!,knownType,binder!, name, context, argNames, staticContext);
 							 callsite =tCallSite;
 						}
                         return tCallSite.Target(tCallSite, target);
                     }
                 case 1:
                     {
-					    var tCallSite = (CallSite<Func<CallSite, TTarget,  object,TReturn>>)callsite;
-					    if(tCallSite==null){
-							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object,TReturn>>(binderType,knownType,binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Func<CallSite, TTarget,  object?,TReturn>> tCallSite)){
+							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object?,TReturn>>(binderType!,knownType,binder!, name, context, argNames, staticContext);
 							 callsite =tCallSite;
 						}
                         return tCallSite.Target(tCallSite, target, args[0]);
                     }
                 case 2:
                     {
-					    var tCallSite = (CallSite<Func<CallSite, TTarget,  object, object,TReturn>>)callsite;
-					    if(tCallSite==null){
-							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object, object,TReturn>>(binderType,knownType,binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Func<CallSite, TTarget,  object?, object?,TReturn>> tCallSite)){
+							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object?, object?,TReturn>>(binderType!,knownType,binder!, name, context, argNames, staticContext);
 							 callsite =tCallSite;
 						}
                         return tCallSite.Target(tCallSite, target, args[0], args[1]);
                     }
                 case 3:
                     {
-					    var tCallSite = (CallSite<Func<CallSite, TTarget,  object, object, object,TReturn>>)callsite;
-					    if(tCallSite==null){
-							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object, object, object,TReturn>>(binderType,knownType,binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Func<CallSite, TTarget,  object?, object?, object?,TReturn>> tCallSite)){
+							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object?, object?, object?,TReturn>>(binderType!,knownType,binder!, name, context, argNames, staticContext);
 							 callsite =tCallSite;
 						}
                         return tCallSite.Target(tCallSite, target, args[0], args[1], args[2]);
                     }
                 case 4:
                     {
-					    var tCallSite = (CallSite<Func<CallSite, TTarget,  object, object, object, object,TReturn>>)callsite;
-					    if(tCallSite==null){
-							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object, object, object, object,TReturn>>(binderType,knownType,binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Func<CallSite, TTarget,  object?, object?, object?, object?,TReturn>> tCallSite)){
+							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object?, object?, object?, object?,TReturn>>(binderType!,knownType,binder!, name, context, argNames, staticContext);
 							 callsite =tCallSite;
 						}
                         return tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3]);
                     }
                 case 5:
                     {
-					    var tCallSite = (CallSite<Func<CallSite, TTarget,  object, object, object, object, object,TReturn>>)callsite;
-					    if(tCallSite==null){
-							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object, object, object, object, object,TReturn>>(binderType,knownType,binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?,TReturn>> tCallSite)){
+							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?,TReturn>>(binderType!,knownType,binder!, name, context, argNames, staticContext);
 							 callsite =tCallSite;
 						}
                         return tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4]);
                     }
                 case 6:
                     {
-					    var tCallSite = (CallSite<Func<CallSite, TTarget,  object, object, object, object, object, object,TReturn>>)callsite;
-					    if(tCallSite==null){
-							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object, object, object, object, object, object,TReturn>>(binderType,knownType,binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?, object?,TReturn>> tCallSite)){
+							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?, object?,TReturn>>(binderType!,knownType,binder!, name, context, argNames, staticContext);
 							 callsite =tCallSite;
 						}
                         return tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4], args[5]);
                     }
                 case 7:
                     {
-					    var tCallSite = (CallSite<Func<CallSite, TTarget,  object, object, object, object, object, object, object,TReturn>>)callsite;
-					    if(tCallSite==null){
-							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object, object, object, object, object, object, object,TReturn>>(binderType,knownType,binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?, object?, object?,TReturn>> tCallSite)){
+							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?, object?, object?,TReturn>>(binderType!,knownType,binder!, name, context, argNames, staticContext);
 							 callsite =tCallSite;
 						}
                         return tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
                     }
                 case 8:
                     {
-					    var tCallSite = (CallSite<Func<CallSite, TTarget,  object, object, object, object, object, object, object, object,TReturn>>)callsite;
-					    if(tCallSite==null){
-							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object, object, object, object, object, object, object, object,TReturn>>(binderType,knownType,binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?, object?, object?, object?,TReturn>> tCallSite)){
+							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?, object?, object?, object?,TReturn>>(binderType!,knownType,binder!, name, context, argNames, staticContext);
 							 callsite =tCallSite;
 						}
                         return tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7]);
                     }
                 case 9:
                     {
-					    var tCallSite = (CallSite<Func<CallSite, TTarget,  object, object, object, object, object, object, object, object, object,TReturn>>)callsite;
-					    if(tCallSite==null){
-							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object, object, object, object, object, object, object, object, object,TReturn>>(binderType,knownType,binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?, object?, object?, object?, object?,TReturn>> tCallSite)){
+							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?, object?, object?, object?, object?,TReturn>>(binderType!,knownType,binder!, name, context, argNames, staticContext);
 							 callsite =tCallSite;
 						}
                         return tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8]);
                     }
                 case 10:
                     {
-					    var tCallSite = (CallSite<Func<CallSite, TTarget,  object, object, object, object, object, object, object, object, object, object,TReturn>>)callsite;
-					    if(tCallSite==null){
-							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object, object, object, object, object, object, object, object, object, object,TReturn>>(binderType,knownType,binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?,TReturn>> tCallSite)){
+							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?,TReturn>>(binderType!,knownType,binder!, name, context, argNames, staticContext);
 							 callsite =tCallSite;
 						}
                         return tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9]);
                     }
                 case 11:
                     {
-					    var tCallSite = (CallSite<Func<CallSite, TTarget,  object, object, object, object, object, object, object, object, object, object, object,TReturn>>)callsite;
-					    if(tCallSite==null){
-							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object, object, object, object, object, object, object, object, object, object, object,TReturn>>(binderType,knownType,binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?,TReturn>> tCallSite)){
+							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?,TReturn>>(binderType!,knownType,binder!, name, context, argNames, staticContext);
 							 callsite =tCallSite;
 						}
                         return tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10]);
                     }
                 case 12:
                     {
-					    var tCallSite = (CallSite<Func<CallSite, TTarget,  object, object, object, object, object, object, object, object, object, object, object, object,TReturn>>)callsite;
-					    if(tCallSite==null){
-							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object, object, object, object, object, object, object, object, object, object, object, object,TReturn>>(binderType,knownType,binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?,TReturn>> tCallSite)){
+							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?,TReturn>>(binderType!,knownType,binder!, name, context, argNames, staticContext);
 							 callsite =tCallSite;
 						}
                         return tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11]);
                     }
                 case 13:
                     {
-					    var tCallSite = (CallSite<Func<CallSite, TTarget,  object, object, object, object, object, object, object, object, object, object, object, object, object,TReturn>>)callsite;
-					    if(tCallSite==null){
-							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object, object, object, object, object, object, object, object, object, object, object, object, object,TReturn>>(binderType,knownType,binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?,TReturn>> tCallSite)){
+							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?,TReturn>>(binderType!,knownType,binder!, name, context, argNames, staticContext);
 							 callsite =tCallSite;
 						}
                         return tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11], args[12]);
                     }
                 case 14:
                     {
-					    var tCallSite = (CallSite<Func<CallSite, TTarget,  object, object, object, object, object, object, object, object, object, object, object, object, object, object,TReturn>>)callsite;
-					    if(tCallSite==null){
-							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object, object, object, object, object, object, object, object, object, object, object, object, object, object,TReturn>>(binderType,knownType,binder, name, context, argNames, staticContext);
+					    if(!(callsite is CallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?,TReturn>> tCallSite)){
+							 tCallSite = CreateCallSite<Func<CallSite, TTarget,  object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?, object?,TReturn>>(binderType!,knownType,binder!, name, context, argNames, staticContext);
 							 callsite =tCallSite;
 						}
                         return tCallSite.Target(tCallSite, target, args[0], args[1], args[2], args[3], args[4], args[5], args[6], args[7], args[8], args[9], args[10], args[11], args[12], args[13]);
                     }
 #endregion
                 default:
-                    var tArgTypes = Enumerable.Repeat(typeof(object), tSwitch);
-                    var tDelagateType = EmitCallSiteFuncType(tArgTypes, typeof(TTarget));
-                    return Dynamic.InvokeCallSite(CreateCallSite(tDelagateType, binderType,knownType, binder, name, context, argNames), target, args);
+                    var argTypes = Enumerable.Repeat(typeof(object), tSwitch);
+                    var delegateType = EmitCallSiteFuncType(argTypes, typeof(TTarget));
+                    return Dynamic.InvokeCallSite(CreateCallSite(delegateType, binderType!,knownType, binder!, name, context, argNames), target, args)!;
 
             }
         }
@@ -627,95 +606,58 @@ namespace Dynamitey.Internal.Optimization {
 
 		internal static Delegate WrapFuncHelper<TReturn>(dynamic invokable, int length)
         {
-			 switch(length){
+			  return length switch {
 #region Optimizations
-			   					case 0:
-						return new Func< TReturn>(()=> invokable());
-  					case 1:
-						return new Func< object, TReturn>((a1)=> invokable(a1));
-  					case 2:
-						return new Func< object, object, TReturn>((a1,a2)=> invokable(a1,a2));
-  					case 3:
-						return new Func< object, object, object, TReturn>((a1,a2,a3)=> invokable(a1,a2,a3));
-  					case 4:
-						return new Func< object, object, object, object, TReturn>((a1,a2,a3,a4)=> invokable(a1,a2,a3,a4));
-  					case 5:
-						return new Func< object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5)=> invokable(a1,a2,a3,a4,a5));
-  					case 6:
-						return new Func< object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6)=> invokable(a1,a2,a3,a4,a5,a6));
-  					case 7:
-						return new Func< object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7)=> invokable(a1,a2,a3,a4,a5,a6,a7));
-  					case 8:
-						return new Func< object, object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7,a8)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8));
-  					case 9:
-						return new Func< object, object, object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7,a8,a9)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9));
-  					case 10:
-						return new Func< object, object, object, object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10));
-  					case 11:
-						return new Func< object, object, object, object, object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11));
-  					case 12:
-						return new Func< object, object, object, object, object, object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12));
-  					case 13:
-						return new Func< object, object, object, object, object, object, object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13));
-  					case 14:
-						return new Func< object, object, object, object, object, object, object, object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14));
-  					case 15:
-						return new Func< object, object, object, object, object, object, object, object, object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15));
-  					case 16:
-						return new Func< object, object, object, object, object, object, object, object, object, object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16));
+  					0 => new Func< TReturn>(()=> invokable()),
+  					1 => new Func< object, TReturn>((a1)=> invokable(a1)),
+  					2 => new Func< object, object, TReturn>((a1,a2)=> invokable(a1,a2)),
+  					3 => new Func< object, object, object, TReturn>((a1,a2,a3)=> invokable(a1,a2,a3)),
+  					4 => new Func< object, object, object, object, TReturn>((a1,a2,a3,a4)=> invokable(a1,a2,a3,a4)),
+  					5 => new Func< object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5)=> invokable(a1,a2,a3,a4,a5)),
+  					6 => new Func< object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6)=> invokable(a1,a2,a3,a4,a5,a6)),
+  					7 => new Func< object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7)=> invokable(a1,a2,a3,a4,a5,a6,a7)),
+  					8 => new Func< object, object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7,a8)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8)),
+  					9 => new Func< object, object, object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7,a8,a9)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9)),
+  					10 => new Func< object, object, object, object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)),
+  					11 => new Func< object, object, object, object, object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11)),
+  					12 => new Func< object, object, object, object, object, object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12)),
+  					13 => new Func< object, object, object, object, object, object, object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13)),
+  					14 => new Func< object, object, object, object, object, object, object, object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14)),
+  					15 => new Func< object, object, object, object, object, object, object, object, object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15)),
+  					16 => new Func< object, object, object, object, object, object, object, object, object, object, object, object, object, object, object, object, TReturn>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16)),
 #endregion	
-				default:
-					return new DynamicFunc<TReturn>(args=>(TReturn)Dynamic.Invoke((object)invokable,args));
-			}
+				_ => (Delegate) new DynamicFunc<TReturn>(args=>(TReturn)Dynamic.Invoke((object)invokable,args))
+			};
         }
-
 
         internal static Delegate WrapAction(dynamic invokable, int length)
         {
-           	 switch(length){
+           	 return length switch {
 #region Optimizations
-				    case 0:
-					    return new Action(()=>invokable());
-  					case 1:
-						return new Action< object>((a1)=> invokable(a1));
-  					case 2:
-						return new Action< object, object>((a1,a2)=> invokable(a1,a2));
-  					case 3:
-						return new Action< object, object, object>((a1,a2,a3)=> invokable(a1,a2,a3));
-  					case 4:
-						return new Action< object, object, object, object>((a1,a2,a3,a4)=> invokable(a1,a2,a3,a4));
-  					case 5:
-						return new Action< object, object, object, object, object>((a1,a2,a3,a4,a5)=> invokable(a1,a2,a3,a4,a5));
-  					case 6:
-						return new Action< object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6)=> invokable(a1,a2,a3,a4,a5,a6));
-  					case 7:
-						return new Action< object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7)=> invokable(a1,a2,a3,a4,a5,a6,a7));
-  					case 8:
-						return new Action< object, object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7,a8)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8));
-  					case 9:
-						return new Action< object, object, object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7,a8,a9)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9));
-  					case 10:
-						return new Action< object, object, object, object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10));
-  					case 11:
-						return new Action< object, object, object, object, object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11));
-  					case 12:
-						return new Action< object, object, object, object, object, object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12));
-  					case 13:
-						return new Action< object, object, object, object, object, object, object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13));
-  					case 14:
-						return new Action< object, object, object, object, object, object, object, object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14));
-  					case 15:
-						return new Action< object, object, object, object, object, object, object, object, object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15));
-  					case 16:
-						return new Action< object, object, object, object, object, object, object, object, object, object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16));
+				0 => (Delegate) new Action(()=>invokable()),
+  				1 => new Action< object>((a1)=> invokable(a1)),
+  				2 => new Action< object, object>((a1,a2)=> invokable(a1,a2)),
+  				3 => new Action< object, object, object>((a1,a2,a3)=> invokable(a1,a2,a3)),
+  				4 => new Action< object, object, object, object>((a1,a2,a3,a4)=> invokable(a1,a2,a3,a4)),
+  				5 => new Action< object, object, object, object, object>((a1,a2,a3,a4,a5)=> invokable(a1,a2,a3,a4,a5)),
+  				6 => new Action< object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6)=> invokable(a1,a2,a3,a4,a5,a6)),
+  				7 => new Action< object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7)=> invokable(a1,a2,a3,a4,a5,a6,a7)),
+  				8 => new Action< object, object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7,a8)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8)),
+  				9 => new Action< object, object, object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7,a8,a9)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9)),
+  				10 => new Action< object, object, object, object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10)),
+  				11 => new Action< object, object, object, object, object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11)),
+  				12 => new Action< object, object, object, object, object, object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12)),
+  				13 => new Action< object, object, object, object, object, object, object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13)),
+  				14 => new Action< object, object, object, object, object, object, object, object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14)),
+  				15 => new Action< object, object, object, object, object, object, object, object, object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15)),
+  				16 => new Action< object, object, object, object, object, object, object, object, object, object, object, object, object, object, object, object>((a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16)=> invokable(a1,a2,a3,a4,a5,a6,a7,a8,a9,a10,a11,a12,a13,a14,a15,a16)),
 #endregion		
-				default:
-					return new DynamicAction(args=>Dynamic.InvokeAction((object)invokable,args));
-			}
+				_ => new DynamicAction(args=>Dynamic.InvokeAction((object)invokable,args))
+			};
         }
 
 
-        internal static object FastDynamicInvokeReturn(Delegate del, dynamic [] args)
+        internal static object? FastDynamicInvokeReturn(Delegate del, dynamic?[] args)
         {
             dynamic tDel =del;
             switch(args.Length){
@@ -726,7 +668,11 @@ namespace Dynamitey.Internal.Optimization {
                     }
                     catch (TargetInvocationException ex)
                     {
-                        throw ex.InnerException;
+                        if (ex.InnerException is { } iex)
+                        {
+                            ExceptionDispatchInfo.Capture(iex).Throw();
+                        }
+                        throw;
                     }
 #region Optimization
 				case 1:
@@ -765,7 +711,7 @@ namespace Dynamitey.Internal.Optimization {
             }
         }
 
-        internal static void FastDynamicInvokeAction(Delegate del, params dynamic [] args)
+        internal static void FastDynamicInvokeAction(Delegate del, params dynamic?[] args)
         {
             dynamic tDel =del;
             switch(args.Length){
@@ -776,7 +722,11 @@ namespace Dynamitey.Internal.Optimization {
 					}
 					catch (TargetInvocationException ex)
                     {
-                        throw ex.InnerException;
+                        if (ex.InnerException is { } iex)
+                        {
+                            ExceptionDispatchInfo.Capture(iex).Throw();
+                        }
+                        throw;
                     }
                     return;
 #region Optimization

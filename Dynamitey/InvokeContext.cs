@@ -97,14 +97,14 @@ namespace Dynamitey
         /// <param name="target">The target.</param>
         /// <param name="staticContext">if set to <c>true</c> [static context].</param>
         /// <param name="context">The context.</param>
-        public InvokeContext(Type target, bool staticContext, object context)
+        public InvokeContext(Type target, bool staticContext, object? context)
         {
-            if (context != null && !(context is Type))
+            if (!(context is null) && !(context is Type))
             {
                 context = context.GetType();
             }
             Target = target;
-            Context = ((Type)context) ?? target;
+            Context =  (Type?)context ?? target;
             StaticContext = staticContext;
         }
 
@@ -113,16 +113,15 @@ namespace Dynamitey
         /// </summary>
         /// <param name="target">The target.</param>
         /// <param name="context">The context.</param>
-        public InvokeContext(object target, object context)
+        public InvokeContext(object target, object? context)
         {
             this.Target = target;
-
-            if (context != null && !(context is Type))
+            Context = context switch
             {
-                context = context.GetType();
-            }
-
-            Context = (Type)context;
+                Type ct => ct,
+                null => target switch {Type t => t, _ => target.GetType()},
+                _ => context.GetType()
+            };
         }
     }
 }

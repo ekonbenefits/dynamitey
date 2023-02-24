@@ -1395,13 +1395,13 @@ namespace Dynamitey.Tests
                 _type = type;
             }
 
-            public override bool TryBinaryOperation(BinaryOperationBinder binder, object arg, out object result){
+            public override bool TryBinaryOperation(BinaryOperationBinder binder, object arg, out object? result){
                 Assert.AreEqual(_type, binder.Operation);
                 result = _type;
                 return true;
             }
 
-            public override bool TryUnaryOperation(UnaryOperationBinder binder, out object result){
+            public override bool TryUnaryOperation(UnaryOperationBinder binder, out object? result){
                 Assert.AreEqual(_type, binder.Operation);
                 result = _type;
                 return true;
