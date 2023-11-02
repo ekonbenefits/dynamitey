@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   build:
-
+    name: Test Windows .net Core and Framework
     runs-on: windows-2019
     steps:
     
@@ -24,6 +24,7 @@ jobs:
       uses: microsoft/vstest-action@v1.0.0
       with:
         testAssembly: Tests.dll
-        searchFolder: .\Tests\bin\Release\**\
+        searchFolder: .\Tests\bin\Release\*\
         runInParallel: true
         otherConsoleOptions: /TestCaseFilter:"(TestCategory!=Performance)"
+        platform: x64
