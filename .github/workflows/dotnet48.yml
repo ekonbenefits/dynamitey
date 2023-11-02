@@ -14,17 +14,18 @@ jobs:
       uses: microsoft/setup-msbuild@v1
     
     - name: Setup NuGet
-      uses: NuGet/setup-nuget@v1.0.5
+      uses: NuGet/setup-nuget@v1.2.0
       
     - name: setup-msbuild
       uses: microsoft/setup-msbuild@v1.1
     
     - name: Restore Packages
       run: nuget restore Dynamitey.sln
-  
+    - name: Build solution
+      run: msbuild Dynamitey.sln -t:rebuild -property:Configuration=Release
     - name: Run vstests
       uses: microsoft/vstest-action@v1.0.0
       with:
         testAssembly: Tests.dll
-        searchFolder: .\Tests\bin\Debug\net48\
+        searchFolder: .\Tests\bin\Release\net48\
         runInParallel: true
