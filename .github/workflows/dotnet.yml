@@ -1,4 +1,4 @@
-name: Build .net core *nix
+name: Build .net core
 
 on: [push]
 
