@@ -1,0 +1,30 @@
+name: Build .net framework 48
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: windows-2019
+    steps:
+    
+    - uses: actions/checkout@v2
+    
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
+    
+    - name: Setup NuGet
+      uses: NuGet/setup-nuget@v1.0.5
+      
+    - name: setup-msbuild
+      uses: microsoft/setup-msbuild@v1.1
+    
+    - name: Restore Packages
+      run: nuget restore Dynamitey.sln
+  
+    - name: Run vstests
+      uses: microsoft/vstest-action@v1.0.0
+      with:
+        testAssembly: Tests.dll
+        searchFolder: .\Tests\bin\Debug\net48\
+        runInParallel: true
