@@ -16,7 +16,7 @@ namespace Dynamitey.Tests
 {
     public class Invoke:AssertionHelper
     {
-        [TestFixtureTearDown]
+        [OneTimeTearDown]
         public void DestroyCaches()
         {
             Dynamic.ClearCaches();

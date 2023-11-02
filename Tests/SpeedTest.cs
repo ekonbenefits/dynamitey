@@ -13,7 +13,7 @@ namespace Dynamitey.Tests
     [Category("Performance")]
     public class SpeedTest:AssertionHelper
     {
-        [TestFixtureSetUp]
+        [OneTimeSetUp]
         public void WarmUpDlr()
         {
             Dynamic.InvokeMember(1, "ToString");
