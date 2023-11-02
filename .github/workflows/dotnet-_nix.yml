@@ -1,4 +1,4 @@
-name: Build .net core
+name: Build .net core *nix
 
 on: [push]
 
@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         dotnet: [ '6.0.x' ]
-        os: [ubuntu-latest, windows-latest, macOS-latest]
+        os: [ubuntu-latest, macOS-latest]
     
     steps:
     - uses: actions/checkout@v1
