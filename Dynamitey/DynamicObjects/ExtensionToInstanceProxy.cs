@@ -293,7 +293,22 @@ namespace Dynamitey.DynamicObjects
 
                 }catch(RuntimeBinderException)
                 {
-                    types = null;
+                    try
+                    {
+                        IList<Type> typeList = Dynamic.InvokeGet(binder,
+                            "TypeArguments");
+                        if (typeList != null)
+                        {
+
+                            types = typeList.ToArray();
+
+                        }
+
+                    }
+                    catch (RuntimeBinderException)
+                    {
+                        types = null;
+                    }
                 }
 
                 var name=InvokeMemberName.Create;

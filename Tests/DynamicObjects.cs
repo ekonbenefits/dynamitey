@@ -573,7 +573,7 @@ namespace Dynamitey.Tests
         }
 
 
-#if !NETCOREAPP2_0
+#if !NET6_0_OR_GREATER
 
         [Test]
         public void TestCodeDomLateTypeBind()
