@@ -88,11 +88,20 @@ namespace Dynamitey.Internal.Optimization
         {
             try
             {
-                return BuildProxy.EmitCallSiteFuncType(argTypes, returnType);
+                //Impromptu Interface version 8.04
+                return BuildProxy.DefaultProxyMaker.EmitCallSiteFuncType(argTypes, returnType);
             }
             catch (LateType.MissingTypeException ex)
-            {
-                throw new TypeLoadException("Cannot Emit long delegates without ImpromptuInterface installed", ex);
+            {  
+                try
+                {
+                    //Impromptu Interface 7.X
+                    return BuildProxy.EmitCallSiteFuncType(argTypes, returnType);
+                }
+                catch (LateType.MissingTypeException)
+                {
+                    throw new TypeLoadException("Cannot Emit long delegates without ImpromptuInterface installed", ex);
+                }
             }
     
         }
