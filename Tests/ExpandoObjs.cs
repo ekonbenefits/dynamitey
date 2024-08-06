@@ -1,10 +1,9 @@
 ﻿using System.Dynamic;
-using NUnit.Framework;
 
 namespace Dynamitey.Tests
 {
     [TestFixture]
-    public class ExpandoObjs : AssertionHelper
+    public class ExpandoObjs
     {
         [Test]
         public void TestExpando()

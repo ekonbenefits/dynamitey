@@ -1,11 +1,6 @@
-﻿using System;
-using System.Dynamic;
-using System.Linq;
-
+﻿using System.Dynamic;
 using System.Text.RegularExpressions;
-using System.Collections.Generic;
 using System.Reflection;
-using Dynamitey.Internal.Compat;
 
 namespace Dynamitey.DynamicObjects
 {

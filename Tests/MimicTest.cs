@@ -1,7 +1,4 @@
-﻿using System;
-using NUnit.Framework;
-
-namespace Dynamitey.Tests
+﻿namespace Dynamitey.Tests
 {
     /// <summary>
     /// This is the craziest set of tests I've ever written in my life...

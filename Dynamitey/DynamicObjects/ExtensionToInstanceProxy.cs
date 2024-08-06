@@ -1,13 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
+﻿using System.Dynamic;
 using System.Reflection;
-
-using System.Text;
 using Microsoft.CSharp.RuntimeBinder;
-using Dynamitey.Internal.Compat;
 using Dynamitey.Internal.Optimization;
 
 namespace Dynamitey.DynamicObjects

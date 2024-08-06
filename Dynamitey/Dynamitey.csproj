@@ -1,70 +1,43 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net40</TargetFrameworks>
-    <Description>(pronounced dyna-mighty) flexes DLR muscle to do meta-mazing things in .net</Description>
-    <Company>Ekon Benefits</Company>
-    <Authors />
-    <Copyright>Copyright 2017 Ekon Benefits</Copyright>
-    <PackageProjectUrl>https://github.com/ekonbenefits/dynamitey</PackageProjectUrl>
-    <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
-    <PackageTags>dynamic metaprogramming dlr reflection currying tuples expando latetypes</PackageTags>
-    <IncludeSymbols>True</IncludeSymbols>
-    <IncludeSource>True</IncludeSource>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>sn.snk</AssemblyOriginatorKeyFile>
-    <DelaySign>False</DelaySign>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+	</PropertyGroup>
 
-  </PropertyGroup>
-  
-  <Import Project="..\Version.props" />
-
-
-  <ItemGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
-    <PackageReference Include="Microsoft.CSharp" Version="4.*" />
-    <PackageReference Include="System.ComponentModel" Version="4.3.0" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)'=='net40'">
-    <Reference Include="Microsoft.CSharp" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="InlineLambdas.tt">
+			<Generator>TextTemplatingFileGenerator</Generator>
+			<LastGenOutput>InlineLambdas.cs</LastGenOutput>
+		</None>
+		<None Update="Internal\Optimization\InvokeHelper.tt">
+			<Generator>TextTemplatingFileGenerator</Generator>
+			<LastGenOutput>InvokeHelper.cs</LastGenOutput>
+		</None>
+		<None Update="ThisFunctions.tt">
+			<Generator>TextTemplatingFileGenerator</Generator>
+			<LastGenOutput>ThisFunctions.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
 
 
-  <ItemGroup>
-    <None Update="InlineLambdas.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>InlineLambdas.cs</LastGenOutput>
-    </None>
-    <None Update="Internal\Optimization\InvokeHelper.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>InvokeHelper.cs</LastGenOutput>
-    </None>
-    <None Update="ThisFunctions.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>ThisFunctions.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-
-
-  <ItemGroup>
-    <Compile Update="InlineLambdas.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>InlineLambdas.tt</DependentUpon>
-    </Compile>
-    <Compile Update="Internal\Optimization\InvokeHelper.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>InvokeHelper.tt</DependentUpon>
-    </Compile>
-    <Compile Update="ThisFunctions.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>ThisFunctions.tt</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
+	<ItemGroup>
+		<Compile Update="InlineLambdas.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>InlineLambdas.tt</DependentUpon>
+		</Compile>
+		<Compile Update="Internal\Optimization\InvokeHelper.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>InvokeHelper.tt</DependentUpon>
+		</Compile>
+		<Compile Update="ThisFunctions.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ThisFunctions.tt</DependentUpon>
+		</Compile>
+	</ItemGroup>
 
 </Project>
