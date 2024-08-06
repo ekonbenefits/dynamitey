@@ -89,6 +89,7 @@ namespace Dynamitey.Tests
 		public interface IBuilder
 		{
 			INest Nester(object props);
+
 			INested Nester2(object props);
 
 			[ImpromptuInterface.UseNamedArgument]

@@ -1,97 +1,95 @@
-﻿using System.Collections;
-using System.Dynamic;
-using Dynamitey.Internal.Optimization;
+﻿using Dynamitey.Internal.Optimization;
 using Microsoft.CSharp.RuntimeBinder;
+using System.Collections;
+using System.Dynamic;
 using System.Reflection;
 
 namespace Dynamitey.Internal
 {
-    /// <summary>
-    /// Internal class implmenation for <see cref="Dynamic.InvokeSetAll"/>
-    /// </summary>
-    public class InvokeSetters : DynamicObject
-    {
-        internal InvokeSetters()
-        {
+	/// <summary>
+	/// Internal class implmenation for <see cref="Dynamic.InvokeSetAll"/>
+	/// </summary>
+	public class InvokeSetters : DynamicObject
+	{
+		internal InvokeSetters()
+		{
+		}
 
-        }
+		/// <summary>
+		/// Provides the implementation for operations that invoke an object. Classes derived from the <see cref="T:System.Dynamic.DynamicObject"/> class can override this method to specify dynamic behavior for operations such as invoking an object or a delegate.
+		/// </summary>
+		/// <param name="binder">Provides information about the invoke operation.</param>
+		/// <param name="args">The arguments that are passed to the object during the invoke operation. For example, for the sampleObject(100) operation, where sampleObject is derived from the <see cref="T:System.Dynamic.DynamicObject"/> class, <paramref name="args"/>[0] is equal to 100.</param>
+		/// <param name="result">The result of the object invocation.</param>
+		/// <returns>
+		/// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.
+		/// </returns>
+		public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
+		{
+			IEnumerable<KeyValuePair<string, object>> tDict = null;
+			object target = null;
+			result = null;
 
-        /// <summary>
-        /// Provides the implementation for operations that invoke an object. Classes derived from the <see cref="T:System.Dynamic.DynamicObject"/> class can override this method to specify dynamic behavior for operations such as invoking an object or a delegate.
-        /// </summary>
-        /// <param name="binder">Provides information about the invoke operation.</param>
-        /// <param name="args">The arguments that are passed to the object during the invoke operation. For example, for the sampleObject(100) operation, where sampleObject is derived from the <see cref="T:System.Dynamic.DynamicObject"/> class, <paramref name="args"/>[0] is equal to 100.</param>
-        /// <param name="result">The result of the object invocation.</param>
-        /// <returns>
-        /// true if the operation is successful; otherwise, false. If this method returns false, the run-time binder of the language determines the behavior. (In most cases, a language-specific run-time exception is thrown.
-        /// </returns>
-        public override bool TryInvoke(InvokeBinder binder, object[] args, out object result)
-        {
-            IEnumerable<KeyValuePair<string, object>> tDict = null;
-            object target = null;
-            result = null;
+			//Setup Properties as dictionary
+			if (binder.CallInfo.ArgumentNames.Any())
+			{
+				if (binder.CallInfo.ArgumentNames.Count + 1 == binder.CallInfo.ArgumentCount)
+				{
+					target = args.First();
+					tDict = binder.CallInfo.ArgumentNames
+						.Zip(args.Skip(1), (key, value) => new { key, value })
+						.ToDictionary(k => k.key, v => v.value);
+				}
+				else
+				{
+					throw new RuntimeBinderException("InvokeSetAll requires first parameter to be target unamed, and all other parameters to be named.");
+				}
+			}
+			else if (args.Length == 2)
+			{
+				target = args[0];
+				if (args[1] is IEnumerable<KeyValuePair<string, object>>)
+				{
+					tDict = (IEnumerable<KeyValuePair<string, object>>)args[1];
+				}
+				else if (args[1] is IEnumerable
+						&& args[1].GetType().GetTypeInfo().IsGenericType
+					)
+				{
+					var tEnumerableArg = (IEnumerable)args[1];
 
-            //Setup Properties as dictionary
-            if (binder.CallInfo.ArgumentNames.Any())
-            {
-                
-                if (binder.CallInfo.ArgumentNames.Count + 1 == binder.CallInfo.ArgumentCount)
-                {
-                    target = args.First();
-                    tDict = binder.CallInfo.ArgumentNames
-                        .Zip(args.Skip(1), (key, value) => new { key, value })
-                        .ToDictionary(k => k.key, v => v.value);
-
-                }else
-                {
-                    throw new RuntimeBinderException("InvokeSetAll requires first parameter to be target unamed, and all other parameters to be named.");
-                }
-            }
-            else if (args.Length == 2)
-            {
-                target = args[0];
-                if (args[1] is IEnumerable<KeyValuePair<string, object>>)
-                {
-                    tDict = (IEnumerable<KeyValuePair<string, object>>)args[1];
-                }
-                else if (args[1] is IEnumerable
-                        && args[1].GetType().GetTypeInfo().IsGenericType
-                    )
-                {
-                    var tEnumerableArg = (IEnumerable)args[1];
-
-                    var tInterface = tEnumerableArg.GetType().GetTypeInfo().GetInterfaces().FirstOrDefault(it=>it.Name =="IEnumerable`1");
-                    if(tInterface !=null)
-                    {
-                        var tParamTypes = tInterface.GetTypeInfo().GetGenericArguments();
-                        if(tParamTypes.Length ==1 
-                            && tParamTypes[0].GetGenericTypeDefinition() == typeof(Tuple<,>))
-                        {
-                           tDict= tEnumerableArg.Cast<dynamic>().ToDictionary(k => (string) k.Item1, v => (object) v.Item2);
-                        }
-                    }
-                }
-                else if (Util.IsAnonymousType(args[1]))
-                {
-                    var keyDict = new Dictionary<string, object>();
-                    foreach (var tProp in args[1].GetType().GetTypeInfo().GetProperties())
-                    {
-                        keyDict[tProp.Name] = Dynamic.InvokeGet(args[1], tProp.Name);
-                    }
-                    tDict = keyDict;
-                }
-            }
-            //Invoke all properties
-            if (target != null && tDict != null)
-            {
-                foreach (var tPair in tDict)
-                {
-                    Dynamic.InvokeSetChain(target, tPair.Key, tPair.Value);
-                }
-                result = target;
-                return true;
-            }
-            return false;
-        }
-    }
+					var tInterface = tEnumerableArg.GetType().GetTypeInfo().GetInterfaces().FirstOrDefault(it => it.Name =="IEnumerable`1");
+					if (tInterface !=null)
+					{
+						var tParamTypes = tInterface.GetTypeInfo().GetGenericArguments();
+						if (tParamTypes.Length ==1
+							&& tParamTypes[0].GetGenericTypeDefinition() == typeof(Tuple<,>))
+						{
+							tDict= tEnumerableArg.Cast<dynamic>().ToDictionary(k => (string)k.Item1, v => (object)v.Item2);
+						}
+					}
+				}
+				else if (Util.IsAnonymousType(args[1]))
+				{
+					var keyDict = new Dictionary<string, object>();
+					foreach (var tProp in args[1].GetType().GetTypeInfo().GetProperties())
+					{
+						keyDict[tProp.Name] = Dynamic.InvokeGet(args[1], tProp.Name);
+					}
+					tDict = keyDict;
+				}
+			}
+			//Invoke all properties
+			if (target != null && tDict != null)
+			{
+				foreach (var tPair in tDict)
+				{
+					Dynamic.InvokeSetChain(target, tPair.Key, tPair.Value);
+				}
+				result = target;
+				return true;
+			}
+			return false;
+		}
+	}
 }

@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq.Expressions;
-using System.Xml.Linq;
-using Dynamitey.SupportLibrary;
+﻿using Dynamitey.SupportLibrary;
 using Microsoft.CSharp.RuntimeBinder;
 using Moq;
-using NUnit.Framework;
-using System.Globalization;
 using System.Drawing;
+using System.Dynamic;
+using System.Globalization;
+using System.Linq.Expressions;
+using System.Xml.Linq;
 
 namespace Dynamitey.Tests
 {
@@ -1009,7 +1006,8 @@ namespace Dynamitey.Tests
 
 		public class OperatorTestDynObject : DynamicObject
 		{
-			ExpressionType _type;
+			private ExpressionType _type;
+
 			public OperatorTestDynObject(ExpressionType type)
 			{
 				_type = type;

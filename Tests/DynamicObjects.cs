@@ -1,13 +1,7 @@
-﻿using System;
+﻿using Dynamitey.SupportLibrary;
 using System.Collections;
-using System.Collections.Generic;
 using System.Dynamic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using NUnit.Framework;
-using Dynamitey;
-using Dynamitey.DynamicObjects;
-using Dynamitey.SupportLibrary;
 
 namespace Dynamitey.Tests
 {

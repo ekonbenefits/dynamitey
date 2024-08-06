@@ -1,5 +1,4 @@
 ﻿using System.Dynamic;
-using NUnit.Framework;
 
 namespace Dynamitey.Tests
 {

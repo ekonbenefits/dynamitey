@@ -1,13 +1,9 @@
-﻿
-
-
-
-namespace Dynamitey.Internal.Compat
+﻿namespace Dynamitey.Internal.Compat
 {
 	using System.Globalization;
 
 	public static class Net40
-    {
+	{
 #if NET40 || PROFILE158
 
         public static Type GetTypeInfo(this Type type)
@@ -22,19 +18,14 @@ namespace Dynamitey.Internal.Compat
 
        public static CultureInfo GetDefaultThreadCurrentCulture() {
             return Thread.CurrentThread.CurrentCulture;
-
        }
 #else
-        public static CultureInfo GetDefaultThreadCurrentCulture() {
 
-            return CultureInfo.DefaultThreadCurrentCulture;
-
-        }
+		public static CultureInfo GetDefaultThreadCurrentCulture()
+		{
+			return CultureInfo.DefaultThreadCurrentCulture;
+		}
 
 #endif
-
-
-    }
-
+	}
 }
-
