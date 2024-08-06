@@ -1,21 +1,12 @@
-﻿using System;
-using System.CodeDom.Compiler;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using System.Dynamic;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-
 using Dynamitey.SupportLibrary;
-using Microsoft.CSharp;
-using NUnit.Framework;
 
 namespace Dynamitey.Tests
 {
     [TestFixture]
-    public class DynamicObjs : AssertionHelper
+    public class DynamicObjs
     {
 
 

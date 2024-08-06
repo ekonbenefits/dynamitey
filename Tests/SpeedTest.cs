@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dynamitey.SupportLibrary;
-using NUnit.Framework;
+﻿using Dynamitey.SupportLibrary;
 using Microsoft.FSharp.Reflection;
 
 namespace Dynamitey.Tests
 {
     [TestFixture]
     [Category("Performance")]
-    public class SpeedTest:AssertionHelper
+    public class SpeedTest
     {
         [OneTimeSetUp]
         public void WarmUpDlr()

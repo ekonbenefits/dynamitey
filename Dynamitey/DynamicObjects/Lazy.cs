@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-
-
-namespace Dynamitey.DynamicObjects
+﻿namespace Dynamitey.DynamicObjects
 {
 
     /// <summary>

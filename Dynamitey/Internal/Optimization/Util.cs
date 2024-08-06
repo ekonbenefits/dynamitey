@@ -14,16 +14,10 @@
 //    limitations under the License.
 
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Dynamic;
-using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Dynamitey.DynamicObjects;
-using Microsoft.CSharp.RuntimeBinder;
-using Dynamitey.Internal.Compat;
 
 
 namespace Dynamitey.Internal.Optimization

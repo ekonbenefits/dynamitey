@@ -13,14 +13,8 @@
 //    See the License for the specific language governing permissions and
 //    limitations under the License.
 
-using System;
-using System.Collections.Generic;
 using System.Dynamic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using Dynamitey.Internal.Optimization;
-using Microsoft.CSharp;
 using Microsoft.CSharp.RuntimeBinder;
 
 namespace Dynamitey.DynamicObjects

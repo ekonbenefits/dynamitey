@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dynamitey.SupportLibrary;
+﻿using Dynamitey.SupportLibrary;
 using Microsoft.CSharp.RuntimeBinder;
-using NUnit.Framework;
 
 namespace Dynamitey.Tests
 {
     [TestFixture]
-    public class PrivateTest : AssertionHelper
+    public class PrivateTest 
     {
   
         [Test]

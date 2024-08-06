@@ -1,29 +1,41 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <TargetFrameworks>net6;net48</TargetFrameworks>
-	  <IsPackable>false</IsPackable>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="FSharp.Core" Version="8.0.301" />
     <PackageReference Include="ImpromptuInterface" Version="8.0.4" />
-    <PackageReference Include="Microsoft.CSharp" Version="4.*" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
-    <PackageReference Include="NUnit" Version="3.13.3" />
-    <PackageReference Include="FSharp.Core" Version="4.7.2" />
-    <PackageReference Include="Moq" Version="4.20.69" />
-    <PackageReference Include="NUnit.Console" Version="3.16.3" />
-    <PackageReference Include="IronPython" Version="2.7.12" />
-
-  </ItemGroup>
-
- 
-  <ItemGroup>
-    <PackageReference Include="NUnit3TestAdapter" Version="4.5.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Scripting" Version="4.10.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.10.0" />
+    <PackageReference Include="Moq" Version="4.20.70" />
+    <PackageReference Include="NUnit.Analyzers" Version="4.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="NUnit.ConsoleRunner" Version="3.18.1" />
+    <PackageReference Include="NUnit.StaticExpect" Version="2.0.0" />
+    <PackageReference Include="NUnit3TestAdapter" Version="4.6.0" />
+    <PackageReference Include="pythonnet" Version="3.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Dynamitey\Dynamitey.csproj" />
     <ProjectReference Include="..\SupportLibrary\SupportLibrary.csproj" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="NUnit.Framework" />
+  </ItemGroup>
+
 </Project>

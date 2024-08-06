@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 using Dynamitey.SupportLibrary;
-using NUnit.Framework;
 
 namespace Dynamitey.Tests
 {
     [TestFixture]
-    public class Curry : AssertionHelper
+    public class Curry
     {
         [Test]
         public void TestBasicDelegateCurry()

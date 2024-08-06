@@ -1,13 +1,9 @@
-﻿using System;
-using System.Dynamic;
-using System.Linq;
+﻿using System.Dynamic;
 using System.Runtime.CompilerServices;
 using Dynamitey.Internal.Optimization;
 using Microsoft.CSharp.RuntimeBinder;
 using System.Reflection;
-using Dynamitey.Internal.Compat;
 using System.Collections;
-using System.Collections.Generic;
 
 namespace Dynamitey
 {
