@@ -134,7 +134,7 @@ namespace Dynamitey
         /// });
         /// var tSite = Impromptu.CreateCallSite<DynamicTryString>(tBinder);
         /// tSite.Target.Invoke(tSite, tPoco, out tResult);
-        /// Assert.AreEqual("success", tResult);
+        /// Assert.That("success", Is.EqualTo(tResult));
         /// ]]></code>
         /// </example>
         /// <seealso cref="CreateCallSite"/>
@@ -189,7 +189,7 @@ namespace Dynamitey
         ///    var tValue = 1;
         ///    var tOut = Impromptu.InvokeMember(tExpando, "Func", tValue);
         ///
-        ///    Assert.AreEqual(tValue.ToString(), tOut);
+        ///    Assert.That(tValue.ToString(), Is.EqualTo(tOut));
         /// ]]>
         /// </code>
         /// </example>
@@ -399,7 +399,7 @@ namespace Dynamitey
         ///
         ///    Impromptu.InvokeMemberAction(tExpando, "Action", tValue);
         ///
-        ///    Assert.AreEqual(tValue, tTest);
+        ///    Assert.That(tValue, Is.EqualTo(tTest));
         /// ]]>
         /// </code>
         /// </example>
@@ -444,7 +444,7 @@ namespace Dynamitey
         ///
         ///    Impromptu.InvokeSet(tExpando, "Test", tSetValue);
         ///
-        ///    Assert.AreEqual(tSetValue, tExpando.Test);
+        ///    Assert.That(tSetValue, Is.EqualTo(tExpando.Test));
         /// ]]>
         /// </code>
         /// </example>
@@ -561,7 +561,7 @@ namespace Dynamitey
         ///
         ///    var tOut =Impromptu.InvokeGet(tAnon, "Test");
         ///
-        ///    Assert.AreEqual(tSetValue, tOut);
+        ///    Assert.That(tSetValue, Is.EqualTo(tOut));
         /// ]]>
         /// </code>
         /// </example>

@@ -14,7 +14,7 @@ namespace Dynamitey.Tests
 			dynamic tNew = new DynamicObjects.Dictionary();
 			ISimpleStringMethod tActsLike = ImpromptuInterface.Impromptu.ActLike(tNew);
 
-			Assert.AreEqual(false, tActsLike.StartsWith("Te"));
+			Assert.That(tActsLike.StartsWith("Te"), Is.EqualTo(false));
 		}
 
 		[Test]
@@ -55,7 +55,7 @@ namespace Dynamitey.Tests
 
 			if (baseObj.TryTypeForName("test", out Type ot))
 			{
-				Assert.AreEqual(typeof(bool), ot);
+				Assert.That(ot, Is.EqualTo(typeof(bool)));
 			}
 			else
 			{
@@ -71,7 +71,7 @@ namespace Dynamitey.Tests
 
 			if (baseObj.TryTypeForName("Prop2", out Type ot))
 			{
-				Assert.AreEqual(typeof(long), ot);
+				Assert.That(ot, Is.EqualTo(typeof(long)));
 			}
 			else
 			{
@@ -83,7 +83,7 @@ namespace Dynamitey.Tests
 		public void DictionaryCurriedAcctlikeNullMethodsTest()
 		{
 			ISimpleStringMethod tActsLike = Interfacing << new DynamicObjects.Dictionary();
-			Assert.AreEqual(false, tActsLike.StartsWith("Te"));
+			Assert.That(tActsLike.StartsWith("Te"), Is.EqualTo(false));
 		}
 
 		public interface IBuilder
@@ -122,8 +122,8 @@ namespace Dynamitey.Tests
 				})
 			});
 
-			Assert.AreEqual("Lvl1", tNest.NameLevel1);
-			Assert.AreEqual("Lvl2", tNest.Nested.NameLevel2);
+			Assert.That(tNest.NameLevel1, Is.EqualTo("Lvl1"));
+			Assert.That(tNest.Nested.NameLevel2, Is.EqualTo("Lvl2"));
 		}
 
 		[Test]
@@ -138,8 +138,8 @@ namespace Dynamitey.Tests
 					)
 				);
 
-			Assert.AreEqual("Lvl1", tNest.NameLevel1);
-			Assert.AreEqual("Lvl2", tNest.Nested.NameLevel2);
+			Assert.That(tNest.NameLevel1, Is.EqualTo("Lvl1"));
+			Assert.That(tNest.Nested.NameLevel2, Is.EqualTo("Lvl2"));
 		}
 	}
 }

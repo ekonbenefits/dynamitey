@@ -150,7 +150,7 @@
         {
             dynamic mimic = new SubMimic();
             int result = mimic.Add(2, 2);
-            Assert.AreEqual(4, result);
+            Assert.That(4, Is.EqualTo(result));
         }
 
         [Test]
@@ -158,7 +158,7 @@
         {
             dynamic mimic = new SubMimic();
             string result = mimic.Add("He", "llo");
-            Assert.AreEqual("Hello", result);
+            Assert.That("Hello", Is.EqualTo(result));
         }
 
         [Test]
@@ -166,7 +166,7 @@
         {
             dynamic mimic = new SubMimic();
             int result = mimic.Add(1, "llo");
-            Assert.AreEqual(default(int), result);
+            Assert.That(default(int), Is.EqualTo(result));
         }
     }
 }

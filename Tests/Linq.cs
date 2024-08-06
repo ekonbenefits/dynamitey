@@ -16,7 +16,7 @@ namespace Dynamitey.Tests
             var expected = Enumerable.Range(1, 10).Where(i => i > 5).Skip(1).Take(2).Max();
             var actual = Dynamic.Linq(Enumerable.Range(1, 10)).Where(new Func<int, bool>(i => i > 5)).Skip(1).Take(2).Max();
 
-            Assert.AreEqual(expected, actual);
+            Assert.That(expected, Is.EqualTo(actual));
         }
         [Test]
         public void MoreGenericsDynamicLinq()
@@ -26,7 +26,7 @@ namespace Dynamitey.Tests
                 .Select(new Func<int, Tuple<int, int>>(i => Tuple.Create(1, i)))
                 .Aggregate(0, new Func<int, Tuple<int, int>, int>((accum, each) => each.Item2));
 
-            Assert.AreEqual(expected, actual);
+            Assert.That(expected, Is.EqualTo(actual));
 
         }
 
@@ -61,7 +61,7 @@ namespace Dynamitey.Tests
 //result = linq.OfType[System.Int32]().Skip(1).First()
 
 //");
-//            Assert.AreEqual(expected, actual);
+//            Assert.That(expected, actual);
 //        }
 
 
@@ -78,7 +78,7 @@ namespace Dynamitey.Tests
 
 //");
 
-//            Assert.AreEqual(expected, actual);
+//            Assert.That(expected, actual);
 //        }
 
 
@@ -134,10 +134,10 @@ namespace Dynamitey.Tests
         {
             return it.GetParameters().First().ParameterType.IsGenericType
                    && it.GetParameters().First().ParameterType.GetGenericTypeDefinition() == genericType
-                   && HelperSignleGenericArgMatch(it.GetParameters().First().ParameterType.GetGenericArguments().Single());
+                   && HelperSingleGenericArgMatch(it.GetParameters().First().ParameterType.GetGenericArguments().Single());
         }
 
-        bool HelperSignleGenericArgMatch(Type info)
+        bool HelperSingleGenericArgMatch(Type info)
         {
             foreach (var name in new[] { "TSource", "TFirst", "TOuter" })
             {
@@ -154,7 +154,7 @@ namespace Dynamitey.Tests
         // Define other methods and classes here
         string HelperFormatType(Type it)
         {
-            if (HelperSignleGenericArgMatch(it))
+            if (HelperSingleGenericArgMatch(it))
             {
                 return "TSource";
             }
@@ -171,7 +171,7 @@ namespace Dynamitey.Tests
 
         string HelperGenericParams(Type[] it)
         {
-            var tArgs = it.Where(t => !HelperSignleGenericArgMatch(t)).Select(t => HelperFormatType(t));
+            var tArgs = it.Where(t => !HelperSingleGenericArgMatch(t)).Select(t => HelperFormatType(t));
             if (!tArgs.Any())
             {
                 return "";
