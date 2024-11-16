@@ -4,19 +4,15 @@
 
 Dynamitey is available Nuget [![NuGet](https://img.shields.io/nuget/dt/Dynamitey.svg)](https://www.nuget.org/packages/Dynamitey/)
 
-You can find the latest bleed edge on MyGet [![MyGet Pre Release](https://img.shields.io/myget/dynamitey-ci/vpre/Dynamitey.svg)](https://www.myget.org/feed/dynamitey-ci/package/nuget/Dynamitey)
-
 Framework | Platform | Status
 --------- | -------- | ------
-All | Windows | [![Build status](https://ci.appveyor.com/api/projects/status/kctdnnmctakj1j9w/branch/master?svg=true)](https://ci.appveyor.com/project/jbtule/dynamitey/branch/master)
-.NET Core | Linux/Mac/Windows | [![Actions Status](https://github.com/ekonbenefits/dynamitey/workflows/Build%20.net%20core/badge.svg)](https://github.com/ekonbenefits/dynamitey/actions?workflow=Build+.net+core)
+All | Windows | [![Actions Status](https://github.com/ekonbenefits/dynamitey/actions/workflows/dotnet48.yml/badge.svg)](https://github.com/ekonbenefits/dynamitey/actions/workflows/dotnet48.yml)
+.NET Core | Linux/Mac | [![Actions Status](https://github.com/ekonbenefits/dynamitey/actions/workflows/dotnet.yml/badge.svg)](https://github.com/ekonbenefits/dynamitey/actions/workflows/dotnet.yml)
 
 Compiled For|
 --------|
 .Net Std 2.0 | 
-.Net Std 1.5 |
 .Net 4.0  |
-Portable .NET 4.5, Silverlight 4 & 5, WinRT, Win Phone 8 |
 
 
 
