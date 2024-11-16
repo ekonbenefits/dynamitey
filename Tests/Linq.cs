@@ -12,7 +12,7 @@ using Microsoft.Scripting;
 namespace Dynamitey.Tests
 {
     [TestFixture]
-    public class Linq : AssertionHelper
+    public class Linq : Helper
     {
   
 

@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace Dynamitey.Tests
 {
     [TestFixture]
-    public class ExpandoObjs : AssertionHelper
+    public class ExpandoObjs : Helper
     {
         [Test]
         public void TestExpando()

@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace Dynamitey.Tests
 {
     [TestFixture]
-    public class PrivateTest : AssertionHelper
+    public class PrivateTest : Helper
     {
   
         [Test]

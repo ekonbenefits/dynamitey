@@ -15,7 +15,7 @@ using NUnit.Framework;
 namespace Dynamitey.Tests
 {
     [TestFixture]
-    public class DynamicObjs : AssertionHelper
+    public class DynamicObjs : Helper
     {
 
 
@@ -573,7 +573,7 @@ namespace Dynamitey.Tests
         }
 
 
-#if !NET6_0_OR_GREATER
+#if NETFRAMEWORK
 
         [Test]
         public void TestCodeDomLateTypeBind()

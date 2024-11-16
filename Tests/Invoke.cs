@@ -14,7 +14,7 @@ using System.Globalization;
 
 namespace Dynamitey.Tests
 {
-    public class Invoke:AssertionHelper
+    public class Invoke:Helper
     {
         [OneTimeTearDown]
         public void DestroyCaches()
@@ -1416,7 +1416,9 @@ namespace Dynamitey.Tests
 
         private void RunUnaryMockTests(ExpressionType type){
             var mock = new OperatorTestDynObject(type);
+#pragma warning disable CS0618 // Type or member is obsolete
             Dynamic.InvokeUnaryOpartor(type,mock);
+#pragma warning restore CS0618 // Type or member is obsolete
         }
 
         [Test]

@@ -291,15 +291,15 @@ namespace Dynamitey.DynamicObjects
         ///<summary>
         /// Trampoline for builder
         ///</summary>
-        public class BuilderTrampoline<TObjectProtoType> : DynamicObject
+        public class BuilderTrampoline<TInnerObjectProtoType> : DynamicObject
         {
-            Builder<TObjectProtoType> _buider;
+            Builder<TInnerObjectProtoType> _buider;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Builder{TObjectProtoType}.BuilderTrampoline"/> class.
             /// </summary>
             /// <param name="builder">The builder.</param>
-            public BuilderTrampoline(Builder<TObjectProtoType> builder)
+            public BuilderTrampoline(Builder<TInnerObjectProtoType> builder)
             {
 				_buider = builder;
 			}
@@ -324,15 +324,15 @@ namespace Dynamitey.DynamicObjects
         /// <summary>
         /// Trampoline for setup builder
         /// </summary>
-        public class SetupTrampoline<TObjectProtoType> : DynamicObject
+        public class SetupTrampoline<TInnerObjectProtoType> : DynamicObject
         {
-			Builder<TObjectProtoType> _buider;
+			Builder<TInnerObjectProtoType> _buider;
 
             /// <summary>
             /// Initializes a new instance of the <see cref="Builder{TObjectProtoType}.SetupTrampoline"/> class.
             /// </summary>
             /// <param name="builder">The builder.</param>
-			public SetupTrampoline(Builder<TObjectProtoType> builder){
+			public SetupTrampoline(Builder<TInnerObjectProtoType> builder){
 				_buider = builder;
 			}
 
