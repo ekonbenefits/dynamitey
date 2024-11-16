@@ -9,7 +9,7 @@ using NUnit.Framework;
 namespace Dynamitey.Tests
 {
     [TestFixture]
-    public class Curry : AssertionHelper
+    public class Curry : Helper
     {
         [Test]
         public void TestBasicDelegateCurry()

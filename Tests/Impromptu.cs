@@ -13,7 +13,7 @@ using NUnit.Framework.Constraints;
 namespace Dynamitey.Tests
 {
     [TestFixture(Category = "Impromptu")]
-    public class Impromptu:AssertionHelper
+    public class Impromptu:Helper
     {
 
         public static readonly dynamic Interfacing 

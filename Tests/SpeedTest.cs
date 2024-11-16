@@ -11,7 +11,7 @@ namespace Dynamitey.Tests
 {
     [TestFixture]
     [Category("Performance")]
-    public class SpeedTest:AssertionHelper
+    public class SpeedTest:Helper
     {
         [OneTimeSetUp]
         public void WarmUpDlr()

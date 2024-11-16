@@ -1,18 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6;net48</TargetFrameworks>
+    <TargetFrameworks>net8.0;net48</TargetFrameworks>
 	  <IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ImpromptuInterface" Version="8.0.4" />
+    <PackageReference Include="ImpromptuInterface" Version="8.0.*" />
     <PackageReference Include="Microsoft.CSharp" Version="4.*" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.3.0" />
     <PackageReference Include="NUnit" Version="3.13.3" />
     <PackageReference Include="FSharp.Core" Version="4.7.2" />
     <PackageReference Include="Moq" Version="4.20.69" />
     <PackageReference Include="NUnit.Console" Version="3.16.3" />
     <PackageReference Include="IronPython" Version="2.7.12" />
+    <PackageReference Include="System.Drawing.Common" Version="8.0.11"/>
 
   </ItemGroup>
 

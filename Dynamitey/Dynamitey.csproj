@@ -7,7 +7,7 @@
     <Authors />
     <Copyright>Copyright 2017 Ekon Benefits</Copyright>
     <PackageProjectUrl>https://github.com/ekonbenefits/dynamitey</PackageProjectUrl>
-    <PackageLicenseUrl>http://www.apache.org/licenses/LICENSE-2.0</PackageLicenseUrl>
+    <PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
     <PackageTags>dynamic metaprogramming dlr reflection currying tuples expando latetypes</PackageTags>
     <IncludeSymbols>True</IncludeSymbols>
     <IncludeSource>True</IncludeSource>
@@ -66,5 +66,11 @@
     </Compile>
   </ItemGroup>
 
-
+  <Target Name="CopyPackage" AfterTargets="Pack">
+    <Copy
+            SourceFiles="$(OutputPath)$(PackageId).$(PackageVersion).nupkg"
+            DestinationFolder="$(SolutionDir)\publish"
+    />
+  </Target>
+  
 </Project>
